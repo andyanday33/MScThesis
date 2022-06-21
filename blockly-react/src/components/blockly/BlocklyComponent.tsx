@@ -12,36 +12,50 @@ export default function BlocklyComponent() {
   useEffect(() => {
     if(!workspace) {
       let toolbox = {
-        "kind": "flyoutToolbox",
+        "kind": "categoryToolbox",
         "contents": [
           {
-            "kind": "block",
-            "type": "controls_if"
+            "kind": "category",
+            "name": "Variables",
+            "custom": "VARIABLE",
+            "colour": "160"
           },
           {
-            "kind": "block",
-            "type": "controls_repeat_ext"
+            "kind": "category",
+            "name": "Functions",
+            "custom": "PROCEDURE",
+            "colour": "360"
           },
           {
-            "kind": "block",
-            "type": "logic_compare"
+            "kind": "category",
+            "name": "Control",
+            "colour": "210",
+            "contents": [
+              {
+                "kind": "block",
+                "type": "controls_if"
+              },
+            ]
           },
           {
-            "kind": "block",
-            "type": "math_number"
-          },
-          {
-            "kind": "block",
-            "type": "math_arithmetic"
-          },
-          {
-            "kind": "block",
-            "type": "text"
-          },
-          {
-            "kind": "block",
-            "type": "text_print"
-          },
+            "kind": "category",
+            "name": "Logic",
+            "colour": "120",
+            "contents": [
+              {
+                "kind": "block",
+                "type": "logic_compare"
+              },
+              {
+                "kind": "block",
+                "type": "logic_operation"
+              },
+              {
+                "kind": "block",
+                "type": "logic_boolean"
+              }
+            ]
+          }
         ]
       }
   

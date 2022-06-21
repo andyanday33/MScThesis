@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import BlocklyComponent from './components/blockly/BlocklyComponent'
+import BlocklyComponent from './components/blockly'
 import Canvas from './components/canvas'
 
 function App() {
