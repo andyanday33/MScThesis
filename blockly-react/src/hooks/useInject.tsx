@@ -25,6 +25,7 @@ export default function useInject(blocklyRef: RefObject<HTMLDivElement>, HTMLTag
       //It's probably caused by type definitions inside blockly api
       //Yet it works perfectly fine
       workspace = Blockly.inject(HTMLTagId, {toolbox})
+      console.log(workspace)
     }
     
   }, [toolbox])
