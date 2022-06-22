@@ -3,6 +3,17 @@ let toolbox = {
     "contents": [
       {
         "kind": "category",
+        "name": "Movement",
+        "colour": "80",
+        "contents": [
+          {
+            "kind": "block",
+            "type": "move_forward_block"
+          }
+        ]
+      },
+      {
+        "kind": "category",
         "name": "Variables",
         "custom": "VARIABLE",
         "colour": "160"

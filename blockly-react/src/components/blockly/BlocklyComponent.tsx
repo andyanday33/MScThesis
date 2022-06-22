@@ -5,7 +5,10 @@ import BlocklyJS from 'blockly/javascript';
 import toolbox from './toolbox';
 
 // style
-import './BlocklyComponent.css'
+import './BlocklyComponent.css';
+
+// custom blocks
+import './blocks/customBlocks';
 
 /**
  * A functional component that holds Blockly related functionality.
