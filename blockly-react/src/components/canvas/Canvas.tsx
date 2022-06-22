@@ -28,7 +28,6 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
 export default function Canvas(props: CanvasProps) {
 
 	//TODO: add more than one circles at once and try to move them around.
-	//TODO: add a blockly component to control the moveForward function.
 	let [coordinateX, setCoordinateX] = useState(50)
 	let [coordinateY, setCoordinateY] = useState(50)
 	// const PLAYER_RADIUS = 20
@@ -42,6 +41,8 @@ export default function Canvas(props: CanvasProps) {
 	// 		setCoordinateY(coordinateY + 0)
 	// }
 
+	//TODO: Make the custom move_forward_block to be able to call this function.
+	//This might require Redux
     /**
      * Makes the character move forward in their direction
      */

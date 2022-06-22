@@ -43,11 +43,8 @@ export default function BlocklyComponent(...props : Object[]) {
     
   }, [toolbox])
 
-
-
   let code = "";
 
-  //TODO: Connect the generated code with html canvas by adding custom blocks.
   /**
    * Code generation handler function
    */
