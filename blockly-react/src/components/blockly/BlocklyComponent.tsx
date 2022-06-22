@@ -7,6 +7,12 @@ import toolbox from './toolbox';
 // style
 import './BlocklyComponent.css'
 
+/**
+ * A functional component that holds Blockly related functionality.
+ * 
+ * @param props options for Blockly injection
+ * @returns A JSX consisting of a Blockly injected div and a button to generate code
+ */
 export default function BlocklyComponent(...props : Object[]) {
 
   let blocklyRef = useRef<HTMLDivElement>(null);
@@ -36,6 +42,9 @@ export default function BlocklyComponent(...props : Object[]) {
 
   let code = "";
 
+  /**
+   * Code generation handler function
+   */
   const handleGeneration = () => {
     code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
     console.log(code);
