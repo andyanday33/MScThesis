@@ -12,6 +12,8 @@ import './BlocklyComponent.css'
  * 
  * @param props options for Blockly injection
  * @returns A JSX consisting of a Blockly injected div and a button to generate code
+ * 
+ * @author bab26@st-andrews.ac.uk
  */
 export default function BlocklyComponent(...props : Object[]) {
 
@@ -42,6 +44,7 @@ export default function BlocklyComponent(...props : Object[]) {
 
   let code = "";
 
+  //TODO: Connect the generated code with html canvas by adding custom blocks.
   /**
    * Code generation handler function
    */

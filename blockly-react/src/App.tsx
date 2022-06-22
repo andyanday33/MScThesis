@@ -3,6 +3,11 @@ import './App.css'
 import BlocklyComponent from './components/blockly'
 import Canvas from './components/canvas'
 
+/**
+ * Main App component for the React application.
+ * 
+ * @returns A JSX template
+ */
 function App() {
   
 

@@ -5,8 +5,10 @@ import './Canvas.css'
 
 /**
  * This functional component consists of a canvas and a button to move elements in the canvas.
- * @param {height, width} props 
+ * @param {height, width} props options for canvas element.
  * @returns some JSX involving a canvas and a button.
+ * 
+ * @author bab26@st-andrews.ac.uk
  */
 
 // types 
