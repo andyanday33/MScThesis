@@ -21,3 +21,5 @@ export const codeSlice = createSlice({
         }
     }
 });
+
+export const { generate, generateAndEval } = codeSlice.actions;
