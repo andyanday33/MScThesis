@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+//TODO: connect the store to slices and blockly/canvas components to the store.
 export const store = configureStore({
     reducer: {}
 }); 

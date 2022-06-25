@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { moveForward } from './playground';
 
 interface CodeState {
     code: string
