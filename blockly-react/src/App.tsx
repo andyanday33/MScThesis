@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import './App.css'
-import BlocklyComponent from './components/blockly'
-import Canvas from './components/canvas'
+import { useState } from 'react';
+import './App.css';
+import BlocklyComponent from './components/blockly';
+import Canvas from './components/canvas';
+import { store } from './components/redux/store';
 
 /**
  * Main App component for the React application.
