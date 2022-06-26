@@ -1,4 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../redux/store';
+import { moveForward } from '../redux/playgroundSlice';
 
 //styles
 import './Canvas.css'
@@ -28,8 +31,10 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
 export default function Canvas(props: CanvasProps) {
 
 	//TODO: add more than one circles at once and try to move them around.
-	let [coordinateX, setCoordinateX] = useState(50)
-	let [coordinateY, setCoordinateY] = useState(50)
+	// let [coordinateX, setCoordinateX] = useState(50)
+	// let [coordinateY, setCoordinateY] = useState(50)
+	const coordinates = useSelector((state: RootState) => state.playground.actorPosition);
+	const dispatch = useDispatch();
 	// const PLAYER_RADIUS = 20
 
 
@@ -46,10 +51,10 @@ export default function Canvas(props: CanvasProps) {
     /**
      * Makes the character move forward in their direction
      */
-	const moveForward = () => {
-		setCoordinateX(coordinateX + 50)
-		setCoordinateY(coordinateY)
-	}
+	// const moveForward = () => {
+	// 	setCoordinateX(coordinateX + 50)
+	// 	setCoordinateY(coordinateY)
+	// }
 
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -58,10 +63,10 @@ export default function Canvas(props: CanvasProps) {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
             ctx.fillStyle = "#000000"
             ctx.beginPath()
-            ctx.arc(coordinateX, coordinateY, 25, 0, 2 * Math.PI)
+            ctx.arc(coordinates[0], coordinates[1], 25, 0, 2 * Math.PI)
             ctx.fill()
         }
-	}, [coordinateX, coordinateY])
+	}, [coordinates[0], coordinates[1]])
 
 	useEffect(() => {
 		const canvas = canvasRef.current
@@ -75,7 +80,7 @@ export default function Canvas(props: CanvasProps) {
 	return (
 		<>
 			<canvas className="main-canvas" ref={canvasRef} {...props}></canvas>
-			<button onClick={moveForward}>Move Forward</button>
+			<button onClick={() => dispatch(moveForward())}>Move Forward</button>
 		</>
 		)
 	}

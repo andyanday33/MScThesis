@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useMemo } from 'react'
 import Blockly, { WorkspaceSvg } from 'blockly'
 import BlocklyJS from 'blockly/javascript';
+import { useSelector, useDispatch } from 'react-redux';
+import { generateAndEval, generate } from '../redux/codeSlice';
+import { RootState } from '../redux/store';
 
 import toolbox from './toolbox';
 
@@ -23,6 +26,9 @@ export default function BlocklyComponent(...props : Object[]) {
   let blocklyRef = useRef<HTMLDivElement>(null);
   let simpleWorkspace = useRef<WorkspaceSvg>();
 
+  const code = useSelector((state: RootState) => state.code.value);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     
 		//Check if the div that the blockly is going to be injected
@@ -43,14 +49,17 @@ export default function BlocklyComponent(...props : Object[]) {
     
   }, [toolbox])
 
-  let code = "";
+
+  useEffect(() => {
+    console.log(code);
+  }, [code]);
 
   /**
    * Code generation handler function
    */
-  const handleGeneration = () => {
-    code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
-    console.log(code);
+  const handleGeneration = async () => {
+    let tempCode = BlocklyJS.workspaceToCode(simpleWorkspace.current);
+    dispatch(generate(tempCode));
   }
 
   return (

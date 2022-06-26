@@ -9,7 +9,7 @@ const initialState: PlaygroundState = {
 }
 
 export const playgroundSlice = createSlice({
-    name: "code",
+    name: "actor",
     initialState,
     reducers: {
         moveForward: (state) => {
@@ -19,3 +19,5 @@ export const playgroundSlice = createSlice({
 });
 
 export const { moveForward } = playgroundSlice.actions;
+
+export default playgroundSlice.reducer;

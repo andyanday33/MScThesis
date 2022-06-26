@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { moveForward } from './playground';
+import { moveForward } from './playgroundSlice';
 
 interface CodeState {
-    code: string
+    value: string
 }
 
 const initialState: CodeState = {
-    code: ""
+    value: ""
 }
 
 export const codeSlice = createSlice({
@@ -14,13 +14,15 @@ export const codeSlice = createSlice({
     initialState,
     reducers: {
         generate: (state, code: PayloadAction<string>) => {
-            state.code = code.payload;
+            state.value = code.payload;
         },
         generateAndEval: (state, code: PayloadAction<string>) => {
-            state.code = code.payload;
-            eval(state.code);
+            state.value = code.payload;
+            eval(state.value);
         }
     }
 });
 
 export const { generate, generateAndEval } = codeSlice.actions;
+
+export default codeSlice.reducer;
