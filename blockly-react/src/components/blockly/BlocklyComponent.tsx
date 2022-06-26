@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useMemo } from 'react'
 import Blockly, { WorkspaceSvg } from 'blockly'
 import BlocklyJS from 'blockly/javascript';
 import { useSelector, useDispatch } from 'react-redux';
-import { generate } from '../redux/codeSlice';
 import { move } from '../redux/playgroundSlice';
 import { RootState } from '../redux/store';
 
@@ -27,7 +26,6 @@ export default function BlocklyComponent(...props : Object[]) {
   let blocklyRef = useRef<HTMLDivElement>(null);
   let simpleWorkspace = useRef<WorkspaceSvg>();
 
-  const code = useSelector((state: RootState) => state.code.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,6 +48,10 @@ export default function BlocklyComponent(...props : Object[]) {
     
   }, [toolbox])
 
+  /**
+   * The function that is going to be called via one of the Blockly
+   * components.
+   */
   const moveForward = () => {
     dispatch(move());
   }
@@ -58,9 +60,8 @@ export default function BlocklyComponent(...props : Object[]) {
    * Code generation handler function
    */
   const handleGeneration = async () => {
-    let tempCode = BlocklyJS.workspaceToCode(simpleWorkspace.current);
-    dispatch(generate(tempCode));
-    eval(tempCode);
+    let code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
+    eval(code);
   }
 
   return (
