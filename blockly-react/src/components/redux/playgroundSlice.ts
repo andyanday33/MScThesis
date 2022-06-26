@@ -12,12 +12,12 @@ export const playgroundSlice = createSlice({
     name: "actor",
     initialState,
     reducers: {
-        moveForward: (state) => {
+        move: (state) => {
             state.actorPosition[0] += 50;
         },
     }
 });
 
-export const { moveForward } = playgroundSlice.actions;
+export const { move } = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
-import { moveForward } from '../redux/playgroundSlice';
+import { move } from '../redux/playgroundSlice';
 
 //styles
 import './Canvas.css'
@@ -80,7 +80,7 @@ export default function Canvas(props: CanvasProps) {
 	return (
 		<>
 			<canvas className="main-canvas" ref={canvasRef} {...props}></canvas>
-			<button onClick={() => dispatch(moveForward())}>Move Forward</button>
+			<button onClick={() => dispatch(move())}>Move Forward</button>
 		</>
 		)
 	}
