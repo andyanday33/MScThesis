@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+//TODO: reconsider usefulness of this slice's operations, delete if must. 
 interface CodeState {
     value: string
 }
