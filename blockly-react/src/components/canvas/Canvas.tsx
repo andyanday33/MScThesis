@@ -30,33 +30,10 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
  */
 export default function Canvas(props: CanvasProps) {
 
-	//TODO: add more than one circles at once and try to move them around.
-	// let [coordinateX, setCoordinateX] = useState(50)
-	// let [coordinateY, setCoordinateY] = useState(50)
 	const actors = useSelector((state: RootState) => state.playground.actors);
 	const positionX = actors[0][0];
 	const positionY = actors[0][1];
 	const dispatch = useDispatch();
-	// const PLAYER_RADIUS = 20
-
-
-	// let c = document.getElementById("myCanvas");
-	// let ctx = c.getContext("2d");
-
-	// const moveForward = () => {
-	//     setCoordinateX(coordinateX + 50)
-	// 		setCoordinateY(coordinateY + 0)
-	// }
-
-	//TODO: Make the custom move_forward_block to be able to call this function.
-	//This might require Redux
-    /**
-     * Makes the character move forward in their direction
-     */
-	// const moveForward = () => {
-	// 	setCoordinateX(coordinateX + 50)
-	// 	setCoordinateY(coordinateY)
-	// }
 
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 
