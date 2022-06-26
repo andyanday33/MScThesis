@@ -1,19 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface PlaygroundState {
-    actorPosition: number[]
+    actors: number[][]
 }
 
 const initialState: PlaygroundState = {
-    actorPosition: [50, 50]
+    //Actors on the map with their x,y coordinates
+    actors : [[50, 50], [50, 150], [50, 250]],
 }
 
 export const playgroundSlice = createSlice({
-    name: "actor",
+    name: "actors",
     initialState,
     reducers: {
         move: (state) => {
-            state.actorPosition[0] += 50;
+            state.actors = state.actors.map((actor) => {
+                actor[0] += 50;
+                return actor;
+            });
         },
     }
 });

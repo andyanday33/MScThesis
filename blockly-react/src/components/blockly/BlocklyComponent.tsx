@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useMemo } from 'react'
 import Blockly, { WorkspaceSvg } from 'blockly'
 import BlocklyJS from 'blockly/javascript';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { move } from '../redux/playgroundSlice';
-import { RootState } from '../redux/store';
 
 import toolbox from './toolbox';
 

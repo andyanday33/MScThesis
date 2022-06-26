@@ -33,7 +33,9 @@ export default function Canvas(props: CanvasProps) {
 	//TODO: add more than one circles at once and try to move them around.
 	// let [coordinateX, setCoordinateX] = useState(50)
 	// let [coordinateY, setCoordinateY] = useState(50)
-	const coordinates = useSelector((state: RootState) => state.playground.actorPosition);
+	const actors = useSelector((state: RootState) => state.playground.actors);
+	const positionX = actors[0][0];
+	const positionY = actors[0][1];
 	const dispatch = useDispatch();
 	// const PLAYER_RADIUS = 20
 
@@ -63,10 +65,11 @@ export default function Canvas(props: CanvasProps) {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
             ctx.fillStyle = "#000000"
             ctx.beginPath()
-            ctx.arc(coordinates[0], coordinates[1], 25, 0, 2 * Math.PI)
+            actors.map((actor) => ctx.arc(actor[0], 
+				actor[1], 25, 0, 2 * Math.PI))
             ctx.fill()
         }
-	}, [coordinates[0], coordinates[1]])
+	}, [positionX, positionY])
 
 	useEffect(() => {
 		const canvas = canvasRef.current
