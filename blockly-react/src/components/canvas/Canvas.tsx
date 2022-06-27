@@ -6,14 +6,6 @@ import { move } from '../redux/playgroundSlice';
 //styles
 import './Canvas.css'
 
-/**
- * This functional component consists of a canvas and a button to move elements in the canvas.
- * @param {height, width} props options for canvas element.
- * @returns some JSX involving a canvas and a button.
- * 
- * @author bab26@st-andrews.ac.uk
- */
-
 // types 
 interface CanvasProps {
     height: string,
@@ -23,10 +15,11 @@ interface CanvasProps {
 type CtxType = (CanvasRenderingContext2D | null | undefined)
 
 /**
- * A custom canvas component
+ * This functional component consists of a canvas and a button to move elements in the canvas.
+ * @param props options for canvas element.
+ * @returns some JSX involving a canvas and a button.
  * 
- * @param props width and height of the canvas
- * @returns a react component with a canvas and a button
+ * @author bab26@st-andrews.ac.uk
  */
 export default function Canvas(props: CanvasProps) {
 
