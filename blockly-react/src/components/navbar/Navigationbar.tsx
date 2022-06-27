@@ -20,10 +20,10 @@ export default function Navigationbar() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <LinkContainer to="/">
-                <Nav.Link>Home</Nav.Link>
+                <Nav.Link active={false}>Home</Nav.Link>
               </LinkContainer>
               <LinkContainer to="game">
-                <Nav.Link>Game</Nav.Link>
+                <Nav.Link active={false}>Game</Nav.Link>
               </LinkContainer>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
