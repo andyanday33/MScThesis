@@ -4,12 +4,12 @@ import Canvas from './components/canvas';
 import { store } from './components/redux/store';
 import { Provider } from 'react-redux';
 import Navigationbar from './components/navbar';
+import { Routes, Route, Link } from 'react-router-dom';
 
 // styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-//TODO: add routing
 /**
  * Main App component for the React application.
  * 
@@ -20,10 +20,16 @@ function App() {
   return (
     <div className="App">
       <Navigationbar />
-      <Provider store={store}>
-        <Canvas width="800" height="800"/>
-        <BlocklyComponent />
-      </Provider>
+      <Routes>
+        <Route path="/" element={<div>Home</div>}/>
+        <Route path="/game" element={
+          <Provider store={store}>
+            <Canvas width="800" height="800"/>
+            <BlocklyComponent />
+          </Provider>
+        }/>
+      </Routes>
+      
     </div>
   )
 }
