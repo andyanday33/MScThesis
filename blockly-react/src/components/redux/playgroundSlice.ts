@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+/*TODO: add goal points for the game and reset positions to initial
+if goal is not met */
 interface PlaygroundState {
     actors: number[][]
 }
