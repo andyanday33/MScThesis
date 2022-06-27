@@ -3,6 +3,12 @@ import React from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
+/**
+ * A simple navigation bar that exists on every route of the site.
+ * 
+ * @returns a JSX containing a Navbar bootstrap component and its children
+ * such as Navbar.Link and Navbar.Brand.
+ */
 export default function Navigationbar() {
 
   return (

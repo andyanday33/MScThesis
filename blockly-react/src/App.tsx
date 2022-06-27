@@ -5,6 +5,7 @@ import { store } from './components/redux/store';
 import { Provider } from 'react-redux';
 import Navigationbar from './components/navbar';
 import { Routes, Route, Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap'; 
 
 // styles
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,8 +25,16 @@ function App() {
         <Route path="/" element={<div>Home</div>}/>
         <Route path="/game" element={
           <Provider store={store}>
-            <Canvas width="800" height="800"/>
-            <BlocklyComponent />
+            <Container fluid>
+              <Row>
+                <Col>
+                  <BlocklyComponent />
+                </Col>
+                <Col>
+                  <Canvas width="800" height="600"/>
+                </Col>
+              </Row>
+            </Container>
           </Provider>
         }/>
       </Routes>

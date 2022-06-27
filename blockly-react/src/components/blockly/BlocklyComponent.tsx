@@ -3,6 +3,7 @@ import Blockly, { WorkspaceSvg } from 'blockly'
 import BlocklyJS from 'blockly/javascript';
 import { useDispatch } from 'react-redux';
 import { move } from '../redux/playgroundSlice';
+import { Button } from 'react-bootstrap';
 
 import toolbox from './toolbox';
 
@@ -66,7 +67,7 @@ export default function BlocklyComponent(...props : Object[]) {
   return (
     <React.Fragment>
         <div id="blockly-div" ref={blocklyRef} />
-        <button onClick={handleGeneration}>Generate Code</button>
+        <Button id="generate-button" variant="primary" onClick={handleGeneration}>Generate Code</Button>
     </React.Fragment>
   )
 }
