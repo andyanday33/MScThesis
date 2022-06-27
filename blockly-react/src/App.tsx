@@ -9,6 +9,7 @@ import Navigationbar from './components/navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+//TODO: add routing
 /**
  * Main App component for the React application.
  * 
