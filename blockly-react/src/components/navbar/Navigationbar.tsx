@@ -15,9 +15,7 @@ export default function Navigationbar() {
     <>
       <Navbar bg="primary" variant="dark" expand="lg">
         <Container>
-          <LinkContainer to="/">
-            <Navbar.Brand>Puzzlaffic</Navbar.Brand>
-          </LinkContainer>
+          <Navbar.Brand>Puzzlaffic</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
