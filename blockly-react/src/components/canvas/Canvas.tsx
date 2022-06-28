@@ -23,7 +23,7 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
  *
  * @author bab26@st-andrews.ac.uk
  */
-export default function Canvas(props: CanvasProps) {
+export default function Canvas(props: CanvasProps): JSX.Element {
   const actors = useSelector((state: RootState) => state.playground.actors);
   const positionX = actors[0][0];
   const positionY = actors[0][1];

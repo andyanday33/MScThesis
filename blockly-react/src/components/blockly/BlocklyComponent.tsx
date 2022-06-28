@@ -22,7 +22,7 @@ import './blocks/customBlocks';
  *
  * @author bab26@st-andrews.ac.uk
  */
-export default function BlocklyComponent(...props : Object[]) {
+export default function BlocklyComponent(...props : Object[]): JSX.Element {
   const blocklyRef = useRef<HTMLDivElement>(null);
   const simpleWorkspace = useRef<WorkspaceSvg>();
 

@@ -1,1 +1,1 @@
-export { default } from './BlocklyComponent'
+export {default} from './BlocklyComponent';

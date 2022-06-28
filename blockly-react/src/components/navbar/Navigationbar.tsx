@@ -9,7 +9,7 @@ import {LinkContainer} from 'react-router-bootstrap';
  * a Navbar bootstrap component and its children
  * such as Navbar.Link and Navbar.Brand.
  */
-export default function Navigationbar() {
+export default function Navigationbar(): JSX.Element {
   return (
     <>
       <Navbar bg="primary" variant="dark" expand="lg">
