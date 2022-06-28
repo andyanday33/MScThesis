@@ -3,7 +3,7 @@ import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {move, reset} from '../redux/playgroundSlice';
-import {Button} from 'react-bootstrap';
+import {Button, Stack} from 'react-bootstrap';
 
 import toolbox from './toolbox';
 
@@ -12,6 +12,7 @@ import './BlocklyComponent.css';
 
 // custom blocks
 import './blocks/customBlocks';
+import GoalAlert from '../alerts/GoalAlert';
 
 /**
  * A functional component that holds Blockly related functionality.
@@ -30,7 +31,10 @@ export default function BlocklyComponent(...props :
   const goals = useAppSelector((state) => state.playground.goals);
   const actors = useAppSelector((state) => state.playground.actors);
 
-  const [metGoals, setMetGoals] = useState(false);
+  const [actorsMetGoals, setActorsMetGoals] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const disabledRef = useRef(false);
 
   const dispatch = useAppDispatch();
 
@@ -67,6 +71,9 @@ export default function BlocklyComponent(...props :
   const handleGeneration = async () => {
     const code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
     eval(code);
+    disabledRef.current = true;
+    setInProgress(true);
+    setFailed(false);
   };
 
   /* Checks whether the goals are met, resets the state
@@ -75,19 +82,31 @@ export default function BlocklyComponent(...props :
   later stages.*/
   useEffect(() => {
     console.log(actors[0][0]);
+
     if (actors[0][0] != goals[0][0]) {
-      setTimeout(() => dispatch(reset()), 5000);
+      setTimeout(() => {
+        disabledRef.current = false;
+        setInProgress(false);
+        setFailed(true);
+        return dispatch(reset());
+      }, 5000);
     } else {
-      setMetGoals(true);
+      setInProgress(false);
+      setActorsMetGoals(true);
     }
   }, [handleGeneration]);
 
   return (
     <React.Fragment>
       <div id="blockly-div" ref={blocklyRef} />
-      <Button id="generate-button" variant="primary"
-        onClick={handleGeneration}>Generate Code</Button>
-      { metGoals && (<div>Congrats!</div>) }
+      <Stack gap={3}>
+        <Button className="w-25 float-right"
+          id="generate-button" variant="primary"
+          disabled={disabledRef.current}
+          onClick={handleGeneration}>Generate Code</Button>
+        <GoalAlert
+          success={actorsMetGoals} failed={failed} loading={inProgress}/>
+      </Stack>
     </React.Fragment>
   );
 }
