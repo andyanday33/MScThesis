@@ -1,6 +1,5 @@
 import React, {useRef, useEffect, useCallback} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {RootState} from '../redux/store';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {move, reset} from '../redux/playgroundSlice';
 import {Button} from 'react-bootstrap';
 
@@ -25,10 +24,10 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
  * @author bab26@st-andrews.ac.uk
  */
 export default function Canvas(props: CanvasProps): JSX.Element {
-  const actors = useSelector((state: RootState) => state.playground.actors);
+  const actors = useAppSelector((state) => state.playground.actors);
   const positionX = actors[0][0];
   const positionY = actors[0][1];
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 

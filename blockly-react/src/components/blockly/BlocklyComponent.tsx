@@ -1,8 +1,8 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
-import {useDispatch} from 'react-redux';
-import {move} from '../redux/playgroundSlice';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {move, reset} from '../redux/playgroundSlice';
 import {Button} from 'react-bootstrap';
 
 import toolbox from './toolbox';
@@ -25,8 +25,12 @@ import './blocks/customBlocks';
 export default function BlocklyComponent(...props : Object[]): JSX.Element {
   const blocklyRef = useRef<HTMLDivElement>(null);
   const simpleWorkspace = useRef<WorkspaceSvg>();
+  const goals = useAppSelector((state) => state.playground.goals);
+  const actors = useAppSelector((state) => state.playground.actors);
 
-  const dispatch = useDispatch();
+  const [metGoals, setMetGoals] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     /* Check if the div that the blockly is going to be injected
@@ -53,6 +57,7 @@ export default function BlocklyComponent(...props : Object[]): JSX.Element {
     dispatch(move());
   };
 
+  // TODO: disable generating code until timeout interval ends.
   /**
    * Code generation handler function
    */
@@ -61,11 +66,23 @@ export default function BlocklyComponent(...props : Object[]): JSX.Element {
     eval(code);
   };
 
+  /* Checks whether the goals are met, resets the state
+  after 5 seconds if not. */
+  useEffect(() => {
+    console.log(actors[0][0]);
+    if (actors[0][0] != goals[0][0]) {
+      setTimeout(() => dispatch(reset()), 5000);
+    } else {
+      setMetGoals(true);
+    }
+  }, [handleGeneration]);
+
   return (
     <React.Fragment>
       <div id="blockly-div" ref={blocklyRef} />
       <Button id="generate-button" variant="primary"
         onClick={handleGeneration}>Generate Code</Button>
+      { metGoals && (<div>Congrats!</div>) }
     </React.Fragment>
   );
 }

@@ -5,13 +5,13 @@ import {Routes, Route} from 'react-router-dom';
 // styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Game from './pages/game';
-import Home from './pages/home';
+import Game from './pages/Game';
+import Home from './pages/Home';
 
 /**
  * Main App component for the React application.
  *
- * @return {JSX.Element} A JSX template
+ * @return {JSX.Element} A JSX template of the whole application.
  */
 function App(): JSX.Element {
   return (
