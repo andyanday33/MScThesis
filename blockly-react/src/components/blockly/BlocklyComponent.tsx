@@ -22,7 +22,9 @@ import './blocks/customBlocks';
  *
  * @author bab26@st-andrews.ac.uk
  */
-export default function BlocklyComponent(...props : Object[]): JSX.Element {
+export default function BlocklyComponent(...props :
+  React.ComponentProps<any>[]):
+    JSX.Element {
   const blocklyRef = useRef<HTMLDivElement>(null);
   const simpleWorkspace = useRef<WorkspaceSvg>();
   const goals = useAppSelector((state) => state.playground.goals);
@@ -40,6 +42,7 @@ export default function BlocklyComponent(...props : Object[]): JSX.Element {
       /* Typescript is probably going to give an error about this one
       It's probably caused by type definitions inside blockly api
       Yet it works perfectly fine */
+      console.log(...props);
       simpleWorkspace.current = Blockly.inject(blocklyRef.current,
           {
             toolbox,

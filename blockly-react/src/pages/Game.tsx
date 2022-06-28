@@ -20,7 +20,11 @@ export default function Game(): JSX.Element {
         <Container fluid>
           <Row>
             <Col>
-              <BlocklyComponent />
+              <BlocklyComponent move={{
+                scrollbars: true,
+                drag: true,
+                wheel: true,
+              }}/>
             </Col>
             <Col>
               <Canvas width="800" height="600"/>
