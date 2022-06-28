@@ -21,9 +21,10 @@ export const playgroundSlice = createSlice({
         return actor;
       });
     },
+    reset: () => initialState,
   },
 });
 
-export const {move} = playgroundSlice.actions;
+export const {move, reset} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

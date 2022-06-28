@@ -1,7 +1,7 @@
 import React, {useRef, useEffect, useCallback} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../redux/store';
-import {move} from '../redux/playgroundSlice';
+import {move, reset} from '../redux/playgroundSlice';
 import {Button} from 'react-bootstrap';
 
 // styles
@@ -55,7 +55,11 @@ export default function Canvas(props: CanvasProps): JSX.Element {
     <>
       <canvas className="main-canvas" ref={canvasRef} {...props}></canvas>
       <Button variant="primary" onClick={() =>
-        dispatch(move())}>Move Forward</Button>
+        dispatch(move())}>Move Forward
+      </Button>
+      <Button variant="primary" onClick={() =>
+        dispatch(reset())}>Reset State
+      </Button>
     </>
   );
 }
