@@ -67,7 +67,9 @@ export default function BlocklyComponent(...props : Object[]): JSX.Element {
   };
 
   /* Checks whether the goals are met, resets the state
-  after 5 seconds if not. */
+  after 5 seconds if not.
+  TODO: check every actor individually in the
+  later stages.*/
   useEffect(() => {
     console.log(actors[0][0]);
     if (actors[0][0] != goals[0][0]) {
