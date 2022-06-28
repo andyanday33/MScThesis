@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
@@ -31,9 +31,9 @@ export default function BlocklyComponent(...props :
   const goals = useAppSelector((state) => state.playground.goals);
   const actors = useAppSelector((state) => state.playground.actors);
 
-  const [actorsMetGoals, setActorsMetGoals] = useState(false);
-  const [inProgress, setInProgress] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const actorsMetGoalsRef = useRef(false);
+  const inProgressRef = useRef(false);
+  const failedRef = useRef(false);
   const disabledRef = useRef(false);
 
   const dispatch = useAppDispatch();
@@ -72,8 +72,8 @@ export default function BlocklyComponent(...props :
     const code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
     eval(code);
     disabledRef.current = true;
-    setInProgress(true);
-    setFailed(false);
+    inProgressRef.current = true;
+    failedRef.current = false;
   };
 
   /* Checks whether the goals are met, resets the state
@@ -86,13 +86,13 @@ export default function BlocklyComponent(...props :
     if (actors[0][0] != goals[0][0]) {
       setTimeout(() => {
         disabledRef.current = false;
-        setInProgress(false);
-        setFailed(true);
+        inProgressRef.current = false;
+        failedRef.current = true;
         return dispatch(reset());
-      }, 5000);
+      }, 1000);
     } else {
-      setInProgress(false);
-      setActorsMetGoals(true);
+      inProgressRef.current = false;
+      actorsMetGoalsRef.current = true;
     }
   }, [handleGeneration]);
 
@@ -105,7 +105,9 @@ export default function BlocklyComponent(...props :
           disabled={disabledRef.current}
           onClick={handleGeneration}>Generate Code</Button>
         <GoalAlert
-          success={actorsMetGoals} failed={failed} loading={inProgress}/>
+          success={actorsMetGoalsRef.current}
+          failed={failedRef.current}
+          loading={inProgressRef.current}/>
       </Stack>
     </React.Fragment>
   );

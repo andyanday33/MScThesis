@@ -53,10 +53,10 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   return (
     <>
       <canvas className="main-canvas" ref={canvasRef} {...props}></canvas>
-      <Button variant="primary" onClick={() =>
+      <Button className="m-2" variant="primary" onClick={() =>
         dispatch(move())}>Move Forward
       </Button>
-      <Button variant="primary" onClick={() =>
+      <Button className="m-2" variant="primary" onClick={() =>
         dispatch(reset())}>Reset State
       </Button>
     </>
