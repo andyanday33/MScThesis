@@ -79,7 +79,9 @@ export default function BlocklyComponent(...props :
   /* Checks whether the goals are met, resets the state
   after 5 seconds if not.
   TODO: check every actor individually in the
-  later stages.*/
+  later stages.
+  TODO: Add animation to look movements step by step
+  */
   useEffect(() => {
     console.log(actors[0][0]);
 
