@@ -1,5 +1,6 @@
+import React from 'react';
 import Navigationbar from './components/navbar';
-import { Routes, Route, Link } from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 
 // styles
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,11 +10,10 @@ import Home from './pages/home';
 
 /**
  * Main App component for the React application.
- * 
- * @returns A JSX template
+ *
+ * @return {JSX.Element} A JSX template
  */
-function App() {
-  
+function App(): JSX.Element {
   return (
     <div className="App">
       <Navigationbar />
@@ -21,9 +21,8 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/game" element={<Game />}/>
       </Routes>
-      
     </div>
-  )
+  );
 }
 
 export default App;
