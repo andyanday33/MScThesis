@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-/* TODO: add goal points for the game and reset positions to initial
-if goal is not met */
+/* TODO: Fetch level data from the backend
+TODO: Add more than one levels */
 interface PlaygroundState {
     actors: number[][],
     goals: number[][],
