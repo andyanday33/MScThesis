@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
@@ -31,7 +31,7 @@ export default function BlocklyComponent(...props :
   const goals = useAppSelector((state) => state.playground.goals);
   const actors = useAppSelector((state) => state.playground.actors);
 
-  const actorsMetGoalsRef = useRef(false);
+  const [actorsMetGoals, setActorsMetGoals] = useState(false);
   const inProgressRef = useRef(false);
   const failedRef = useRef(false);
   const disabledRef = useRef(false);
@@ -92,7 +92,7 @@ export default function BlocklyComponent(...props :
       }, 1000);
     } else {
       inProgressRef.current = false;
-      actorsMetGoalsRef.current = true;
+      setActorsMetGoals(true);
     }
   }, [handleGeneration]);
 
@@ -105,7 +105,7 @@ export default function BlocklyComponent(...props :
           disabled={disabledRef.current}
           onClick={handleGeneration}>Generate Code</Button>
         <GoalAlert
-          success={actorsMetGoalsRef.current}
+          success={actorsMetGoals}
           failed={failedRef.current}
           loading={inProgressRef.current}/>
       </Stack>
