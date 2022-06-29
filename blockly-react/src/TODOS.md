@@ -1,0 +1,1 @@
+- Add a Get Started or How to Play page with complete guide.
