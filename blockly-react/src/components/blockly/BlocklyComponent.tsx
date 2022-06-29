@@ -30,11 +30,17 @@ export default function BlocklyComponent(...props :
   const simpleWorkspace = useRef<WorkspaceSvg>();
   const goals = useAppSelector((state) => state.playground.goals);
   const actors = useAppSelector((state) => state.playground.actors);
+  // The real turn on the board state
+  const boardTurn = useAppSelector((state) => state.playground.turn);
+  // Turn created to make some animation delay between movements
+  const animationTurn = useRef(0);
+  const moveCountRef = useRef(0);
 
   const [actorsMetGoals, setActorsMetGoals] = useState(false);
   const inProgressRef = useRef(false);
   const failedRef = useRef(false);
   const disabledRef = useRef(false);
+
 
   const dispatch = useAppDispatch();
 
@@ -61,19 +67,59 @@ export default function BlocklyComponent(...props :
    */
   // eslint-disable-next-line no-unused-vars
   const moveForward = () => {
-    dispatch(move());
+    setTimeout(() => dispatch(move()), animationTurn.current * 250);
+    animationTurn.current += 1;
   };
 
-  // TODO: disable generating code until timeout interval ends.
+  // const checkCompleted = () => {
+  //   console.log(actors[0][0]);
+
+  //   if (actors[0][0] != goals[0][0]) {
+  //     setTimeout(() => {
+  //       disabledRef.current = false;
+  //       inProgressRef.current = false;
+  //       failedRef.current = true;
+  //       return dispatch(reset());
+  //     }, turn.current * 500);
+  //     turn.current = 0;
+  //   } else {
+  //     inProgressRef.current = false;
+  //     turn.current = 0;
+  //     setActorsMetGoals(true);
+  //   }
+  // };
+
+  useEffect(() => {
+    if (moveCountRef.current == boardTurn) {
+      if (actors[0][0] != goals[0][0]) {
+        setTimeout(() => {
+          disabledRef.current = false;
+          inProgressRef.current = false;
+          failedRef.current = true;
+          return dispatch(reset());
+        }, moveCountRef.current * 250);
+        animationTurn.current = 0;
+      } else {
+        inProgressRef.current = false;
+        animationTurn.current = 0;
+        setActorsMetGoals(true);
+      }
+    }
+  }, [actors[0][0]]);
+
   /**
    * Code generation handler function
    */
-  const handleGeneration = async () => {
+  const handleGeneration = () => {
     const code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
     eval(code);
     disabledRef.current = true;
     inProgressRef.current = true;
     failedRef.current = false;
+    // Count the number of moveForward functions
+    // for animation purposes.
+    moveCountRef.current = (code.match(/moveForward/g) || []).length;
+    // setTimeout(() => checkCompleted(), count * 500);
   };
 
   /* Checks whether the goals are met, resets the state
@@ -82,21 +128,6 @@ export default function BlocklyComponent(...props :
   later stages.
   TODO: Add animation to look movements step by step
   */
-  useEffect(() => {
-    console.log(actors[0][0]);
-
-    if (actors[0][0] != goals[0][0]) {
-      setTimeout(() => {
-        disabledRef.current = false;
-        inProgressRef.current = false;
-        failedRef.current = true;
-        return dispatch(reset());
-      }, 1000);
-    } else {
-      inProgressRef.current = false;
-      setActorsMetGoals(true);
-    }
-  }, [handleGeneration]);
 
   return (
     <React.Fragment>
