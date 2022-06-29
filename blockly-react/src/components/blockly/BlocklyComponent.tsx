@@ -71,24 +71,12 @@ export default function BlocklyComponent(...props :
     animationTurn.current += 1;
   };
 
-  // const checkCompleted = () => {
-  //   console.log(actors[0][0]);
-
-  //   if (actors[0][0] != goals[0][0]) {
-  //     setTimeout(() => {
-  //       disabledRef.current = false;
-  //       inProgressRef.current = false;
-  //       failedRef.current = true;
-  //       return dispatch(reset());
-  //     }, turn.current * 500);
-  //     turn.current = 0;
-  //   } else {
-  //     inProgressRef.current = false;
-  //     turn.current = 0;
-  //     setActorsMetGoals(true);
-  //   }
-  // };
-
+  /**
+   * Checks whether the actor goals are met
+   * after a "number of actor moves x 0.25 seconds"
+   * delay. Checks the movecount and board turn
+   * so it only executes after last move was made.
+   */
   useEffect(() => {
     if (moveCountRef.current == boardTurn) {
       if (actors[0][0] != goals[0][0]) {
@@ -119,15 +107,10 @@ export default function BlocklyComponent(...props :
     // Count the number of moveForward functions
     // for animation purposes.
     moveCountRef.current = (code.match(/moveForward/g) || []).length;
-    // setTimeout(() => checkCompleted(), count * 500);
   };
 
-  /* Checks whether the goals are met, resets the state
-  after 5 seconds if not.
-  TODO: check every actor individually in the
-  later stages.
-  TODO: Add animation to look movements step by step
-  */
+  /* TODO: check every actor individually in the
+  later stages. */
 
   return (
     <React.Fragment>
