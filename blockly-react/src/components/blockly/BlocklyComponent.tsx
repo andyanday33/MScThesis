@@ -34,7 +34,6 @@ export default function BlocklyComponent(...props :
   const boardTurn = useAppSelector((state) => state.playground.turn);
   // Turn created to make some animation delay between movements
   const animationTurn = useRef(0);
-  const moveCountRef = useRef(0);
 
   const [actorsMetGoals, setActorsMetGoals] = useState(false);
   const inProgressRef = useRef(false);
@@ -73,19 +72,21 @@ export default function BlocklyComponent(...props :
 
   /**
    * Checks whether the actor goals are met
-   * after a "number of actor moves x 0.25 seconds"
-   * delay. Checks the movecount and board turn
-   * so it only executes after last move was made.
+   * after delay.
+   * Checks the animation turn and board turn to
+   * check completion only after all moves are made.
+   * Animation turn and board turn would only be equal
+   * after the last update was made inside redux store.
    */
   useEffect(() => {
-    if (moveCountRef.current == boardTurn) {
+    if (animationTurn.current == boardTurn) {
       if (actors[0][0] != goals[0][0]) {
         setTimeout(() => {
           disabledRef.current = false;
           inProgressRef.current = false;
           failedRef.current = true;
           return dispatch(reset());
-        }, moveCountRef.current * 250);
+        }, 250);
         animationTurn.current = 0;
       } else {
         inProgressRef.current = false;
@@ -106,7 +107,6 @@ export default function BlocklyComponent(...props :
     failedRef.current = false;
     // Count the number of moveForward functions
     // for animation purposes.
-    moveCountRef.current = (code.match(/moveForward/g) || []).length;
   };
 
   /* TODO: check every actor individually in the
