@@ -70,6 +70,9 @@ export default function BlocklyComponent(...props :
     animationTurn.current += 1;
   };
 
+  // TODO: consider replacing this hooks with custom hooks.
+  // TODO: this could be handled by a store.subscribe method more easily.
+  // look further https://redux.js.org/api/store
   /**
    * Checks whether the actor goals are met
    * after delay.
