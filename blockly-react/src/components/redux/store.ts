@@ -1,6 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
 import playgroundReducer from './playgroundSlice';
 
+// TODO: consider adding a game slice for general game logic such as
+// levels.
 export const store = configureStore({
   reducer: {
     playground: playgroundReducer,
