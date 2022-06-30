@@ -75,13 +75,16 @@ export default function Canvas(): JSX.Element {
     }
   }, [positionX, positionY]);
 
+  /**
+   * Draws everything on the canvas.
+   * Re-renders on width or height update.
+   */
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx : CtxType = canvas?.getContext('2d');
 
     draw(ctx);
   }, [draw, dimensions.width, dimensions.height]);
-
 
   return (
     <>
