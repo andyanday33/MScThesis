@@ -10,8 +10,8 @@ interface PlaygroundState {
 
 const initialState: PlaygroundState = {
   // Actors on the map with their x,y coordinates
-  actors: [[50, 50], [50, 150], [50, 250]],
-  goals: [[200, 50], [200, 150], [200, 250]],
+  actors: [[1, 1], [1, 3], [1, 5]],
+  goals: [[4, 1], [4, 3], [4, 5]],
   turn: 0,
 };
 
@@ -22,7 +22,7 @@ export const playgroundSlice = createSlice({
     move: (state) => {
       state.turn = state.turn += 1;
       state.actors = state.actors.map((actor) => {
-        actor[0] += 50;
+        actor[0] += 1;
         return actor;
       });
     },

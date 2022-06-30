@@ -19,7 +19,7 @@ export default function Game(): JSX.Element {
       <Provider store={store}>
         <Container fluid>
           <Row>
-            <Col>
+            <Col xs={12} xl={6}>
               <BlocklyComponent move={{
                 scrollbars: true,
                 drag: true,
@@ -27,7 +27,7 @@ export default function Game(): JSX.Element {
               }}/>
             </Col>
             <Col>
-              <Canvas width="800" height="600"/>
+              <Canvas />
             </Col>
           </Row>
         </Container>
