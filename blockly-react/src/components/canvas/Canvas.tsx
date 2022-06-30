@@ -18,7 +18,8 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
 /**
  * This functional component consists of a canvas and
  * a button to move elements in the canvas.
- * @param {CanvasProps} props options for canvas element.
+ * Width and Height of the canvas is dynamic and related to the screen size,
+ * therefore there are no props being passed to this component.
  * @return {JSX.Element} some JSX involving a canvas and a button.
  *
  * @author bab26@st-andrews.ac.uk
@@ -57,6 +58,9 @@ export default function Canvas(): JSX.Element {
     };
   });
 
+  /**
+   * Draws the actors on the canvas
+   */
   const draw = useCallback((ctx : CtxType) => {
     if (ctx) {
       const gridSize = ctx.canvas.width / MAP_GRID_COLS;
