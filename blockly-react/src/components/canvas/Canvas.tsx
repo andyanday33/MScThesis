@@ -40,7 +40,7 @@ export default function Canvas(): JSX.Element {
     width: window.innerWidth,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     /**
      * Handles resizing of the window.
      */
@@ -80,7 +80,7 @@ export default function Canvas(): JSX.Element {
     const ctx : CtxType = canvas?.getContext('2d');
 
     draw(ctx);
-  }, [draw, dimensions.width]);
+  }, [draw, dimensions.width, dimensions.height]);
 
 
   return (
