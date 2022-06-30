@@ -30,6 +30,7 @@ export default function Canvas(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // TODO: change map grid sizes on each map
   const MAP_GRID_COLS = 15;
   const MAP_GRID_ROWS = 15;
 
@@ -81,8 +82,8 @@ export default function Canvas(): JSX.Element {
   return (
     <>
       <canvas className="main-canvas" ref={canvasRef}
-        height={`${dimensions.height >= 1200 ?
-          dimensions.height / 2 : dimensions.height - 50}`}
+        height={`${dimensions.width >= 1200 ?
+          dimensions.height / 1.5 : dimensions.height - 50}`}
         width={`${dimensions.width >= 1200 ?
           dimensions.width / 2 - 50 : dimensions.width - 50}`} />
       <Button className="m-2" variant="primary" onClick={() =>
