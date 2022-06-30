@@ -4,7 +4,6 @@ import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {move, reset} from '../redux/playgroundSlice';
 import {Button, Stack} from 'react-bootstrap';
-
 import toolbox from './toolbox';
 
 // style
@@ -30,9 +29,10 @@ export default function BlocklyComponent(...props :
   const simpleWorkspace = useRef<WorkspaceSvg>();
   const goals = useAppSelector((state) => state.playground.goals);
   const actors = useAppSelector((state) => state.playground.actors);
-  // The real turn on the board state
+
+  // Movement turn number inside the redux store.
   const boardTurn = useAppSelector((state) => state.playground.turn);
-  // Turn created to make some animation delay between movements
+  // Number of movements in total, counted for animation purposes.
   const animationTurn = useRef(0);
 
   const [actorsMetGoals, setActorsMetGoals] = useState(false);
@@ -43,7 +43,11 @@ export default function BlocklyComponent(...props :
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  /**
+   * Injects Blockly into the relavant div
+   * if not already injected.
+   */
+  const injectBlockly = () => {
     /* Check if the div that the blockly is going to be injected
     Already has a child element
     This would prevent injecting Blockly multiple times */
@@ -58,6 +62,10 @@ export default function BlocklyComponent(...props :
             ...props,
           });
     }
+  };
+
+  useEffect(() => {
+    injectBlockly();
   }, [toolbox]);
 
   /**
@@ -67,12 +75,10 @@ export default function BlocklyComponent(...props :
   // eslint-disable-next-line no-unused-vars
   const moveForward = () => {
     setTimeout(() => dispatch(move()), animationTurn.current * 250);
+    // count each movement for animation purposes.
     animationTurn.current += 1;
   };
 
-  // TODO: consider replacing this hooks with custom hooks.
-  // TODO: this could be handled by a store.subscribe method more easily.
-  // look further https://redux.js.org/api/store
   /**
    * Checks whether the actor goals are met
    * after delay.
@@ -81,7 +87,7 @@ export default function BlocklyComponent(...props :
    * Animation turn and board turn would only be equal
    * after the last update was made inside redux store.
    */
-  useEffect(() => {
+  const checkActorGoals = () => {
     if (animationTurn.current == boardTurn) {
       if (actors[0][0] != goals[0][0]) {
         setTimeout(() => {
@@ -97,6 +103,10 @@ export default function BlocklyComponent(...props :
         setActorsMetGoals(true);
       }
     }
+  };
+
+  useEffect(() => {
+    checkActorGoals();
   }, [actors[0][0]]);
 
   /**
