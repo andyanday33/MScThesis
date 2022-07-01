@@ -1,4 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {db} from '../../firebase/firebaseConfig';
+import {collection, getDocs} from 'firebase/firestore';
+
+const levelCollection = collection(db, 'levels');
+
+const getLevels = async () => {
+  let levels: object[] = [];
+  getDocs(levelCollection).then((data) => {
+    levels = data.docs.map((doc) => ({...doc.data(), id: doc.id}));
+  });
+  return levels;
+};
+
+const levels = await getLevels();
+
+console.log('levels: ' + levels);
 
 /* TODO: Fetch level data from the backend
 TODO: Add more than one levels */
