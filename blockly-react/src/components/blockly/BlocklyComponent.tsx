@@ -55,7 +55,6 @@ export default function BlocklyComponent(...props :
       /* Typescript is probably going to give an error about this one
       It's probably caused by type definitions inside blockly api
       Yet it works perfectly fine */
-      console.log(...props);
       simpleWorkspace.current = Blockly.inject(blocklyRef.current,
           {
             toolbox,

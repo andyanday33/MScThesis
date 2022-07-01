@@ -13,9 +13,6 @@ const firebaseConfig = {
   useFetchStreams: false,
 };
 
-// console.log(import.meta.env.VITE_API_KEY);
-// console.log(firebaseConfig.authDomain);
-
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);

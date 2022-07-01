@@ -67,7 +67,6 @@ export default function Canvas(): JSX.Element {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       ctx.fillStyle = '#000000';
       ctx.beginPath();
-      console.log(gridSize / 2);
       actors.map((actor) => ctx.arc(actor.coordinateX *
         ctx.canvas.width / MAP_GRID_COLS,
       actor.coordinateY * ctx.canvas.height / MAP_GRID_ROWS,
