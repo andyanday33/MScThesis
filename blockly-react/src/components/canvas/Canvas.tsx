@@ -26,8 +26,8 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
  */
 export default function Canvas(): JSX.Element {
   const actors = useAppSelector((state) => state.playground.actors);
-  const positionX = actors[0][0];
-  const positionY = actors[0][1];
+  const positionX = actors[0].coordinateX;
+  const positionY = actors[0].coordinateY;
   const dispatch = useAppDispatch();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -68,9 +68,10 @@ export default function Canvas(): JSX.Element {
       ctx.fillStyle = '#000000';
       ctx.beginPath();
       console.log(gridSize / 2);
-      actors.map((actor) => ctx.arc(actor[0] * ctx.canvas.width / MAP_GRID_COLS,
-          actor[1] * ctx.canvas.height / MAP_GRID_ROWS,
-          gridSize / 3, 0, 2 * Math.PI));
+      actors.map((actor) => ctx.arc(actor.coordinateX *
+        ctx.canvas.width / MAP_GRID_COLS,
+      actor.coordinateY * ctx.canvas.height / MAP_GRID_ROWS,
+      gridSize / 3, 0, 2 * Math.PI));
       ctx.fill();
     }
   }, [positionX, positionY]);

@@ -89,7 +89,7 @@ export default function BlocklyComponent(...props :
    */
   const checkActorGoals = () => {
     if (animationTurn.current == boardTurn) {
-      if (actors[0][0] != goals[0][0]) {
+      if (actors[0].coordinateX != goals[0].coordinateX) {
         setTimeout(() => {
           disabledRef.current = false;
           inProgressRef.current = false;
@@ -107,7 +107,7 @@ export default function BlocklyComponent(...props :
 
   useEffect(() => {
     checkActorGoals();
-  }, [actors[0][0]]);
+  }, [actors[0].coordinateX]);
 
   /**
    * Code generation handler function

@@ -14,6 +14,7 @@ import Canvas from '../components/canvas/Canvas';
  * and Canvas component wrapped inside a Redux Provider.
  */
 export default function Game(): JSX.Element {
+  // TODO: add a loading state.
   return (
     <>
       <Provider store={store}>
