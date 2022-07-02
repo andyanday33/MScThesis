@@ -105,6 +105,7 @@ export default function BlocklyComponent(...props :
         setActorsMetGoals(true);
         setTimeout(() => {
           disabledRef.current = false;
+          setActorsMetGoals(false);
           console.log('Congrats, leveling up');
           return dispatch(levelUp());
         }, 500);
