@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {move, reset} from '../redux/playgroundSlice';
+import {move, levelUp, reset} from '../redux/playgroundSlice';
 import {Button, Stack} from 'react-bootstrap';
 import toolbox from './toolbox';
 
@@ -39,7 +39,7 @@ export default function BlocklyComponent(...props :
   const inProgressRef = useRef(false);
   const failedRef = useRef(false);
   const disabledRef = useRef(false);
-
+  const level = useAppSelector((state) => state.playground.level);
 
   const dispatch = useAppDispatch();
 
@@ -87,7 +87,10 @@ export default function BlocklyComponent(...props :
    * after the last update was made inside redux store.
    */
   const checkActorGoals = () => {
-    if (animationTurn.current == boardTurn) {
+    if (animationTurn.current == boardTurn && boardTurn != 0) {
+      console.log('a');
+      console.log(actors[0].coordinateX);
+      console.log(goals[0].coordinateX);
       if (actors[0].coordinateX != goals[0].coordinateX) {
         setTimeout(() => {
           disabledRef.current = false;
@@ -100,6 +103,11 @@ export default function BlocklyComponent(...props :
         inProgressRef.current = false;
         animationTurn.current = 0;
         setActorsMetGoals(true);
+        setTimeout(() => {
+          disabledRef.current = false;
+          console.log('Congrats, leveling up');
+          return dispatch(levelUp());
+        }, 500);
       }
     }
   };
@@ -132,6 +140,7 @@ export default function BlocklyComponent(...props :
           id="generate-button" variant="primary"
           disabled={disabledRef.current}
           onClick={handleGeneration}>Generate Code</Button>
+        <p className='w-25 float-left'>Level: {level + 1}</p>
         <GoalAlert
           success={actorsMetGoals}
           failed={failedRef.current}
