@@ -41,6 +41,7 @@ interface PlaygroundState {
     level: number,
 };
 
+// TODO: Add other objects in the map.
 /* TODO: after adding user auth, change initial
 level 0 to where usere left off. */
 const initialState: PlaygroundState = {
