@@ -19,6 +19,7 @@ type LevelsType = {
 
 // TODO: add order by levelNo inside firebase collection
 // TODO: add roads and walls
+// TODO: add level selection logic
 const getLevels: () => Promise<LevelsType[]> = async () => {
   let levels: LevelsType[] = [];
   await getDocs(query(levelCollection, orderBy('levelNo')))
