@@ -69,14 +69,15 @@ export default function Canvas(): JSX.Element {
       // sizes of each rect on canvas
       const colSize = ctx.canvas.width / MAP_GRID_COLS;
       const rowSize = ctx.canvas.height / MAP_GRID_ROWS;
-      // draw the roads
+      // draw the grids
       ctx.fillStyle = '#000000';
       ctx.beginPath();
-      for (let i = 0; i < MAP_GRID_COLS; i++) {
+      for (let i = 1; i < MAP_GRID_COLS; i++) {
         // rows
+        ctx.lineWidth = 1;
         ctx.moveTo(0, rowSize * i);
         ctx.lineTo(ctx.canvas.width, rowSize * i);
-        ctx.stroke();
+        // ctx.stroke();
         // cols
         ctx.moveTo(colSize * i, 0);
         ctx.lineTo(colSize * i, ctx.canvas.height);

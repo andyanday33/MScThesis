@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {db} from '../../firebase/firebaseConfig';
-import {collection, getDocs} from 'firebase/firestore';
+import {collection, getDocs, orderBy, query} from 'firebase/firestore';
 
 const levelCollection = collection(db, 'levels');
 
@@ -21,12 +21,13 @@ type LevelsType = {
 // TODO: add roads and walls
 const getLevels: () => Promise<LevelsType[]> = async () => {
   let levels: LevelsType[] = [];
-  await getDocs(levelCollection).then((data) => {
-    levels = data.docs.map((doc) => {
-      const temp = {...doc.data(), id: doc.id};
-      return temp;
-    });
-  });
+  await getDocs(query(levelCollection, orderBy('levelNo')))
+      .then((data) => {
+        levels = data.docs.map((doc) => {
+          const temp = {...doc.data(), id: doc.id};
+          return temp;
+        });
+      });
   return levels;
 };
 
