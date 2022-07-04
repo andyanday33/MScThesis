@@ -9,9 +9,14 @@ type GridType = {
   coordinateY: number,
 }
 
+// TODO: add house and wall coordinates to firestore
+// anything else could be considered a road.
+// further down the road: add traffic lights
 type LevelsType = {
   actors?: GridType[],
   goals?: GridType[],
+  houses?: GridType[],
+  walls?: GridType[],
   gridSize?: number,
   id: string,
   levelNo?: number,
