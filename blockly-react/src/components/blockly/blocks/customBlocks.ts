@@ -1,5 +1,6 @@
 import Blockly from 'blockly';
 
+// TODO: add turning block
 Blockly.Blocks['move_forward_block'] = {
   init: function() {
     this.appendDummyInput()
