@@ -26,6 +26,7 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
  */
 export default function Canvas(): JSX.Element {
   const actors = useAppSelector((state) => state.playground.actors);
+  const goals = useAppSelector((state) => state.playground.goals);
   const positionX = actors[0].coordinateX;
   const positionY = actors[0].coordinateY;
   const dispatch = useAppDispatch();
@@ -85,13 +86,36 @@ export default function Canvas(): JSX.Element {
       ctx.beginPath();
       actors.map((actor) => ctx.arc(
           // place the actor in middle of corresponding column
-          actor.coordinateX * ctx.canvas.width / MAP_GRID_COLS -
+          actor.coordinateX * colSize -
             colSize / 2,
           // place the actor in middle of corresponding row
-          actor.coordinateY * ctx.canvas.height / MAP_GRID_ROWS -
+          actor.coordinateY * rowSize -
             rowSize / 2,
           Math.min(rowSize, colSize) / 3, 0, 2 * Math.PI));
       ctx.fill();
+
+      // draw the goals
+      ctx.beginPath();
+      goals.map((goal) => {
+        // make a cross on the goal
+        ctx.moveTo(
+            (goal.coordinateX - 1) * colSize,
+            (goal.coordinateY - 1) * rowSize,
+        );
+        ctx.lineTo(
+            goal.coordinateX * colSize,
+            goal.coordinateY * rowSize,
+        );
+        ctx.moveTo(
+            (goal.coordinateX) * colSize,
+            (goal.coordinateY - 1) * rowSize,
+        );
+        ctx.lineTo(
+            (goal.coordinateX - 1) * colSize,
+            goal.coordinateY * rowSize,
+        );
+        ctx.stroke();
+      });
     }
   }, [positionX, positionY]);
 
