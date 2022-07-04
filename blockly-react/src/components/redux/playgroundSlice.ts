@@ -33,8 +33,6 @@ const getLevels: () => Promise<LevelsType[]> = async () => {
 
 const levels: LevelsType[] = await getLevels();
 
-/* TODO: Fetch level data from the backend
-TODO: Add more than one levels */
 interface PlaygroundState {
     maxLevel: number,
     actors: GridType[],
