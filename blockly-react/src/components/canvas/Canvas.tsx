@@ -59,18 +59,38 @@ export default function Canvas(): JSX.Element {
   });
 
   /**
-   * Draws the actors on the canvas
+   * Draws the actors, roads, and goals on the canvas
    */
   const draw = useCallback((ctx : CtxType) => {
     if (ctx) {
-      const gridSize = ctx.canvas.width / MAP_GRID_COLS;
+      // clear the canvas before drawing next state.
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      // sizes of each rect on canvas
+      const colSize = ctx.canvas.width / MAP_GRID_COLS;
+      const rowSize = ctx.canvas.height / MAP_GRID_ROWS;
+      // draw the roads
       ctx.fillStyle = '#000000';
       ctx.beginPath();
-      actors.map((actor) => ctx.arc(actor.coordinateX *
-        ctx.canvas.width / MAP_GRID_COLS,
-      actor.coordinateY * ctx.canvas.height / MAP_GRID_ROWS,
-      gridSize / 3, 0, 2 * Math.PI));
+      for (let i = 0; i < MAP_GRID_COLS; i++) {
+        // rows
+        ctx.moveTo(0, rowSize * i);
+        ctx.lineTo(ctx.canvas.width, rowSize * i);
+        ctx.stroke();
+        // cols
+        ctx.moveTo(colSize * i, 0);
+        ctx.lineTo(colSize * i, ctx.canvas.height);
+        ctx.stroke();
+      }
+      // draw the actors
+      ctx.beginPath();
+      actors.map((actor) => ctx.arc(
+          // place the actor in middle of corresponding column
+          actor.coordinateX * ctx.canvas.width / MAP_GRID_COLS -
+            colSize / 2,
+          // place the actor in middle of corresponding row
+          actor.coordinateY * ctx.canvas.height / MAP_GRID_ROWS -
+            rowSize / 2,
+          Math.min(rowSize, colSize) / 3, 0, 2 * Math.PI));
       ctx.fill();
     }
   }, [positionX, positionY]);
