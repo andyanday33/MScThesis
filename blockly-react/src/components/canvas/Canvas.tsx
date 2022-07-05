@@ -5,7 +5,6 @@ import {Button} from 'react-bootstrap';
 
 // styles
 import './Canvas.css';
-import { createProxyProxy } from 'immer/dist/internal';
 
 // // types
 // interface CanvasProps {
@@ -121,7 +120,7 @@ export default function Canvas(): JSX.Element {
         ctx.stroke();
       });
 
-      // draw the walls, if exist
+      // draw the walls, if exists
       if (walls) {
         console.log(walls);
         ctx.beginPath();
@@ -133,6 +132,26 @@ export default function Canvas(): JSX.Element {
           ctx.fillRect(
               (wall.coordinateX - 1) * colSize,
               (wall.coordinateY - 1) * rowSize,
+              colSize,
+              rowSize,
+          );
+          ctx.stroke();
+        });
+      }
+
+      // draw the houses, if exists
+      if (houses) {
+        console.log(houses);
+        ctx.beginPath();
+        ctx.fillStyle = '#0000FF';
+        houses.map((house) => {
+          // ctx.moveTo(
+          //     wall.coordinateX * colSize,
+          //     wall.coordinateY * rowSize,
+          // );
+          ctx.fillRect(
+              (house.coordinateX - 1) * colSize,
+              (house.coordinateY - 1) * rowSize,
               colSize,
               rowSize,
           );
