@@ -5,6 +5,7 @@ import {Button} from 'react-bootstrap';
 
 // styles
 import './Canvas.css';
+import { createProxyProxy } from 'immer/dist/internal';
 
 // // types
 // interface CanvasProps {
@@ -27,6 +28,8 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
 export default function Canvas(): JSX.Element {
   const actors = useAppSelector((state) => state.playground.actors);
   const goals = useAppSelector((state) => state.playground.goals);
+  const houses = useAppSelector((state) => state.playground.houses);
+  const walls = useAppSelector((state) => state.playground.walls);
   const positionX = actors[0].coordinateX;
   const positionY = actors[0].coordinateY;
   const dispatch = useAppDispatch();
@@ -117,6 +120,25 @@ export default function Canvas(): JSX.Element {
         );
         ctx.stroke();
       });
+
+      // draw the walls, if exist
+      if (walls) {
+        console.log(walls);
+        ctx.beginPath();
+        walls.map((wall) => {
+          // ctx.moveTo(
+          //     wall.coordinateX * colSize,
+          //     wall.coordinateY * rowSize,
+          // );
+          ctx.fillRect(
+              (wall.coordinateX - 1) * colSize,
+              (wall.coordinateY - 1) * rowSize,
+              colSize,
+              rowSize,
+          );
+          ctx.stroke();
+        });
+      }
     }
   }, [positionX, positionY]);
 

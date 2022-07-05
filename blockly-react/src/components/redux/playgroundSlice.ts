@@ -11,13 +11,15 @@ type GridType = {
 
 // TODO: add house and wall coordinates to firestore
 // anything else could be considered a road.
-// further down the road: add traffic lights
+// further down the road: add traffic lights.
+// adding level tips could be nice probably.
 type LevelsType = {
   actors?: GridType[],
   goals?: GridType[],
   houses?: GridType[],
   walls?: GridType[],
   gridSize?: number,
+  tip?: string,
   id: string,
   levelNo?: number,
 }
@@ -43,6 +45,8 @@ interface PlaygroundState {
     maxLevel: number,
     actors: GridType[],
     goals: GridType[],
+    walls?: GridType[],
+    houses?: GridType[],
     turn: number,
     level: number,
 };
@@ -55,6 +59,8 @@ const initialState: PlaygroundState = {
   actors: levels[0].actors!,
   // Goal coordinates of actors.
   goals: levels[0].goals!,
+  walls: levels[0].walls,
+  houses: levels[0].houses,
   turn: 0,
   level: 0,
   maxLevel: 1,
