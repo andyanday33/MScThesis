@@ -29,19 +29,21 @@ export default function BlocklyComponent(...props :
   const simpleWorkspace = useRef<WorkspaceSvg>();
   const goals = useAppSelector((state) => state.playground.goals);
   const actors = useAppSelector((state) => state.playground.actors);
+  const level = useAppSelector((state) => state.playground.level);
+  const dispatch = useAppDispatch();
 
   // Movement turn number inside the redux store.
   const boardTurn = useAppSelector((state) => state.playground.turn);
   // Number of movements in total, counted for animation purposes.
   const animationTurn = useRef(0);
 
+  // Game states
   const [actorsMetGoals, setActorsMetGoals] = useState(false);
   const inProgressRef = useRef(false);
   const failedRef = useRef(false);
+  // generation button disabler
   const disabledRef = useRef(false);
-  const level = useAppSelector((state) => state.playground.level);
 
-  const dispatch = useAppDispatch();
 
   /**
    * Injects Blockly into the relavant div
@@ -69,7 +71,7 @@ export default function BlocklyComponent(...props :
 
   /**
    * The function that is going to be called via one of the Blockly
-   * components.
+   * components to move actors forward by one grid.
    */
   // eslint-disable-next-line no-unused-vars
   const moveForward = () => {
@@ -126,12 +128,7 @@ export default function BlocklyComponent(...props :
     disabledRef.current = true;
     inProgressRef.current = true;
     failedRef.current = false;
-    // Count the number of moveForward functions
-    // for animation purposes.
   };
-
-  /* TODO: check every actor individually in the
-  later stages. */
 
   return (
     <React.Fragment>
