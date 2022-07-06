@@ -49,6 +49,7 @@ interface PlaygroundState {
     houses?: GridType[],
     turn: number,
     level: number,
+    gridSize: number,
 };
 
 // TODO: Add other objects in the map.
@@ -63,7 +64,8 @@ const initialState: PlaygroundState = {
   houses: levels[0].houses,
   turn: 0,
   level: 0,
-  maxLevel: 1,
+  maxLevel: levels.length,
+  gridSize: levels[0].gridSize!,
 };
 
 export const playgroundSlice = createSlice({
@@ -83,6 +85,7 @@ export const playgroundSlice = createSlice({
         state.actors = levels[state.level].actors!;
         state.goals = levels[state.level].goals!;
         state.turn = 0;
+        state.gridSize = levels[state.level].gridSize!;
       }
     },
     reset: (state) => {

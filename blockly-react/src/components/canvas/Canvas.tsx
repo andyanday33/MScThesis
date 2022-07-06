@@ -29,14 +29,12 @@ export default function Canvas(): JSX.Element {
   const goals = useAppSelector((state) => state.playground.goals);
   const houses = useAppSelector((state) => state.playground.houses);
   const walls = useAppSelector((state) => state.playground.walls);
+  const gridSize = useAppSelector((state) => state.playground.gridSize);
   const positionX = actors[0].coordinateX;
   const positionY = actors[0].coordinateY;
   const dispatch = useAppDispatch();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // TODO: change map grid sizes on each map
-  const MAP_GRID_COLS = 15;
-  const MAP_GRID_ROWS = 15;
 
   const [dimensions, setDimensions] = React.useState({
     height: window.innerHeight,
@@ -69,12 +67,12 @@ export default function Canvas(): JSX.Element {
       // clear the canvas before drawing next state.
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       // sizes of each rect on canvas
-      const colSize = ctx.canvas.width / MAP_GRID_COLS;
-      const rowSize = ctx.canvas.height / MAP_GRID_ROWS;
+      const colSize = ctx.canvas.width / gridSize;
+      const rowSize = ctx.canvas.height / gridSize;
       // draw the grids
       ctx.fillStyle = '#000000';
       ctx.beginPath();
-      for (let i = 1; i < MAP_GRID_COLS; i++) {
+      for (let i = 1; i < gridSize; i++) {
         // rows
         ctx.lineWidth = 1;
         ctx.moveTo(0, rowSize * i);
