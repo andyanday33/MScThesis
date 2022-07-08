@@ -86,6 +86,8 @@ export const playgroundSlice = createSlice({
         state.goals = levels[state.level].goals!;
         state.turn = 0;
         state.gridSize = levels[state.level].gridSize!;
+        state.houses = levels[state.level].houses;
+        state.walls = levels[state.level].walls;
       }
     },
     reset: (state) => {
