@@ -47,6 +47,7 @@ interface PlaygroundState {
     goals: GridType[],
     walls?: GridType[],
     houses?: GridType[],
+    tip?: String,
     turn: number,
     level: number,
     gridSize: number,
@@ -66,6 +67,7 @@ const initialState: PlaygroundState = {
   level: 0,
   maxLevel: levels.length,
   gridSize: levels[0].gridSize!,
+  tip: levels[0].tip,
 };
 
 export const playgroundSlice = createSlice({
@@ -88,6 +90,7 @@ export const playgroundSlice = createSlice({
         state.gridSize = levels[state.level].gridSize!;
         state.houses = levels[state.level].houses;
         state.walls = levels[state.level].walls;
+        state.tip = levels[state.level].tip;
       }
     },
     reset: (state) => {

@@ -3,7 +3,7 @@ import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {move, levelUp, reset} from '../redux/playgroundSlice';
-import {Button, Stack} from 'react-bootstrap';
+import {Button, Stack, Popover, OverlayTrigger} from 'react-bootstrap';
 import toolbox from './toolbox';
 
 // style
@@ -31,7 +31,7 @@ export default function BlocklyComponent(...props :
   const actors = useAppSelector((state) => state.playground.actors);
   const level = useAppSelector((state) => state.playground.level);
   const dispatch = useAppDispatch();
-
+  const tip = useAppSelector((state) => state.playground.tip);
   // Movement turn number inside the redux store.
   const boardTurn = useAppSelector((state) => state.playground.turn);
   // Number of movements in total, counted for animation purposes.
@@ -130,15 +130,34 @@ export default function BlocklyComponent(...props :
     failedRef.current = false;
   };
 
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Level Tip</Popover.Header>
+      <Popover.Body>
+        {tip}
+      </Popover.Body>
+    </Popover>
+  );
+
+  const TipPopover = () => (
+    <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+      <Button variant="success">Show Tip</Button>
+    </OverlayTrigger>
+  );
+
   return (
     <React.Fragment>
       <div id="blockly-div" ref={blocklyRef} />
       <Stack gap={3}>
-        <Button className="w-25 float-right"
-          id="generate-button" variant="primary"
-          disabled={disabledRef.current}
-          onClick={handleGeneration}>Generate Code</Button>
-        <p className='w-25 float-left'>Level: {level + 1}</p>
+        <Stack gap={3} direction="horizontal">
+          <Button className="w-50"
+            id="generate-button" variant="primary"
+            disabled={disabledRef.current}
+            onClick={handleGeneration}>Generate Code</Button>
+          <p className='m-auto w-50 text-center
+          bg-secondary text-light'>Level: {level + 1}</p>
+        </Stack>
+        {tip && <TipPopover />}
         <GoalAlert
           success={actorsMetGoals}
           failed={failedRef.current}
