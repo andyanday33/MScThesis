@@ -24,8 +24,7 @@ type LevelsType = {
   levelNo?: number,
 }
 
-// TODO: add order by levelNo inside firebase collection
-// TODO: add roads and walls
+
 // TODO: add level selection logic
 const getLevels: () => Promise<LevelsType[]> = async () => {
   let levels: LevelsType[] = [];
@@ -39,8 +38,8 @@ const getLevels: () => Promise<LevelsType[]> = async () => {
   return levels;
 };
 
+// TODO: use RTK Query here instead
 const levels: LevelsType[] = await getLevels();
-
 interface PlaygroundState {
     maxLevel: number,
     actors: GridType[],
