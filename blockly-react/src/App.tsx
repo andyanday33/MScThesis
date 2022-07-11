@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Game from './pages/Game';
 import Home from './pages/Home';
+import GetStarted from './pages/getStarted/GetStarted';
 
 /**
  * Main App component for the React application.
@@ -20,6 +21,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/game" element={<Game />}/>
+        <Route path="/get-started" element={<GetStarted />}/>
       </Routes>
     </div>
   );

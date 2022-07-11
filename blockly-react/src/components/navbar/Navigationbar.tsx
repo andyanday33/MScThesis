@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navbar, Container, Nav, NavDropdown} from 'react-bootstrap';
+import {Navbar, Container, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 /**
@@ -21,22 +21,12 @@ export default function Navigationbar(): JSX.Element {
               <LinkContainer to="/">
                 <Nav.Link active={false}>Home</Nav.Link>
               </LinkContainer>
+              <LinkContainer to="get-started">
+                <Nav.Link active={false}>Get Started</Nav.Link>
+              </LinkContainer>
               <LinkContainer to="game">
                 <Nav.Link active={false}>Game</Nav.Link>
               </LinkContainer>
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
             </Nav>
           </Navbar.Collapse>
         </Container>
