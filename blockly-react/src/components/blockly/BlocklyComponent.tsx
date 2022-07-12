@@ -32,6 +32,7 @@ export default function BlocklyComponent(...props :
   const level = useAppSelector((state) => state.playground.level);
   const dispatch = useAppDispatch();
   const tip = useAppSelector((state) => state.playground.tip);
+  const storeStatus = useAppSelector((state) => state.playground.status);
   // Movement turn number inside the redux store.
   const boardTurn = useAppSelector((state) => state.playground.turn);
   // Number of movements in total, counted for animation purposes.
@@ -143,7 +144,6 @@ export default function BlocklyComponent(...props :
       <Button variant="success">Show Tip</Button>
     </OverlayTrigger>
   );
-
   return (
     <React.Fragment>
       <div id="blockly-div" ref={blocklyRef} />
@@ -151,7 +151,9 @@ export default function BlocklyComponent(...props :
         <Stack gap={3} direction="horizontal">
           <Button className="w-50"
             id="generate-button" variant="primary"
-            disabled={disabledRef.current}
+            disabled={(disabledRef.current &&
+              storeStatus === 'idle'
+            )}
             onClick={handleGeneration}>Generate Code</Button>
           <p className='m-auto w-50 text-center
           bg-secondary text-light'>Level: {level + 1}</p>

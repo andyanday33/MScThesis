@@ -110,14 +110,14 @@ export const playgroundSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    console.log('extra');
     builder
         .addCase(fetchLevels.pending, (state, action) => {
-          console.log('loading');
           state.status = 'loading';
         })
+        .addCase(fetchLevels.rejected, (state, action) => {
+          state.status = 'rejected';
+        })
         .addCase(fetchLevels.fulfilled, (state, action) => {
-          console.log('fullfilled');
           action.payload.forEach((level) => state.levels.push(level));
           state.status = 'idle';
           state.actors = state.levels[0].actors!;
