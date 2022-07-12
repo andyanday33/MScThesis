@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useCallback} from 'react';
+import React, {useRef, useEffect, useCallback, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {move, reset} from '../redux/playgroundSlice';
 import {Button} from 'react-bootstrap';
@@ -34,13 +34,23 @@ export default function Canvas(): JSX.Element {
   const positionX = actors[0] ? actors[0].coordinateX : null;
   const positionY = actors[0] ? actors[0].coordinateY : null;
   const dispatch = useAppDispatch();
-  const actorImage = useAppSelector((state) => state.playground.actorImage);
+  const actorImageSrc = useAppSelector((state) => state.playground.actorImage);
+  const [actorImage, setActorImage] = useState<HTMLImageElement>(new Image());
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [dimensions, setDimensions] = React.useState({
     height: window.innerHeight,
     width: window.innerWidth,
   });
+
+  useEffect(() => {
+    actorImage.src = actorImageSrc;
+    const newImage = actorImage;
+    newImage.onload = drawEverything;
+    setActorImage(newImage);
+    console.log('aaaa');
+    drawEverything();
+  }, []);
 
   useEffect(() => {
     /**
@@ -100,14 +110,6 @@ export default function Canvas(): JSX.Element {
           2 * minSide / 3,
           2 * minSide / 3,
       ));
-      // ctx.arc(
-      //     // place the actor in middle of corresponding column
-      //     actor.coordinateX * colSize -
-      //       colSize / 2,
-      //     // place the actor in middle of corresponding row
-      //     actor.coordinateY * rowSize -
-      //       rowSize / 2,
-      //     Math.min(rowSize, colSize) / 3, 0, 2 * Math.PI));
       ctx.fill();
 
       // draw the goals
@@ -178,14 +180,15 @@ export default function Canvas(): JSX.Element {
    * Draws everything on the canvas.
    * Re-renders on width or height update.
    */
-  useEffect(() => {
+  const drawEverything = () => {
     if (storeStatus != 'loading') {
       const canvas = canvasRef.current;
       const ctx : CtxType = canvas?.getContext('2d');
-
       draw(ctx);
     };
-  }, [draw, dimensions.width, dimensions.height]);
+  };
+  useEffect(() => drawEverything(), [draw, dimensions.width,
+    dimensions.height]);
   if (storeStatus == 'loading') {
     // TODO: add a spinner here
     return (<p>Loading...</p>);
