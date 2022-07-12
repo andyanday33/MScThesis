@@ -36,7 +36,6 @@ export default function BlocklyComponent(...props :
   const boardTurn = useAppSelector((state) => state.playground.turn);
   // Number of movements in total, counted for animation purposes.
   const animationTurn = useRef(0);
-
   // Game states
   const [actorsMetGoals, setActorsMetGoals] = useState(false);
   const inProgressRef = useRef(false);
@@ -117,7 +116,7 @@ export default function BlocklyComponent(...props :
 
   useEffect(() => {
     checkActorGoals();
-  }, [actors[0].coordinateX]);
+  });
 
   /**
    * Code generation handler function

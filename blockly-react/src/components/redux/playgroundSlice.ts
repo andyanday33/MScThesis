@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {db} from '../../firebase/firebaseConfig';
 import {collection, getDocs, orderBy, query} from 'firebase/firestore';
 
@@ -39,8 +39,10 @@ const getLevels: () => Promise<LevelsType[]> = async () => {
 };
 
 // TODO: use RTK Query here instead
-const levels: LevelsType[] = await getLevels();
+// const levels: LevelsType[] = await getLevels();
 interface PlaygroundState {
+    status: String,
+    levels: LevelsType[],
     maxLevel: number,
     actors: GridType[],
     goals: GridType[],
@@ -57,17 +59,27 @@ interface PlaygroundState {
 level 0 to where usere left off. */
 const initialState: PlaygroundState = {
   // Actors on the map with their x,y coordinates
-  actors: levels[0].actors!,
+  status: 'idle',
+  levels: [],
+  actors: [],
   // Goal coordinates of actors.
-  goals: levels[0].goals!,
-  walls: levels[0].walls,
-  houses: levels[0].houses,
+  goals: [],
+  walls: [],
+  houses: [],
   turn: 0,
   level: 0,
-  maxLevel: levels.length,
-  gridSize: levels[0].gridSize!,
-  tip: levels[0].tip,
+  maxLevel: 0,
+  gridSize: 0,
+  tip: '',
 };
+
+export const fetchLevels = createAsyncThunk('playground/fetchLevels',
+    async () => {
+      const response = await getLevels();
+      console.log(response);
+      return response;
+    },
+);
 
 export const playgroundSlice = createSlice({
   name: 'playground',
@@ -83,19 +95,42 @@ export const playgroundSlice = createSlice({
     levelUp: (state) => {
       if (state.level < state.maxLevel) {
         state.level++;
-        state.actors = levels[state.level].actors!;
-        state.goals = levels[state.level].goals!;
+        state.actors = state.levels[state.level].actors!;
+        state.goals = state.levels[state.level].goals!;
         state.turn = 0;
-        state.gridSize = levels[state.level].gridSize!;
-        state.houses = levels[state.level].houses;
-        state.walls = levels[state.level].walls;
-        state.tip = levels[state.level].tip;
+        state.gridSize = state.levels[state.level].gridSize!;
+        state.houses = state.levels[state.level].houses;
+        state.walls = state.levels[state.level].walls;
+        state.tip = state.levels[state.level].tip;
       }
     },
     reset: (state) => {
-      state.actors = levels[state.level].actors!;
+      state.actors = state.levels[state.level].actors!;
       state.turn = 0;
     },
+  },
+  extraReducers: (builder) => {
+    console.log('extra');
+    builder
+        .addCase(fetchLevels.pending, (state, action) => {
+          console.log('loading');
+          state.status = 'loading';
+        })
+        .addCase(fetchLevels.fulfilled, (state, action) => {
+          console.log('fullfilled');
+          action.payload.forEach((level) => state.levels.push(level));
+          state.status = 'idle';
+          state.actors = state.levels[0].actors!;
+          // Goal coordinates of actors.
+          state.goals = state.levels[0].goals!;
+          state.walls = state.levels[0].walls;
+          state.houses = state.levels[0].houses;
+          state.turn = 0;
+          state.level = 0;
+          state.maxLevel = state.levels.length;
+          state.gridSize = state.levels[0].gridSize!;
+          state.tip = state.levels[0].tip;
+        });
   },
 });
 

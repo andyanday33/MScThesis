@@ -25,13 +25,14 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
  * @author bab26@st-andrews.ac.uk
  */
 export default function Canvas(): JSX.Element {
+  const storeStatus = useAppSelector((state) => state.playground.status);
   const actors = useAppSelector((state) => state.playground.actors);
   const goals = useAppSelector((state) => state.playground.goals);
   const houses = useAppSelector((state) => state.playground.houses);
   const walls = useAppSelector((state) => state.playground.walls);
   const gridSize = useAppSelector((state) => state.playground.gridSize);
-  const positionX = actors[0].coordinateX;
-  const positionY = actors[0].coordinateY;
+  const positionX = actors[0] ? actors[0].coordinateX : null;
+  const positionY = actors[0] ? actors[0].coordinateY : null;
   const dispatch = useAppDispatch();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -164,10 +165,12 @@ export default function Canvas(): JSX.Element {
    * Re-renders on width or height update.
    */
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx : CtxType = canvas?.getContext('2d');
+    if (storeStatus != 'loading') {
+      const canvas = canvasRef.current;
+      const ctx : CtxType = canvas?.getContext('2d');
 
-    draw(ctx);
+      draw(ctx);
+    };
   }, [draw, dimensions.width, dimensions.height]);
 
   return (
