@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {db} from '../../firebase/firebaseConfig';
 import {collection, getDocs, orderBy, query} from 'firebase/firestore';
+import carSvg from '../../../public/car.svg';
 
 const levelCollection = collection(db, 'levels');
 
@@ -52,6 +53,7 @@ interface PlaygroundState {
     turn: number,
     level: number,
     gridSize: number,
+    actorImage: HTMLImageElement,
 };
 
 // TODO: Add other objects in the map.
@@ -71,6 +73,7 @@ const initialState: PlaygroundState = {
   maxLevel: 0,
   gridSize: 0,
   tip: '',
+  actorImage: new Image(),
 };
 
 export const fetchLevels = createAsyncThunk('playground/fetchLevels',
@@ -130,6 +133,7 @@ export const playgroundSlice = createSlice({
           state.maxLevel = state.levels.length;
           state.gridSize = state.levels[0].gridSize!;
           state.tip = state.levels[0].tip;
+          state.actorImage.src = carSvg;
         });
   },
 });

@@ -34,7 +34,7 @@ export default function Canvas(): JSX.Element {
   const positionX = actors[0] ? actors[0].coordinateX : null;
   const positionY = actors[0] ? actors[0].coordinateY : null;
   const dispatch = useAppDispatch();
-
+  const actorImage = useAppSelector((state) => state.playground.actorImage);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [dimensions, setDimensions] = React.useState({
@@ -86,14 +86,28 @@ export default function Canvas(): JSX.Element {
       }
       // draw the actors
       ctx.beginPath();
-      actors.map((actor) => ctx.arc(
-          // place the actor in middle of corresponding column
-          actor.coordinateX * colSize -
-            colSize / 2,
-          // place the actor in middle of corresponding row
+      // we should find the minimum side so we that could
+      // fit the image in a grid without strecthing it.
+      const minSide = Math.min(rowSize, colSize);
+      actors.map((actor) => ctx.drawImage(
+          // Center the images inside a grid by
+          // extracting (grid's size / 2 + image's size / 2)
+          // from the starting point of the image.
+          actorImage, actor.coordinateX * colSize -
+          colSize / 2 - minSide / 3,
           actor.coordinateY * rowSize -
-            rowSize / 2,
-          Math.min(rowSize, colSize) / 3, 0, 2 * Math.PI));
+          rowSize / 2 - minSide / 3,
+          2 * minSide / 3,
+          2 * minSide / 3,
+      ));
+      // ctx.arc(
+      //     // place the actor in middle of corresponding column
+      //     actor.coordinateX * colSize -
+      //       colSize / 2,
+      //     // place the actor in middle of corresponding row
+      //     actor.coordinateY * rowSize -
+      //       rowSize / 2,
+      //     Math.min(rowSize, colSize) / 3, 0, 2 * Math.PI));
       ctx.fill();
 
       // draw the goals
