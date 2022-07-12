@@ -73,7 +73,8 @@ export default function BlocklyComponent(...props :
    * Function that is a placeholder for move function so it
    * could be imported with no errors
    * since we can not provide generated blockly code
-   * ahead of the time.
+   * ahead of the time. This function gets deleted
+   * inside production build.
    */
   // eslint-disable-next-line no-unused-vars
   const fakeMove = () => dispatch(move());
