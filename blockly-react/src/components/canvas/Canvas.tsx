@@ -173,6 +173,7 @@ export default function Canvas(): JSX.Element {
     };
   }, [draw, dimensions.width, dimensions.height]);
   if (storeStatus == 'loading') {
+    // TODO: add a spinner here
     return (<p>Loading...</p>);
   } else if (storeStatus == 'failed') {
     return (<p>There was an error while fetching data.</p>);
