@@ -15,6 +15,7 @@ Blockly.Blocks['move_forward_block'] = {
 
 Blockly.JavaScript['move_forward_block'] = function(block: any) {
   // TODO: Assemble JavaScript into code variable.
-  const code = 'moveForward();\n';
+  const code = 'setTimeout(() => dispatch(move()), ' +
+  'animationTurn.current * 250);animationTurn.current += 1;\n';
   return code;
 };

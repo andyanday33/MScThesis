@@ -70,16 +70,13 @@ export default function BlocklyComponent(...props :
   }, [toolbox]);
 
   /**
-   * The function that is going to be called via one of the Blockly
-   * components to move actors forward by one grid.
+   * Function that is a placeholder for move function so it
+   * could be imported with no errors
+   * since we can not provide generated blockly code
+   * ahead of the time.
    */
   // eslint-disable-next-line no-unused-vars
-  const moveForward = () => {
-    setTimeout(() => dispatch(move()), animationTurn.current * 250);
-    // count each movement for animation purposes.
-    animationTurn.current += 1;
-  };
-
+  const fakeMove = () => dispatch(move());
   /**
    * Checks whether the actor goals are met
    * after delay.
