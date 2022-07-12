@@ -172,7 +172,11 @@ export default function Canvas(): JSX.Element {
       draw(ctx);
     };
   }, [draw, dimensions.width, dimensions.height]);
-
+  if (storeStatus == 'loading') {
+    return (<p>Loading...</p>);
+  } else if (storeStatus == 'failed') {
+    return (<p>There was an error while fetching data.</p>);
+  }
   return (
     <>
       <canvas className="main-canvas" ref={canvasRef}
