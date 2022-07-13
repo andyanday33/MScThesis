@@ -8,7 +8,7 @@ import wallSvg from '../../../public/wall.svg';
 
 const levelCollection = collection(db, 'levels');
 
-type GridType = {
+type GridObjectType = {
   coordinateX: number,
   coordinateY: number,
 }
@@ -17,11 +17,11 @@ type GridType = {
 // anything else could be considered a road.
 // further down the road: add traffic lights.
 // adding level tips could be nice probably.
-type LevelsType = {
-  actors?: GridType[],
-  goals?: GridType[],
-  houses?: GridType[],
-  walls?: GridType[],
+type LevelType = {
+  actors?: GridObjectType[],
+  goals?: GridObjectType[],
+  houses?: GridObjectType[],
+  walls?: GridObjectType[],
   gridSize?: number,
   tip?: string,
   id: string,
@@ -30,8 +30,8 @@ type LevelsType = {
 
 
 // TODO: add level selection logic
-const getLevels: () => Promise<LevelsType[]> = async () => {
-  let levels: LevelsType[] = [];
+const getLevels: () => Promise<LevelType[]> = async () => {
+  let levels: LevelType[] = [];
   await getDocs(query(levelCollection, orderBy('levelNo')))
       .then((data) => {
         levels = data.docs.map((doc) => {
@@ -42,20 +42,22 @@ const getLevels: () => Promise<LevelsType[]> = async () => {
   return levels;
 };
 
-// TODO: use RTK Query here instead
-// const levels: LevelsType[] = await getLevels();
+type CrashableObjectType = {
+  objectName: String,
+}
 interface PlaygroundState {
     status: String,
-    levels: LevelsType[],
+    levels: LevelType[],
     maxLevel: number,
-    actors: GridType[],
-    goals: GridType[],
-    walls?: GridType[],
-    houses?: GridType[],
+    actors: GridObjectType[],
+    goals: GridObjectType[],
+    walls?: GridObjectType[],
+    houses?: GridObjectType[],
     tip?: String,
     turn: number,
     level: number,
     gridSize: number,
+    currentMap: CrashableObjectType[][],
     actorImageSrc: string,
     houseImageSrc: string,
     wallImageSrc: string,
@@ -79,6 +81,7 @@ const initialState: PlaygroundState = {
   maxLevel: 0,
   gridSize: 0,
   tip: '',
+  currentMap: [],
   actorImageSrc: carSvg,
   houseImageSrc: houseSvg,
   goalImageSrc: crossSvg,
@@ -93,6 +96,31 @@ export const fetchLevels = createAsyncThunk('playground/fetchLevels',
     },
 );
 
+const generateCurrentMap = (state: PlaygroundState) => {
+  state.currentMap = [...Array(state.gridSize)].
+      map(() => new Array(state.gridSize));
+  for (let i = 0; i < state.actors.length; i++) {
+    state.currentMap[state.actors[i].coordinateY - 1][state.actors[i].
+        coordinateX - 1] = {objectName: 'actor'};
+  }
+  for (let i = 0; i < state.goals.length; i++) {
+    state.currentMap[state.goals[i].coordinateY - 1][state.goals[i].
+        coordinateX - 1] = {objectName: 'goal'};
+  }
+  if (state.walls) {
+    for (let i = 0; i < state.walls.length; i++) {
+      state.currentMap[state.walls[i].coordinateY - 1][state.walls[i].
+          coordinateX - 1] = {objectName: 'wall'};
+    }
+  }
+  if (state.houses) {
+    for (let i = 0; i < state.houses.length; i++) {
+      state.currentMap[state.houses[i].coordinateY - 1][state.houses[i].
+          coordinateX - 1] = {objectName: 'house'};
+    }
+  }
+};
+
 export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
@@ -101,6 +129,7 @@ export const playgroundSlice = createSlice({
       state.turn = state.turn += 1;
       state.actors = state.actors.map((actor) => {
         actor.coordinateX += 1;
+        // Check if it hits the wall
         return actor;
       });
     },
@@ -114,6 +143,8 @@ export const playgroundSlice = createSlice({
         state.houses = state.levels[state.level].houses;
         state.walls = state.levels[state.level].walls;
         state.tip = state.levels[state.level].tip;
+        // generate new map
+        generateCurrentMap(state);
       }
     },
     reset: (state) => {
@@ -142,7 +173,8 @@ export const playgroundSlice = createSlice({
           state.maxLevel = state.levels.length;
           state.gridSize = state.levels[0].gridSize!;
           state.tip = state.levels[0].tip;
-          state.actorImageSrc = carSvg;
+          // generate current map
+          generateCurrentMap(state);
         });
   },
 });
