@@ -183,7 +183,7 @@ export default function Canvas(): JSX.Element {
       }
       if (actorMovements.length > 0) {
         setTimeout(() => dispatch(finishThisTry()),
-            actorMovements.length + 1 * 250);
+            actorMovements.length * 250);
       }
     };
   };
