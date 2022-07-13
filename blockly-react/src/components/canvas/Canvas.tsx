@@ -1,16 +1,10 @@
-import React, {useRef, useEffect, useCallback} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {move, reset} from '../redux/playgroundSlice';
-import {Button} from 'react-bootstrap';
+import {finishThisTry} from '../redux/playgroundSlice';
+import {GridObjectType} from '../redux/playgroundSlice';
 
 // styles
 import './Canvas.css';
-
-// // types
-// interface CanvasProps {
-//     height: string,
-//     width: string
-// }
 
 type CtxType = (CanvasRenderingContext2D | null | undefined)
 
@@ -20,7 +14,7 @@ type CtxType = (CanvasRenderingContext2D | null | undefined)
  * a button to move elements in the canvas.
  * Width and Height of the canvas is dynamic and related to the screen size,
  * therefore there are no props being passed to this component.
- * @return {JSX.Element} some JSX involving a canvas and a button.
+ * @return {JSX.Element} some JSX involving a canvas.
  *
  * @author bab26@st-andrews.ac.uk
  */
@@ -31,9 +25,16 @@ export default function Canvas(): JSX.Element {
   const houses = useAppSelector((state) => state.playground.houses);
   const walls = useAppSelector((state) => state.playground.walls);
   const gridSize = useAppSelector((state) => state.playground.gridSize);
-  const positionX = actors[0] ? actors[0].coordinateX : null;
-  const positionY = actors[0] ? actors[0].coordinateY : null;
+  // animation movement progress indicator
+  const movementInProgress = useAppSelector((state) =>
+    state.playground.animationInProgress);
   const dispatch = useAppDispatch();
+  // Take actor movements and process them in order for
+  // animation purposes
+  const actorMovements = useAppSelector((state) =>
+    state.playground.movesThisTry);
+
+  // Image sources
   const actorImageSrc = useAppSelector((state) =>
     state.playground.actorImageSrc);
   const wallImageSrc = useAppSelector((state) =>
@@ -42,6 +43,7 @@ export default function Canvas(): JSX.Element {
     state.playground.houseImageSrc);
   const goalImageSrc = useAppSelector((state) =>
     state.playground.goalImageSrc);
+  // Images
   const actorImageRef = useRef<HTMLImageElement>(new Image());
   const wallImageRef = useRef<HTMLImageElement>(new Image());
   const houseImageRef = useRef<HTMLImageElement>(new Image());
@@ -59,7 +61,7 @@ export default function Canvas(): JSX.Element {
     goalImageRef.current.src = goalImageSrc;
     actorImageRef.current.src = actorImageSrc;
     actorImageRef.current.onload = createCtxAndDraw;
-  }, []);
+  });
 
   useEffect(() => {
     /**
@@ -79,10 +81,7 @@ export default function Canvas(): JSX.Element {
     };
   });
 
-  /**
-   * Draws the actors, roads, and goals on the canvas
-   */
-  const drawCanvas = useCallback((ctx : CtxType) => {
+  const drawCanvas = (ctx : CtxType, actors: GridObjectType[]) => {
     if (ctx) {
       // clear the canvas before drawing next state.
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -165,7 +164,7 @@ export default function Canvas(): JSX.Element {
         });
       }
     }
-  }, [positionX, positionY]);
+  };
 
   /**
    * Creates a canvas context and
@@ -175,11 +174,22 @@ export default function Canvas(): JSX.Element {
     if (storeStatus != 'loading') {
       const canvas = canvasRef.current;
       const ctx : CtxType = canvas?.getContext('2d');
-      drawCanvas(ctx);
+      if (!movementInProgress) {
+        drawCanvas(ctx, actors);
+      }
+      for (let i = 0; i < actorMovements.length; i++) {
+        const moveState = actorMovements[i];
+        setTimeout(() => drawCanvas(ctx, moveState), i * 250);
+      }
+      if (actorMovements.length > 0) {
+        setTimeout(() => dispatch(finishThisTry()),
+            actorMovements.length * 250);
+      }
     };
   };
-  useEffect(() => createCtxAndDraw(), [drawCanvas, dimensions.width,
-    dimensions.height]);
+
+  useEffect(() => createCtxAndDraw(), [dimensions.width,
+    dimensions.height, actorMovements]);
   if (storeStatus == 'loading') {
     // TODO: add a spinner here
     return (<p>Loading...</p>);
@@ -193,12 +203,6 @@ export default function Canvas(): JSX.Element {
           dimensions.height / 1.5 : dimensions.height - 50}`}
         width={`${dimensions.width >= 1200 ?
           dimensions.width / 2 - 50 : dimensions.width - 50}`} />
-      <Button className="m-2" variant="primary" onClick={() =>
-        dispatch(move())}>Move Forward
-      </Button>
-      <Button className="m-2" variant="primary" onClick={() =>
-        dispatch(reset())}>Reset State
-      </Button>
     </>
   );
 }

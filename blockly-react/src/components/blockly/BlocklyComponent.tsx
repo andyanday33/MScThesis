@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {move, levelUp, reset} from '../redux/playgroundSlice';
+import {move, levelUp, resetTry, startGame} from '../redux/playgroundSlice';
 import {Button, Stack, Popover, OverlayTrigger} from 'react-bootstrap';
 import toolbox from './toolbox';
 
@@ -33,17 +33,23 @@ export default function BlocklyComponent(...props :
   const dispatch = useAppDispatch();
   const tip = useAppSelector((state) => state.playground.tip);
   const storeStatus = useAppSelector((state) => state.playground.status);
+  const actorCrashed = useAppSelector((state) => state.playground.crashed);
   // Movement turn number inside the redux store.
   const boardTurn = useAppSelector((state) => state.playground.turn);
-  // Number of movements in total, counted for animation purposes.
-  const animationTurn = useRef(0);
+  // Number of movements in total, counted for checking logically resetting
+  // the level state after all the moves are made.
+  const numberOfMovesRef = useRef(0);
+  // current tries
+  const tryNumber = useRef(0);
+  // initial value of trynumber when code generation first called.
+  const initialTryNumber = useRef(0);
   // Game states
   const [actorsMetGoals, setActorsMetGoals] = useState(false);
-  const inProgressRef = useRef(false);
+  const inProgress = useAppSelector((state) =>
+    state.playground.animationInProgress);
   const failedRef = useRef(false);
   // generation button disabler
   const disabledRef = useRef(false);
-
 
   /**
    * Injects Blockly into the relavant div
@@ -87,28 +93,33 @@ export default function BlocklyComponent(...props :
    * after the last update was made inside redux store.
    */
   const checkActorGoals = () => {
-    if (animationTurn.current == boardTurn && boardTurn != 0) {
-      console.log('a');
-      console.log(actors[0].coordinateX);
-      console.log(goals[0].coordinateX);
+    if (actorCrashed) {
+      setTimeout(() => {
+        disabledRef.current = false;
+        failedRef.current = true;
+        return dispatch(resetTry());
+      }, 250 * numberOfMovesRef.current);
+      numberOfMovesRef.current = 0;
+      tryNumber.current++;
+    }
+    if (numberOfMovesRef.current == boardTurn && boardTurn != 0) {
       if (actors[0].coordinateX != goals[0].coordinateX) {
         setTimeout(() => {
           disabledRef.current = false;
-          inProgressRef.current = false;
           failedRef.current = true;
-          return dispatch(reset());
-        }, 250);
-        animationTurn.current = 0;
+          return dispatch(resetTry());
+        }, 250 * numberOfMovesRef.current);
+        numberOfMovesRef.current = 0;
+        tryNumber.current++;
       } else {
-        inProgressRef.current = false;
-        animationTurn.current = 0;
         setActorsMetGoals(true);
         setTimeout(() => {
           disabledRef.current = false;
           setActorsMetGoals(false);
-          console.log('Congrats, leveling up');
           return dispatch(levelUp());
-        }, 500);
+        }, 500 * numberOfMovesRef.current);
+        numberOfMovesRef.current = 0;
+        tryNumber.current = 0;
       }
     }
   };
@@ -120,12 +131,13 @@ export default function BlocklyComponent(...props :
   /**
    * Code generation handler function
    */
-  const handleGeneration = () => {
+  const handleGeneration = async () => {
+    initialTryNumber.current = tryNumber.current;
     const code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
-    eval(code);
     disabledRef.current = true;
-    inProgressRef.current = true;
+    dispatch(startGame());
     failedRef.current = false;
+    eval(code);
   };
 
   const popover = (
@@ -160,7 +172,7 @@ export default function BlocklyComponent(...props :
         <GoalAlert
           success={actorsMetGoals}
           failed={failedRef.current}
-          loading={inProgressRef.current}/>
+          loading={inProgress}/>
       </Stack>
     </React.Fragment>
   );

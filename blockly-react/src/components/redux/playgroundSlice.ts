@@ -8,7 +8,7 @@ import wallSvg from '../../../public/wall.svg';
 
 const levelCollection = collection(db, 'levels');
 
-type GridObjectType = {
+export type GridObjectType = {
   coordinateX: number,
   coordinateY: number,
 }
@@ -47,6 +47,8 @@ type CrashableObjectType = {
 }
 interface PlaygroundState {
     status: String,
+    crashed: boolean,
+    animationInProgress: boolean,
     levels: LevelType[],
     maxLevel: number,
     actors: GridObjectType[],
@@ -62,6 +64,7 @@ interface PlaygroundState {
     houseImageSrc: string,
     wallImageSrc: string,
     goalImageSrc: string
+    movesThisTry: GridObjectType[][],
 };
 
 // TODO: Add other objects in the map.
@@ -70,6 +73,8 @@ level 0 to where usere left off. */
 const initialState: PlaygroundState = {
   // Actors on the map with their x,y coordinates
   status: 'idle',
+  crashed: false,
+  animationInProgress: false,
   levels: [],
   actors: [],
   // Goal coordinates of actors.
@@ -86,12 +91,12 @@ const initialState: PlaygroundState = {
   houseImageSrc: houseSvg,
   goalImageSrc: crossSvg,
   wallImageSrc: wallSvg,
+  movesThisTry: [],
 };
 
 export const fetchLevels = createAsyncThunk('playground/fetchLevels',
     async () => {
       const response = await getLevels();
-      console.log(response);
       return response;
     },
 );
@@ -126,12 +131,20 @@ export const playgroundSlice = createSlice({
   initialState,
   reducers: {
     move: (state) => {
-      state.turn = state.turn += 1;
-      state.actors = state.actors.map((actor) => {
-        actor.coordinateX += 1;
-        // Check if it hits the wall
-        return actor;
-      });
+      if (!state.crashed) {
+        state.turn = state.turn += 1;
+        state.actors = state.actors.map((actor) => {
+          actor.coordinateX += 1;
+          const mapGrid = state.currentMap[actor.
+              coordinateY - 1][actor.coordinateX - 1];
+          // check whether the actor has crashed into a wall or another actor.
+          if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
+            state.crashed = true;
+          }
+          return actor;
+        });
+        state.movesThisTry.push(state.actors);
+      }
     },
     levelUp: (state) => {
       if (state.level < state.maxLevel) {
@@ -147,9 +160,25 @@ export const playgroundSlice = createSlice({
         generateCurrentMap(state);
       }
     },
-    reset: (state) => {
-      state.actors = state.levels[state.level].actors!;
+    startGame: (state) => {
+      state.animationInProgress = true;
+    },
+    /**
+     * Logically resets the playground and initiates animation progress.
+     * @param {PlaygroundState} state State of the playground
+     */
+    resetTry: (state: PlaygroundState) => {
       state.turn = 0;
+      state.crashed = false;
+    },
+    /**
+     * Makes the playground available for a new try.
+     * @param {PlaygroundState} state State of the playground
+     */
+    finishThisTry: (state: PlaygroundState) => {
+      state.animationInProgress = false;
+      state.movesThisTry = [];
+      state.actors = state.levels[state.level].actors!;
     },
   },
   extraReducers: (builder) => {
@@ -179,6 +208,7 @@ export const playgroundSlice = createSlice({
   },
 });
 
-export const {move, levelUp, reset} = playgroundSlice.actions;
+export const {move, levelUp, resetTry, finishThisTry,
+  startGame} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
