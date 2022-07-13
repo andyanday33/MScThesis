@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
@@ -44,7 +44,7 @@ export default function BlocklyComponent(...props :
   // initial value of trynumber when code generation first called.
   const initialTryNumber = useRef(0);
   // Game states
-  const [actorsMetGoals, setActorsMetGoals] = useState(false);
+  const actorsMetGoalsRef = useRef(false);
   const inProgress = useAppSelector((state) =>
     state.playground.animationInProgress);
   const failedRef = useRef(false);
@@ -112,10 +112,12 @@ export default function BlocklyComponent(...props :
         numberOfMovesRef.current = 0;
         tryNumber.current++;
       } else {
-        setActorsMetGoals(true);
+        console.log(numberOfMovesRef.current);
         setTimeout(() => {
+          actorsMetGoalsRef.current = true;
           disabledRef.current = false;
-          setActorsMetGoals(false);
+        }, 250 * numberOfMovesRef.current);
+        setTimeout(() => {
           return dispatch(levelUp());
         }, 500 * numberOfMovesRef.current);
         numberOfMovesRef.current = 0;
@@ -170,7 +172,7 @@ export default function BlocklyComponent(...props :
         </Stack>
         {tip && <TipPopover />}
         <GoalAlert
-          success={actorsMetGoals}
+          success={actorsMetGoalsRef.current}
           failed={failedRef.current}
           loading={inProgress}/>
       </Stack>
