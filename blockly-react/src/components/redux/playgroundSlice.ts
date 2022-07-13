@@ -48,6 +48,7 @@ type CrashableObjectType = {
 interface PlaygroundState {
     status: String,
     crashed: boolean,
+    crashedAt: number,
     animationInProgress: boolean,
     levels: LevelType[],
     maxLevel: number,
@@ -74,6 +75,7 @@ const initialState: PlaygroundState = {
   // Actors on the map with their x,y coordinates
   status: 'idle',
   crashed: false,
+  crashedAt: 0,
   animationInProgress: false,
   levels: [],
   actors: [],
@@ -140,6 +142,7 @@ export const playgroundSlice = createSlice({
           // check whether the actor has crashed into a wall or another actor.
           if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
             state.crashed = true;
+            state.crashedAt = state.movesThisTry.length + 1;
           }
           return actor;
         });

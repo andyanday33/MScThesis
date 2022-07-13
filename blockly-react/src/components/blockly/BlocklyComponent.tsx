@@ -34,6 +34,9 @@ export default function BlocklyComponent(...props :
   const tip = useAppSelector((state) => state.playground.tip);
   const storeStatus = useAppSelector((state) => state.playground.status);
   const actorCrashed = useAppSelector((state) => state.playground.crashed);
+  // Keeping track of movement turn of a crash. for animation purposes.
+  const crashedAtMovementNumber = useAppSelector((state) =>
+    state.playground.crashedAt);
   // Movement turn number inside the redux store.
   const boardTurn = useAppSelector((state) => state.playground.turn);
   // Number of movements in total, counted for checking logically resetting
@@ -98,7 +101,7 @@ export default function BlocklyComponent(...props :
         disabledRef.current = false;
         failedRef.current = true;
         return dispatch(resetTry());
-      }, 250 * numberOfMovesRef.current);
+      }, 250 * crashedAtMovementNumber);
       numberOfMovesRef.current = 0;
       tryNumber.current++;
     }
