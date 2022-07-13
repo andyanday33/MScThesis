@@ -128,7 +128,7 @@ export default function BlocklyComponent(...props :
 
   useEffect(() => {
     checkActorGoals();
-  });
+  }, [boardTurn, numberOfMovesRef]);
 
   /**
    * Code generation handler function
@@ -137,9 +137,11 @@ export default function BlocklyComponent(...props :
     initialTryNumber.current = tryNumber.current;
     const code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
     disabledRef.current = true;
-    dispatch(startGame());
     failedRef.current = false;
     eval(code);
+    if (numberOfMovesRef.current > 0) {
+      dispatch(startGame());
+    }
   };
 
   const popover = (
