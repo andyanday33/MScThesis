@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useCallback, useState} from 'react';
+import React, {useRef, useEffect, useCallback} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {move, reset} from '../redux/playgroundSlice';
 import {Button} from 'react-bootstrap';
@@ -34,8 +34,18 @@ export default function Canvas(): JSX.Element {
   const positionX = actors[0] ? actors[0].coordinateX : null;
   const positionY = actors[0] ? actors[0].coordinateY : null;
   const dispatch = useAppDispatch();
-  const actorImageSrc = useAppSelector((state) => state.playground.actorImage);
-  const [actorImage, setActorImage] = useState<HTMLImageElement>(new Image());
+  const actorImageSrc = useAppSelector((state) =>
+    state.playground.actorImageSrc);
+  const wallImageSrc = useAppSelector((state) =>
+    state.playground.wallImageSrc);
+  const houseImageSrc = useAppSelector((state) =>
+    state.playground.houseImageSrc);
+  const goalImageSrc = useAppSelector((state) =>
+    state.playground.goalImageSrc);
+  const actorImageRef = useRef<HTMLImageElement>(new Image());
+  const wallImageRef = useRef<HTMLImageElement>(new Image());
+  const houseImageRef = useRef<HTMLImageElement>(new Image());
+  const goalImageRef = useRef<HTMLImageElement>(new Image());
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [dimensions, setDimensions] = React.useState({
@@ -44,12 +54,11 @@ export default function Canvas(): JSX.Element {
   });
 
   useEffect(() => {
-    actorImage.src = actorImageSrc;
-    const newImage = actorImage;
-    newImage.onload = drawEverything;
-    setActorImage(newImage);
-    console.log('aaaa');
-    drawEverything();
+    wallImageRef.current.src = wallImageSrc;
+    houseImageRef.current.src = houseImageSrc;
+    goalImageRef.current.src = goalImageSrc;
+    actorImageRef.current.src = actorImageSrc;
+    actorImageRef.current.onload = createCtxAndDraw;
   }, []);
 
   useEffect(() => {
@@ -73,7 +82,7 @@ export default function Canvas(): JSX.Element {
   /**
    * Draws the actors, roads, and goals on the canvas
    */
-  const draw = useCallback((ctx : CtxType) => {
+  const drawCanvas = useCallback((ctx : CtxType) => {
     if (ctx) {
       // clear the canvas before drawing next state.
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -103,7 +112,7 @@ export default function Canvas(): JSX.Element {
           // Center the images inside a grid by
           // extracting (grid's size / 2 + image's size / 2)
           // from the starting point of the image.
-          actorImage, actor.coordinateX * colSize -
+          actorImageRef.current, actor.coordinateX * colSize -
           colSize / 2 - minSide / 3,
           actor.coordinateY * rowSize -
           rowSize / 2 - minSide / 3,
@@ -115,36 +124,22 @@ export default function Canvas(): JSX.Element {
       // draw the goals
       ctx.beginPath();
       goals.map((goal) => {
-        // make a cross on the goal
-        ctx.moveTo(
+        ctx.drawImage(
+            goalImageRef.current,
             (goal.coordinateX - 1) * colSize,
             (goal.coordinateY - 1) * rowSize,
-        );
-        ctx.lineTo(
-            goal.coordinateX * colSize,
-            goal.coordinateY * rowSize,
-        );
-        ctx.moveTo(
-            (goal.coordinateX) * colSize,
-            (goal.coordinateY - 1) * rowSize,
-        );
-        ctx.lineTo(
-            (goal.coordinateX - 1) * colSize,
-            goal.coordinateY * rowSize,
+            colSize,
+            rowSize,
         );
         ctx.stroke();
       });
 
       // draw the walls, if exists
       if (walls) {
-        console.log(walls);
         ctx.beginPath();
         walls.map((wall) => {
-          // ctx.moveTo(
-          //     wall.coordinateX * colSize,
-          //     wall.coordinateY * rowSize,
-          // );
-          ctx.fillRect(
+          ctx.drawImage(
+              wallImageRef.current,
               (wall.coordinateX - 1) * colSize,
               (wall.coordinateY - 1) * rowSize,
               colSize,
@@ -156,15 +151,11 @@ export default function Canvas(): JSX.Element {
 
       // draw the houses, if exists
       if (houses) {
-        console.log(houses);
         ctx.beginPath();
         ctx.fillStyle = '#0000FF';
         houses.map((house) => {
-          // ctx.moveTo(
-          //     wall.coordinateX * colSize,
-          //     wall.coordinateY * rowSize,
-          // );
-          ctx.fillRect(
+          ctx.drawImage(
+              houseImageRef.current,
               (house.coordinateX - 1) * colSize,
               (house.coordinateY - 1) * rowSize,
               colSize,
@@ -177,17 +168,17 @@ export default function Canvas(): JSX.Element {
   }, [positionX, positionY]);
 
   /**
-   * Draws everything on the canvas.
-   * Re-renders on width or height update.
+   * Creates a canvas context and
+   * draws everything on the canvas.
    */
-  const drawEverything = () => {
+  const createCtxAndDraw = () => {
     if (storeStatus != 'loading') {
       const canvas = canvasRef.current;
       const ctx : CtxType = canvas?.getContext('2d');
-      draw(ctx);
+      drawCanvas(ctx);
     };
   };
-  useEffect(() => drawEverything(), [draw, dimensions.width,
+  useEffect(() => createCtxAndDraw(), [drawCanvas, dimensions.width,
     dimensions.height]);
   if (storeStatus == 'loading') {
     // TODO: add a spinner here
