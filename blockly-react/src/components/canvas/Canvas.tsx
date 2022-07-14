@@ -28,6 +28,9 @@ export default function Canvas(): JSX.Element {
   // animation movement progress indicator
   const movementInProgress = useAppSelector((state) =>
     state.playground.animationInProgress);
+  // level up sequence in progress indicator
+  const isLevelingUp = useAppSelector((state) =>
+    state.playground.isLevelingUp);
   const dispatch = useAppDispatch();
   // Take actor movements and process them in order for
   // animation purposes
@@ -174,13 +177,17 @@ export default function Canvas(): JSX.Element {
     if (storeStatus != 'loading') {
       const canvas = canvasRef.current;
       const ctx : CtxType = canvas?.getContext('2d');
-      if (!movementInProgress) {
+
+      // Draw the initial actor position on the canvas.
+      if (!movementInProgress && !isLevelingUp) {
         drawCanvas(ctx, actors);
       }
+      // Draw the animated movement on the canvas.
       for (let i = 0; i < actorMovements.length; i++) {
         const moveState = actorMovements[i];
         setTimeout(() => drawCanvas(ctx, moveState), i * 250);
       }
+      // Finish the animation by setting the state to finished.
       if (actorMovements.length > 0) {
         setTimeout(() => dispatch(finishThisTry()),
             actorMovements.length * 250);

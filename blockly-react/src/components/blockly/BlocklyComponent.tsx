@@ -122,7 +122,7 @@ export default function BlocklyComponent(...props :
         }, 250 * numberOfMovesRef.current);
         setTimeout(() => {
           return dispatch(levelUp());
-        }, 500 * numberOfMovesRef.current);
+        }, 250 * numberOfMovesRef.current);
         numberOfMovesRef.current = 0;
         tryNumber.current = 0;
       }
