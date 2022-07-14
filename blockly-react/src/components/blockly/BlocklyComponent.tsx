@@ -2,7 +2,8 @@ import React, {useEffect, useRef} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {move, levelUp, resetTry, startGame} from '../redux/playgroundSlice';
+import {move, levelUp, resetTry,
+  startAnimation} from '../redux/playgroundSlice';
 import {Button, Stack, Popover, OverlayTrigger} from 'react-bootstrap';
 import toolbox from './toolbox';
 
@@ -88,12 +89,13 @@ export default function BlocklyComponent(...props :
   // eslint-disable-next-line no-unused-vars
   const fakeMove = () => dispatch(move());
   /**
+   * Resets the state if there is a crash.
+   * If there is none;
    * Checks whether the actor goals are met
-   * after delay.
-   * Checks the animation turn and board turn to
-   * check completion only after all moves are made.
-   * Animation turn and board turn would only be equal
-   * after the last update was made inside redux store.
+   * after all moves have been made with a delay.
+   * Number of counted moves and board turn would only be equal
+   * after the last update was made inside redux store and
+   * if one of the actors has not crashed.
    */
   const checkActorGoals = () => {
     if (actorCrashed) {
@@ -105,6 +107,8 @@ export default function BlocklyComponent(...props :
       numberOfMovesRef.current = 0;
       tryNumber.current++;
     }
+    // Check whether the end level goals are met if the board turn
+    // is equal to number of counted moves.
     if (numberOfMovesRef.current == boardTurn && boardTurn != 0) {
       if (actors[0].coordinateX != goals[0].coordinateX) {
         setTimeout(() => {
@@ -134,7 +138,9 @@ export default function BlocklyComponent(...props :
   }, [boardTurn, numberOfMovesRef]);
 
   /**
-   * Code generation handler function
+   * Code generation handler function.
+   * Starts the code generation process
+   * alongside the animation.
    */
   const handleGeneration = async () => {
     initialTryNumber.current = tryNumber.current;
@@ -143,7 +149,7 @@ export default function BlocklyComponent(...props :
     failedRef.current = false;
     eval(code);
     if (numberOfMovesRef.current > 0) {
-      dispatch(startGame());
+      dispatch(startAnimation());
     }
   };
 

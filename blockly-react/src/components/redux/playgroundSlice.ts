@@ -165,7 +165,7 @@ export const playgroundSlice = createSlice({
         generateCurrentMap(state);
       }
     },
-    startGame: (state) => {
+    startAnimation: (state) => {
       state.animationInProgress = true;
     },
     /**
@@ -214,6 +214,6 @@ export const playgroundSlice = createSlice({
 });
 
 export const {move, levelUp, resetTry, finishThisTry,
-  startGame} = playgroundSlice.actions;
+  startAnimation} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
