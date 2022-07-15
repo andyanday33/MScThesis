@@ -11,6 +11,7 @@
 - [ ] Level Design.
 - [ ] Theme selector.
 - [ ] Scoring.
+- [ ] House checkpoints.
 ## Further Down The Line
 
 - Cypress End-to-end Testing
