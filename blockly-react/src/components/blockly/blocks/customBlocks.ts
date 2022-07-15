@@ -14,7 +14,8 @@ Blockly.Blocks['move_forward_block'] = {
 };
 
 Blockly.JavaScript['move_forward_block'] = function(block: any) {
-  // TODO: Assemble JavaScript into code variable.
+  // TODO: count number of times block is used.
+  console.log('move_forward_block');
   const code =
   'if(initialTryNumber.current == tryNumber.current)' +
   '{numberOfMovesRef.current++;dispatch(move())};\n';

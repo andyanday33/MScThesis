@@ -6,7 +6,13 @@
 - [ ] Theme selector for canvas
 - [ ] Game Alerts alongside tips
 
+## FOR THE DEMOVE
 
+- [ ] Turning right and left.
+- [ ] Move backwards.
+- [ ] Level Design.
+- [ ] Theme selector.
+- [ ] Scoring.
 ## Further Down The Line
 
 - Cypress End-to-end Testing
