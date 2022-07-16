@@ -1,6 +1,5 @@
 import Blockly from 'blockly';
 
-// TODO: add turning block
 Blockly.Blocks['move_forward_block'] = {
   init: function() {
     this.appendDummyInput()
@@ -18,6 +17,6 @@ Blockly.JavaScript['move_forward_block'] = function(block: any) {
   console.log('move_forward_block');
   const code =
   'if(initialTryNumber.current == tryNumber.current)' +
-  '{numberOfMovesRef.current++;dispatch(move())};\n';
+  '{numberOfMovesRef.current++;dispatch(moveForward())};\n';
   return code;
 };

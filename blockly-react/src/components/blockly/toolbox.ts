@@ -11,6 +11,10 @@ const toolbox = {
           'kind': 'block',
           'type': 'move_forward_block',
         },
+        {
+          'kind': 'block',
+          'type': 'move_backwards_block',
+        },
       ],
     },
     {

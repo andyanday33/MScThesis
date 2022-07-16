@@ -12,6 +12,7 @@
 - [ ] Theme selector.
 - [ ] Scoring.
 - [ ] House checkpoints.
+- [ ] Indexing actors.
 ## Further Down The Line
 
 - Cypress End-to-end Testing

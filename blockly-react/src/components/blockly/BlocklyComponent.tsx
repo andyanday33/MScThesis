@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {move, levelUp, resetTry,
+import {moveForward, moveBackwards, levelUp, resetTry,
   startAnimation} from '../redux/playgroundSlice';
 import {Button, Stack, Popover, OverlayTrigger} from 'react-bootstrap';
 import toolbox from './toolbox';
@@ -11,7 +11,8 @@ import toolbox from './toolbox';
 import './BlocklyComponent.css';
 
 // custom blocks
-import './blocks/customBlocks';
+import './blocks/moveForwardBlock';
+import './blocks/moveBackwardsBlock';
 import GoalAlert from '../alerts/GoalAlert';
 
 /**
@@ -36,8 +37,8 @@ export default function BlocklyComponent(...props :
   const storeStatus = useAppSelector((state) => state.playground.status);
   const actorCrashed = useAppSelector((state) => state.playground.crashed);
   // Keeping track of movement turn of a crash. for animation purposes.
-  const crashedAtMovementNumber = useAppSelector((state) =>
-    state.playground.crashedAt);
+  const crashedAtTurn = useAppSelector((state) =>
+    state.playground.crashedAtTurn);
   // Movement turn number inside the redux store.
   const boardTurn = useAppSelector((state) => state.playground.turn);
   // Number of movements in total, counted for checking logically resetting
@@ -87,7 +88,10 @@ export default function BlocklyComponent(...props :
    * inside production build.
    */
   // eslint-disable-next-line no-unused-vars
-  const fakeMove = () => dispatch(move());
+  const fakeMoves = () => {
+    dispatch(moveForward());
+    dispatch(moveBackwards());
+  };
   /**
    * Resets the state if there is a crash.
    * If there is none;
@@ -103,7 +107,7 @@ export default function BlocklyComponent(...props :
         disabledRef.current = false;
         failedRef.current = true;
         return dispatch(resetTry());
-      }, 250 * crashedAtMovementNumber);
+      }, 250 * crashedAtTurn);
       numberOfMovesRef.current = 0;
       tryNumber.current++;
     }

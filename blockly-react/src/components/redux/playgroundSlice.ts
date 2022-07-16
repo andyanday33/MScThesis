@@ -48,7 +48,7 @@ type CrashableObjectType = {
 interface PlaygroundState {
     status: String,
     crashed: boolean,
-    crashedAt: number,
+    crashedAtTurn: number,
     isLevelingUp: boolean,
     animationInProgress: boolean,
     levels: LevelType[],
@@ -76,7 +76,7 @@ const initialState: PlaygroundState = {
   // Actors on the map with their x,y coordinates
   status: 'idle',
   crashed: false,
-  crashedAt: 0,
+  crashedAtTurn: 0,
   isLevelingUp: false,
   animationInProgress: false,
   levels: [],
@@ -134,7 +134,24 @@ export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
-    move: (state) => {
+    moveBackwards: (state) => {
+      if (!state.crashed) {
+        state.turn = state.turn += 1;
+        state.actors = state.actors.map((actor) => {
+          actor.coordinateX -= 1;
+          const mapGrid = state.currentMap[actor.
+              coordinateY - 1][actor.coordinateX - 1];
+          // check whether the actor has crashed into a wall or another actor.
+          if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+          }
+          return actor;
+        });
+        state.movesThisTry.push(state.actors);
+      }
+    },
+    moveForward: (state) => {
       if (!state.crashed) {
         state.turn = state.turn += 1;
         state.actors = state.actors.map((actor) => {
@@ -144,7 +161,7 @@ export const playgroundSlice = createSlice({
           // check whether the actor has crashed into a wall or another actor.
           if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
             state.crashed = true;
-            state.crashedAt = state.movesThisTry.length + 1;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
           }
           return actor;
         });
@@ -213,7 +230,7 @@ export const playgroundSlice = createSlice({
   },
 });
 
-export const {move, levelUp, resetTry, finishThisTry,
+export const {moveForward, moveBackwards, levelUp, resetTry, finishThisTry,
   startAnimation} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
