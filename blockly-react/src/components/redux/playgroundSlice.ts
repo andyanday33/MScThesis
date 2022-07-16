@@ -134,11 +134,14 @@ export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
+    // TODO: try merging moveforward and movebackward into one.
     moveBackwards: (state) => {
       if (!state.crashed) {
         state.turn = state.turn += 1;
         state.actors = state.actors.map((actor) => {
           // Check whether the actor has crashed into boundaries.
+          // TODO: this would require some additional checking
+          // after introducing turning block.
           if (actor.coordinateX === 1) {
             state.crashed = true;
             state.crashedAtTurn = state.movesThisTry.length + 1;
@@ -162,6 +165,8 @@ export const playgroundSlice = createSlice({
         state.turn = state.turn += 1;
         state.actors = state.actors.map((actor) => {
           // Check whether the actor has crashed into boundaries.
+          // TODO: this would require some additional checking
+          // after introducing turning block.
           if (actor.coordinateX === state.gridSize) {
             state.crashed = true;
             state.crashedAtTurn = state.movesThisTry.length + 1;
