@@ -138,6 +138,12 @@ export const playgroundSlice = createSlice({
       if (!state.crashed) {
         state.turn = state.turn += 1;
         state.actors = state.actors.map((actor) => {
+          // Check whether the actor has crashed into boundaries.
+          if (actor.coordinateX === 1) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
           actor.coordinateX -= 1;
           const mapGrid = state.currentMap[actor.
               coordinateY - 1][actor.coordinateX - 1];
@@ -155,6 +161,12 @@ export const playgroundSlice = createSlice({
       if (!state.crashed) {
         state.turn = state.turn += 1;
         state.actors = state.actors.map((actor) => {
+          // Check whether the actor has crashed into boundaries.
+          if (actor.coordinateX === state.gridSize) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
           actor.coordinateX += 1;
           const mapGrid = state.currentMap[actor.
               coordinateY - 1][actor.coordinateX - 1];
