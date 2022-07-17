@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // Enums are giving no-unused-vars exception
 // even when they are being used.
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
@@ -306,10 +305,10 @@ export const playgroundSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-        .addCase(fetchLevels.pending, (state, action) => {
+        .addCase(fetchLevels.pending, (state) => {
           state.status = 'loading';
         })
-        .addCase(fetchLevels.rejected, (state, action) => {
+        .addCase(fetchLevels.rejected, (state) => {
           state.status = 'rejected';
         })
         .addCase(fetchLevels.fulfilled, (state, action) => {
