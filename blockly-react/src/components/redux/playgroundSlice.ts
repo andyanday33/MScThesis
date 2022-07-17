@@ -130,57 +130,49 @@ const generateCurrentMap = (state: PlaygroundState) => {
   }
 };
 
+const checkCrashedAndMove = (state: PlaygroundState, actor: GridObjectType,
+    moveType: String) => {
+  switch (moveType) {
+    case `Forward`:
+      if (actor.coordinateX === state.gridSize) {
+        state.crashed = true;
+        state.crashedAtTurn = state.movesThisTry.length + 1;
+        return actor;
+      }
+      actor.coordinateX += 1;
+      break;
+    case `Backwards`:
+      if (actor.coordinateX === 1) {
+        state.crashed = true;
+        state.crashedAtTurn = state.movesThisTry.length + 1;
+        return actor;
+      }
+      actor.coordinateX -= 1;
+      break;
+  }
+  const mapGrid = state.currentMap[actor.
+      coordinateY - 1][actor.coordinateX - 1];
+  // check whether the actor has crashed into a wall or another actor.
+  if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
+    state.crashed = true;
+    state.crashedAtTurn = state.movesThisTry.length + 1;
+  }
+  return actor;
+};
+
 export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
-    // TODO: try merging moveforward and movebackward into one.
-    moveBackwards: (state) => {
+    move: (state, action) => {
       if (!state.crashed) {
+        console.log(action);
         state.turn = state.turn += 1;
         state.actors = state.actors.map((actor) => {
           // Check whether the actor has crashed into boundaries.
           // TODO: this would require some additional checking
           // after introducing turning block.
-          if (actor.coordinateX === 1) {
-            state.crashed = true;
-            state.crashedAtTurn = state.movesThisTry.length + 1;
-            return actor;
-          }
-          actor.coordinateX -= 1;
-          const mapGrid = state.currentMap[actor.
-              coordinateY - 1][actor.coordinateX - 1];
-          // check whether the actor has crashed into a wall or another actor.
-          if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
-            state.crashed = true;
-            state.crashedAtTurn = state.movesThisTry.length + 1;
-          }
-          return actor;
-        });
-        state.movesThisTry.push(state.actors);
-      }
-    },
-    moveForward: (state) => {
-      if (!state.crashed) {
-        state.turn = state.turn += 1;
-        state.actors = state.actors.map((actor) => {
-          // Check whether the actor has crashed into boundaries.
-          // TODO: this would require some additional checking
-          // after introducing turning block.
-          if (actor.coordinateX === state.gridSize) {
-            state.crashed = true;
-            state.crashedAtTurn = state.movesThisTry.length + 1;
-            return actor;
-          }
-          actor.coordinateX += 1;
-          const mapGrid = state.currentMap[actor.
-              coordinateY - 1][actor.coordinateX - 1];
-          // check whether the actor has crashed into a wall or another actor.
-          if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
-            state.crashed = true;
-            state.crashedAtTurn = state.movesThisTry.length + 1;
-          }
-          return actor;
+          return checkCrashedAndMove(state, actor, action.payload);
         });
         state.movesThisTry.push(state.actors);
       }
@@ -247,7 +239,7 @@ export const playgroundSlice = createSlice({
   },
 });
 
-export const {moveForward, moveBackwards, levelUp, resetTry, finishThisTry,
+export const {move, levelUp, resetTry, finishThisTry,
   startAnimation} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
