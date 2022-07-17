@@ -7,7 +7,7 @@
 ## FOR THE DEMO
 
 - [ ] Turning right and left.
-- [ ] Move backwards.
+- [X] Move backwards.
 - [ ] Level Design.
 - [ ] Theme selector.
 - [ ] Scoring.
