@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+// Enums are giving no-unused-vars exception
+// even when they are being used.
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {db} from '../../firebase/firebaseConfig';
 import {collection, getDocs, orderBy, query} from 'firebase/firestore';
@@ -8,17 +11,32 @@ import wallSvg from '../../../public/wall.svg';
 
 const levelCollection = collection(db, 'levels');
 
+enum directions {
+  North = 'NORTH',
+  West = 'WEST',
+  East = 'EAST',
+  South = 'SOUTH',
+}
+
+enum moveTypes {
+  Forward = 'FORWARD',
+  Backwards = 'BACKWARDS',
+}
+
 export type GridObjectType = {
   coordinateX: number,
   coordinateY: number,
 }
 
-// TODO: add house and wall coordinates to firestore
-// anything else could be considered a road.
-// further down the road: add traffic lights.
-// adding level tips could be nice probably.
+export type ActorType = {
+  coordinateX: number,
+  coordinateY: number,
+  direction: directions,
+}
+
+// TODO further down the road: add traffic lights.
 type LevelType = {
-  actors?: GridObjectType[],
+  actors?: ActorType[],
   goals?: GridObjectType[],
   houses?: GridObjectType[],
   walls?: GridObjectType[],
@@ -53,7 +71,7 @@ interface PlaygroundState {
     animationInProgress: boolean,
     levels: LevelType[],
     maxLevel: number,
-    actors: GridObjectType[],
+    actors: ActorType[],
     goals: GridObjectType[],
     walls?: GridObjectType[],
     houses?: GridObjectType[],
@@ -69,7 +87,6 @@ interface PlaygroundState {
     movesThisTry: GridObjectType[][],
 };
 
-// TODO: Add other objects in the map.
 /* TODO: after adding user auth, change initial
 level 0 to where usere left off. */
 const initialState: PlaygroundState = {
@@ -130,25 +147,100 @@ const generateCurrentMap = (state: PlaygroundState) => {
   }
 };
 
-const checkCrashedAndMove = (state: PlaygroundState, actor: GridObjectType,
-    moveType: String) => {
-  switch (moveType) {
-    case `Forward`:
-      if (actor.coordinateX === state.gridSize) {
-        state.crashed = true;
-        state.crashedAtTurn = state.movesThisTry.length + 1;
-        return actor;
+/**
+ * Checks whether an actor is crashing
+ * depending on the direction and current
+ * position. Moves actor one grid forward
+ * if there's no crash.
+ *
+ * @param {PlaygroundState} state current state
+ *  of the playground.
+ * @param {ActorType} actor actor that is
+ *  going to be checked for crashes and moved.
+ * @param {moveTypes} moveType Move type indicating
+ *  forward or backwards move.
+ * @return {ActorType} an actor which is either
+ *  moved one grid further or crashed.
+ */
+const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
+    moveType: moveTypes) : ActorType => {
+  switch (actor.direction) {
+    case directions.East:
+      switch (moveType) {
+        case moveTypes.Forward:
+          if (actor.coordinateX === state.gridSize) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
+          actor.coordinateX += 1;
+          break;
+        case moveTypes.Backwards:
+          if (actor.coordinateX === 1) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
+          actor.coordinateX -= 1;
+          break;
       }
-      actor.coordinateX += 1;
-      break;
-    case `Backwards`:
-      if (actor.coordinateX === 1) {
-        state.crashed = true;
-        state.crashedAtTurn = state.movesThisTry.length + 1;
-        return actor;
+    case directions.West:
+      switch (moveType) {
+        case moveTypes.Forward:
+          if (actor.coordinateX === 1) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
+          actor.coordinateX -= 1;
+          break;
+        case moveTypes.Backwards:
+          if (actor.coordinateX === state.gridSize) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
+          actor.coordinateX += 1;
+          break;
       }
-      actor.coordinateX -= 1;
-      break;
+    case directions.North:
+      switch (moveType) {
+        case moveTypes.Forward:
+          if (actor.coordinateY === 1) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
+          actor.coordinateY -= 1;
+          break;
+        case moveTypes.Backwards:
+          if (actor.coordinateY === state.gridSize) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
+          actor.coordinateY += 1;
+          break;
+      }
+    case directions.South:
+      switch (moveType) {
+        case moveTypes.Forward:
+          if (actor.coordinateY === state.gridSize) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
+          actor.coordinateY += 1;
+          break;
+        case moveTypes.Backwards:
+          if (actor.coordinateY === 1) {
+            state.crashed = true;
+            state.crashedAtTurn = state.movesThisTry.length + 1;
+            return actor;
+          }
+          actor.coordinateY -= 1;
+          break;
+      }
   }
   const mapGrid = state.currentMap[actor.
       coordinateY - 1][actor.coordinateX - 1];

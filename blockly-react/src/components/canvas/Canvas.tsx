@@ -8,7 +8,6 @@ import './Canvas.css';
 
 type CtxType = (CanvasRenderingContext2D | null | undefined)
 
-// TODO: Try adding car SVG's instead of drawing circles.
 /**
  * This functional component consists of a canvas and
  * a button to move elements in the canvas.
