@@ -1,12 +1,10 @@
-// Enums are giving no-unused-vars exception
-// even when they are being used.
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {db} from '../../firebase/firebaseConfig';
 import {collection, getDocs, orderBy, query} from 'firebase/firestore';
-import carSvg from '../../../public/car.svg';
-import crossSvg from '../../../public/cross.svg';
-import houseSvg from '../../../public/house.svg';
-import wallSvg from '../../../public/wall.svg';
+import carSvg from '../../assets/carTheme/car.svg';
+import crossSvg from '../../assets/carTheme/cross.svg';
+import houseSvg from '../../assets/carTheme/house.svg';
+import wallSvg from '../../assets/carTheme/wall.svg';
 
 const levelCollection = collection(db, 'levels');
 
