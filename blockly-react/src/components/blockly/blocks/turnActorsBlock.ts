@@ -7,15 +7,15 @@ Blockly.Blocks['turn_actors_block'] = {
         .appendField(new Blockly.FieldDropdown([['left', 'LEFT'],
           ['right', 'RIGHT']]), 'directions');
     this.setColour(230);
-    this.setTooltip('');
+    this.setTooltip('Turns Actors Left or Right');
     this.setHelpUrl('');
   },
 };
 
 Blockly.JavaScript['turn_actors_block'] = function(block: Blockly.Block)
   : String {
-  const dropdownDirections = block.getFieldValue('directions');
+  const dropdownDirection = block.getFieldValue('directions');
   // TODO: Assemble JavaScript into code variable.
-  const code = `console.log("Turn " + "${dropdownDirections}")`;
+  const code = `console.log("Turn " + "${dropdownDirection}")`;
   return code;
 };
