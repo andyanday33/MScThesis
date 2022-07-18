@@ -9,10 +9,10 @@ import wallSvg from '../../assets/carTheme/wall.svg';
 const levelCollection = collection(db, 'levels');
 
 enum directions {
-  North = 'NORTH',
-  West = 'WEST',
-  East = 'EAST',
-  South = 'SOUTH',
+  North = 0,
+  West = 1,
+  East = 2,
+  South = 3,
 }
 
 enum moveTypes {
