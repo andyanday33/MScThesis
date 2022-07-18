@@ -15,6 +15,10 @@ const toolbox = {
           'kind': 'block',
           'type': 'move_backwards_block',
         },
+        {
+          'kind': 'block',
+          'type': 'turn_actors_block',
+        },
       ],
     },
     {
