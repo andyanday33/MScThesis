@@ -16,6 +16,6 @@ Blockly.JavaScript['turn_actors_block'] = function(block: Blockly.Block)
   : String {
   const dropdownDirections = block.getFieldValue('directions');
   // TODO: Assemble JavaScript into code variable.
-  const code = `console.log("Turn " + ${dropdownDirections})`;
+  const code = `console.log("Turn " + "${dropdownDirections}")`;
   return code;
 };
