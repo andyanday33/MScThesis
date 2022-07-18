@@ -13,6 +13,7 @@ import './BlocklyComponent.css';
 // custom blocks
 import './blocks/moveForwardBlock';
 import './blocks/moveBackwardsBlock';
+import './blocks/turnActorsBlock';
 import GoalAlert from '../alerts/GoalAlert';
 
 /**
@@ -87,7 +88,7 @@ export default function BlocklyComponent(...props :
    * ahead of the time. This function gets deleted
    * inside production build.
    */
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fakeMoves = () => {
     dispatch(move('Forward'));
   };
