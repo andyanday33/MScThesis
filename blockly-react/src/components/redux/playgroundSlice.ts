@@ -181,6 +181,7 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
           actor.coordinateX -= 1;
           break;
       }
+      break;
     case directions.West:
       switch (moveType) {
         case moveTypes.Forward:
@@ -200,6 +201,7 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
           actor.coordinateX += 1;
           break;
       }
+      break;
     case directions.North:
       switch (moveType) {
         case moveTypes.Forward:
@@ -219,6 +221,7 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
           actor.coordinateY += 1;
           break;
       }
+      break;
     case directions.South:
       switch (moveType) {
         case moveTypes.Forward:
@@ -238,7 +241,9 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
           actor.coordinateY -= 1;
           break;
       }
+      break;
   }
+  console.log(actor.coordinateX);
   const mapGrid = state.currentMap[actor.
       coordinateY - 1][actor.coordinateX - 1];
   // check whether the actor has crashed into a wall or another actor.
