@@ -247,6 +247,7 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
   const mapGrid = state.currentMap[actor.
       coordinateY - 1][actor.coordinateX - 1];
   // check whether the actor has crashed into a wall or another actor.
+  // TODO: check this logic for actors again in the future.
   if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
     state.crashed = true;
     state.crashedAtTurn = state.movesThisTry.length + 1;
