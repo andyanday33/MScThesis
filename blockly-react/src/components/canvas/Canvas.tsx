@@ -176,7 +176,6 @@ export default function Canvas(): JSX.Element {
     if (storeStatus != 'loading') {
       const canvas = canvasRef.current;
       const ctx : CtxType = canvas?.getContext('2d');
-
       // Draw the initial actor position on the canvas.
       if (!movementInProgress && !isLevelingUp) {
         drawCanvas(ctx, actors);
@@ -188,6 +187,7 @@ export default function Canvas(): JSX.Element {
       }
       // Finish the animation by setting the state to finished.
       if (actorMovements.length > 0) {
+        console.log("animation finished");
         setTimeout(() => dispatch(finishThisTry()),
             actorMovements.length * 250);
       }

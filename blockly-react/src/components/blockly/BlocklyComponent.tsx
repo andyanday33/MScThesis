@@ -44,7 +44,7 @@ export default function BlocklyComponent(...props :
   const boardTurn = useAppSelector((state) => state.playground.turn);
   // Number of movements in total, counted for checking logically resetting
   // the level state after all the moves are made.
-  const numberOfMovesRef = useRef(0);
+  const moves = useAppSelector((state) => state.playground.movesThisTry);
   // current tries
   const tryNumber = useRef(0);
   // initial value of trynumber when code generation first called.
@@ -82,7 +82,7 @@ export default function BlocklyComponent(...props :
   }, [toolbox]);
 
   /**
-   * Function that is a placeholder for move function so it
+   * Function that is a placeholder for move and turn functions so it
    * could be imported with no errors
    * since we can not provide generated blockly code
    * ahead of the time. This function gets deleted
@@ -109,30 +109,28 @@ export default function BlocklyComponent(...props :
         failedRef.current = true;
         return dispatch(resetTry());
       }, 250 * crashedAtTurn);
-      numberOfMovesRef.current = 0;
       tryNumber.current++;
     }
     // Check whether the end level goals are met if the board turn
     // is equal to number of counted moves.
-    if (numberOfMovesRef.current == boardTurn && boardTurn != 0) {
+    console.log(moves.length, boardTurn);
+    if (moves.length == boardTurn && boardTurn != 0) {
       if (actors[0].coordinateX != goals[0].coordinateX) {
         setTimeout(() => {
           disabledRef.current = false;
           failedRef.current = true;
           return dispatch(resetTry());
-        }, 250 * numberOfMovesRef.current);
-        numberOfMovesRef.current = 0;
+        }, 250 * moves.length);
         tryNumber.current++;
       } else {
-        console.log(numberOfMovesRef.current);
+        console.log(moves.length);
         setTimeout(() => {
           actorsMetGoalsRef.current = true;
           disabledRef.current = false;
-        }, 250 * numberOfMovesRef.current);
+        }, 250 * moves.length);
         setTimeout(() => {
           return dispatch(levelUp());
-        }, 250 * numberOfMovesRef.current);
-        numberOfMovesRef.current = 0;
+        }, 250 * moves.length);
         tryNumber.current = 0;
       }
     }
@@ -140,7 +138,7 @@ export default function BlocklyComponent(...props :
 
   useEffect(() => {
     checkActorGoals();
-  }, [boardTurn, numberOfMovesRef]);
+  }, [boardTurn, moves.length]);
 
   /**
    * Code generation handler function.
@@ -153,7 +151,7 @@ export default function BlocklyComponent(...props :
     disabledRef.current = true;
     failedRef.current = false;
     eval(code);
-    if (numberOfMovesRef.current > 0) {
+    if (moves.length > 0) {
       dispatch(startAnimation());
     }
   };

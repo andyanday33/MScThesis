@@ -19,6 +19,6 @@ Blockly.JavaScript['move_forward_block'] = function(block: Blockly.Block)
   console.log('move_forward_block');
   const code =
   'if(initialTryNumber.current == tryNumber.current)' +
-  '{numberOfMovesRef.current++;dispatch(move("FORWARD"))};\n';
+  '{dispatch(move("FORWARD"))};\n';
   return code;
 };

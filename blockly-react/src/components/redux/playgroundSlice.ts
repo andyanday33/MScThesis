@@ -81,7 +81,7 @@ interface PlaygroundState {
     houseImageSrc: string,
     wallImageSrc: string,
     goalImageSrc: string
-    movesThisTry: GridObjectType[][],
+    movesThisTry: ActorType[][],
 };
 
 /* TODO: after adding user auth, change initial
@@ -271,7 +271,7 @@ export const playgroundSlice = createSlice({
             actor.direction = directions.North;
           }
         }
-        console.log(actor);
+        console.log(actor.direction);
         return actor;
       });
       state.movesThisTry.push(state.actors);
@@ -305,6 +305,7 @@ export const playgroundSlice = createSlice({
     },
     startAnimation: (state) => {
       state.animationInProgress = true;
+      console.log("animation started");
     },
     /**
      * Logically resets the playground and initiates animation progress.
