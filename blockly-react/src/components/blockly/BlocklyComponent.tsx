@@ -3,7 +3,7 @@ import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {move, levelUp, resetTry,
-  startAnimation} from '../redux/playgroundSlice';
+  startAnimation, turn} from '../redux/playgroundSlice';
 import {Button, Stack, Popover, OverlayTrigger} from 'react-bootstrap';
 import toolbox from './toolbox';
 
@@ -91,6 +91,7 @@ export default function BlocklyComponent(...props :
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fakeMoves = () => {
     dispatch(move('Forward'));
+    dispatch(turn('LEFT'));
   };
   /**
    * Resets the state if there is a crash.

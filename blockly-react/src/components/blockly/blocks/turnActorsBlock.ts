@@ -16,6 +16,8 @@ Blockly.JavaScript['turn_actors_block'] = function(block: Blockly.Block)
   : String {
   const dropdownDirection = block.getFieldValue('directions');
   // TODO: Assemble JavaScript into code variable.
-  const code = `console.log("Turn " + "${dropdownDirection}")`;
+  const code =
+  'if(initialTryNumber.current == tryNumber.current)' +
+  `{numberOfMovesRef.current++;dispatch(turn("${dropdownDirection}"))};\n`;
   return code;
 };

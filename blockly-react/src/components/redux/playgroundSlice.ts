@@ -10,9 +10,9 @@ const levelCollection = collection(db, 'levels');
 
 enum directions {
   North = 0,
-  West = 1,
-  East = 2,
-  South = 3,
+  East = 1,
+  South = 2,
+  West = 3,
 }
 
 enum moveTypes {
@@ -243,7 +243,6 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
       }
       break;
   }
-  console.log(actor.coordinateX);
   const mapGrid = state.currentMap[actor.
       coordinateY - 1][actor.coordinateX - 1];
   // check whether the actor has crashed into a wall or another actor.
@@ -259,6 +258,24 @@ export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
+    turn: (state, action) => {
+      state.actors = state.actors.map((actor) => {
+        if (action.payload === 'LEFT') {
+          actor.direction -= 1;
+          if (actor.direction < directions.North) {
+            actor.direction = directions.East;
+          }
+        } else if (action.payload === 'RIGHT') {
+          actor.direction += 1;
+          if (actor.direction > directions.East) {
+            actor.direction = directions.North;
+          }
+        }
+        console.log(actor);
+        return actor;
+      });
+      state.movesThisTry.push(state.actors);
+    },
     move: (state, action) => {
       if (!state.crashed) {
         console.log(action);
@@ -335,6 +352,6 @@ export const playgroundSlice = createSlice({
 });
 
 export const {move, levelUp, resetTry, finishThisTry,
-  startAnimation} = playgroundSlice.actions;
+  startAnimation, turn} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
