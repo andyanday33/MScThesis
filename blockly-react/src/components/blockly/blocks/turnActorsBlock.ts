@@ -6,6 +6,8 @@ Blockly.Blocks['turn_actors_block'] = {
         .appendField('Turn Actors')
         .appendField(new Blockly.FieldDropdown([['left', 'LEFT'],
           ['right', 'RIGHT']]), 'directions');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setColour(230);
     this.setTooltip('Turns Actors Left or Right');
     this.setHelpUrl('');

@@ -7,6 +7,7 @@
 ## FOR THE DEMO
 
 - [ ] Turning right and left.
+    - [ ] Fix the visual bug introduced.
 - [X] Move backwards.
 - [ ] Level Design.
 - [ ] Theme selector.
