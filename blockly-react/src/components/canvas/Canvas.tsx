@@ -187,7 +187,6 @@ export default function Canvas(): JSX.Element {
       }
       // Finish the animation by setting the state to finished.
       if (actorMovements.length > 0) {
-        console.log("animation finished");
         setTimeout(() => dispatch(finishThisTry()),
             actorMovements.length * 250);
       }

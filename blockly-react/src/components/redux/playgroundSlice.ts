@@ -259,6 +259,7 @@ export const playgroundSlice = createSlice({
   initialState,
   reducers: {
     turn: (state, action) => {
+      state.turn += 1;
       state.actors = state.actors.map((actor) => {
         if (action.payload === 'LEFT') {
           actor.direction -= 1;
@@ -279,7 +280,7 @@ export const playgroundSlice = createSlice({
     move: (state, action) => {
       if (!state.crashed) {
         console.log(action);
-        state.turn = state.turn += 1;
+        state.turn += 1;
         state.actors = state.actors.map((actor) => {
           // Check whether the actor has crashed into boundaries.
           // TODO: this would require some additional checking
@@ -305,7 +306,6 @@ export const playgroundSlice = createSlice({
     },
     startAnimation: (state) => {
       state.animationInProgress = true;
-      console.log("animation started");
     },
     /**
      * Logically resets the playground and initiates animation progress.
