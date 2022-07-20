@@ -9,10 +9,10 @@ import wallSvg from '../../assets/carTheme/wall.svg';
 const levelCollection = collection(db, 'levels');
 
 enum directions {
-  North = 0,
-  East = 1,
-  South = 2,
-  West = 3,
+  East = 0,
+  South = 1,
+  West = 2,
+  North = 3,
 }
 
 enum moveTypes {
@@ -263,13 +263,13 @@ export const playgroundSlice = createSlice({
       state.actors = state.actors.map((actor) => {
         if (action.payload === 'LEFT') {
           actor.direction -= 1;
-          if (actor.direction < directions.North) {
-            actor.direction = directions.East;
+          if (actor.direction < directions.East) {
+            actor.direction = directions.North;
           }
         } else if (action.payload === 'RIGHT') {
           actor.direction += 1;
-          if (actor.direction > directions.East) {
-            actor.direction = directions.North;
+          if (actor.direction > directions.North) {
+            actor.direction = directions.East;
           }
         }
         console.log(actor.direction);

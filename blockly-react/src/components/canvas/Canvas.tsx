@@ -1,7 +1,7 @@
 import React, {useRef, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {finishThisTry} from '../redux/playgroundSlice';
-import {GridObjectType} from '../redux/playgroundSlice';
+import {ActorType} from '../redux/playgroundSlice';
 
 // styles
 import './Canvas.css';
@@ -83,13 +83,49 @@ export default function Canvas(): JSX.Element {
     };
   });
 
-  const drawCanvas = (ctx : CtxType, actors: GridObjectType[]) => {
+  const drawCanvas = (ctx : CtxType, actors: ActorType[]) => {
     if (ctx) {
       // clear the canvas before drawing next state.
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       // sizes of each rect on canvas
       const colSize = ctx.canvas.width / gridSize;
       const rowSize = ctx.canvas.height / gridSize;
+
+      // draw the actors
+      ctx.beginPath();
+      // we should find the minimum side so we that could
+      // fit the image in a grid without strecthing it.
+      const minSide = Math.min(rowSize, colSize);
+      actors.map((actor) => {
+        let actorX = actor.coordinateX * colSize -
+        colSize / 2 - minSide / 3;
+        const actorY = actor.coordinateY * rowSize -
+        rowSize / 2 - minSide / 3;
+        const actorWidth = minSide * 2 / 3;
+        const actorHeight = minSide * 2 / 3;
+        ctx.save();
+        if (actor.direction === 2) {
+          ctx.scale(-1, 1);
+          actorX = - actorX - actorHeight;
+        } else {
+          ctx.translate(actorX + actorWidth / 2, actorY + actorHeight / 2);
+          ctx.rotate(actor.direction * Math.PI / 2);
+          ctx.translate(-actorX - actorWidth / 2, -actorY - actorHeight / 2);
+        }
+        ctx.drawImage(
+            // Center the images inside a grid by
+            // extracting (grid's size / 2 + image's size / 2)
+            // from the starting point of the image.
+            actorImageRef.current,
+            actorX,
+            actorY,
+            actorWidth,
+            actorHeight,
+        );
+        ctx.restore();
+      });
+      ctx.fill();
+
       // draw the grids
       ctx.fillStyle = '#000000';
       ctx.beginPath();
@@ -104,23 +140,6 @@ export default function Canvas(): JSX.Element {
         ctx.lineTo(colSize * i, ctx.canvas.height);
         ctx.stroke();
       }
-      // draw the actors
-      ctx.beginPath();
-      // we should find the minimum side so we that could
-      // fit the image in a grid without strecthing it.
-      const minSide = Math.min(rowSize, colSize);
-      actors.map((actor) => ctx.drawImage(
-          // Center the images inside a grid by
-          // extracting (grid's size / 2 + image's size / 2)
-          // from the starting point of the image.
-          actorImageRef.current, actor.coordinateX * colSize -
-          colSize / 2 - minSide / 3,
-          actor.coordinateY * rowSize -
-          rowSize / 2 - minSide / 3,
-          2 * minSide / 3,
-          2 * minSide / 3,
-      ));
-      ctx.fill();
 
       // draw the goals
       ctx.beginPath();
