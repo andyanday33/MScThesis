@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Game from './pages/Game';
 import Home from './pages/Home';
-import GetStarted from './pages/getStarted/GetStarted';
+import GetStarted from './pages/GetStarted';
 
 /**
  * Main App component for the React application.

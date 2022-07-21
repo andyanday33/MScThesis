@@ -1,5 +1,5 @@
 import React from 'react';
-import AlertDismissible from '../../components/alerts/AlertDismissable';
+import AlertDismissible from '../components/alerts/AlertDismissable';
 import {Accordion} from 'react-bootstrap';
 /**
  * The functional component corresponding to
