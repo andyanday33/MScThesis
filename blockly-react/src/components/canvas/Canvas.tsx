@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry} from '../redux/playgroundSlice';
 import {ActorType} from '../redux/playgroundSlice';
 
