@@ -144,12 +144,18 @@ export default function Canvas(): JSX.Element {
       // draw the goals
       ctx.beginPath();
       goals.map((goal) => {
+        const goalX = goal.coordinateX * colSize -
+        colSize / 2 - minSide / 3;
+        const goalY = goal.coordinateY * rowSize -
+        rowSize / 2 - minSide / 3;
+        const goalWidth = minSide * 2 / 3;
+        const goalHeight = minSide * 2 / 3;
         ctx.drawImage(
             goalImageRef.current,
-            (goal.coordinateX - 1) * colSize,
-            (goal.coordinateY - 1) * rowSize,
-            colSize,
-            rowSize,
+            goalX,
+            goalY,
+            goalWidth,
+            goalHeight,
         );
         ctx.stroke();
       });
