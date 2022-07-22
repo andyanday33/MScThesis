@@ -8,7 +8,7 @@
 
 - [X] Turning right and left.
 - [X] Fix the visual bug introduced.
-- [ ] Make the goals smaller.
+- [X] Make the goals smaller.
 - [X] Move backwards.
 - [ ] Level Design.
 - [ ] Theme selector.
