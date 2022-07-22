@@ -264,27 +264,27 @@ export const playgroundSlice = createSlice({
   initialState,
   reducers: {
     turn: (state, action) => {
-      state.turn += 1;
-      state.actors = state.actors.map((actor) => {
-        if (action.payload === 'LEFT') {
-          actor.direction -= 1;
-          if (actor.direction < directions.East) {
-            actor.direction = directions.North;
+      if (!state.crashed) {
+        state.turn += 1;
+        state.actors = state.actors.map((actor) => {
+          if (action.payload === 'LEFT') {
+            actor.direction -= 1;
+            if (actor.direction < directions.East) {
+              actor.direction = directions.North;
+            }
+          } else if (action.payload === 'RIGHT') {
+            actor.direction += 1;
+            if (actor.direction > directions.North) {
+              actor.direction = directions.East;
+            }
           }
-        } else if (action.payload === 'RIGHT') {
-          actor.direction += 1;
-          if (actor.direction > directions.North) {
-            actor.direction = directions.East;
-          }
-        }
-        console.log(actor.direction);
-        return actor;
-      });
-      state.movesThisTry.push(state.actors);
+          console.log(actor.direction);
+          return actor;
+        });
+        state.movesThisTry.push(state.actors);
+      }
     },
     move: (state, action) => {
-      console.log('move');
-      console.log(state.crashed);
       if (!state.crashed) {
         console.log(action);
         state.turn += 1;
