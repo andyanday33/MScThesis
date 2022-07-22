@@ -1,4 +1,5 @@
 import React, {useRef, useEffect} from 'react';
+import {Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry} from '../redux/playgroundSlice';
 import {ActorType} from '../redux/playgroundSlice';
@@ -228,6 +229,12 @@ export default function Canvas(): JSX.Element {
   }
   return (
     <>
+      <Form.Select aria-label="Theme Select">
+        <option>Please select a theme (Cars by default)</option>
+        <option value="Cars">Cars</option>
+        <option value="Shopping-Carts">Shopping Carts</option>
+        <option value="Monkeys">Monkeys</option>
+      </Form.Select>
       <canvas className="main-canvas" ref={canvasRef}
         height={`${dimensions.width >= 1200 ?
           dimensions.height / 1.5 : dimensions.height - 50}`}
