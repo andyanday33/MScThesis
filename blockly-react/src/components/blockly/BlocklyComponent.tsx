@@ -150,7 +150,8 @@ export default function BlocklyComponent(...props :
     const code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
     disabledRef.current = true;
     failedRef.current = false;
-    eval(code);
+    console.log(code);
+    await eval(code);
     if (moves.length > 0) {
       dispatch(startAnimation());
     }
