@@ -82,6 +82,7 @@ interface PlaygroundState {
     wallImageSrc: string,
     goalImageSrc: string
     movesThisTry: ActorType[][],
+    points: number[],
 };
 
 /* TODO: after adding user auth, change initial
@@ -110,6 +111,7 @@ const initialState: PlaygroundState = {
   goalImageSrc: crossSvg,
   wallImageSrc: wallSvg,
   movesThisTry: [],
+  points: [],
 };
 
 export const fetchLevels = createAsyncThunk('playground/fetchLevels',
