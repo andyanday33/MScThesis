@@ -196,7 +196,7 @@ export default function Canvas(): JSX.Element {
       const canvas = canvasRef.current;
       const ctx : CtxType = canvas?.getContext('2d');
       // Draw the initial actor position on the canvas.
-      if (!movementInProgress && !isLevelingUp) {
+      if (!movementInProgress && !isLevelingUp && actorMovements.length == 0) {
         drawCanvas(ctx, actors);
       }
       // Draw the animated movement on the canvas.
