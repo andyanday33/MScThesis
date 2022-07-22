@@ -229,17 +229,17 @@ export default function Canvas(): JSX.Element {
   }
   return (
     <>
-      <Form.Select aria-label="Theme Select">
-        <option>Please select a theme (Cars by default)</option>
-        <option value="Cars">Cars</option>
-        <option value="Shopping-Carts">Shopping Carts</option>
-        <option value="Monkeys">Monkeys</option>
-      </Form.Select>
       <canvas className="main-canvas" ref={canvasRef}
         height={`${dimensions.width >= 1200 ?
           dimensions.height / 1.5 : dimensions.height - 50}`}
         width={`${dimensions.width >= 1200 ?
           dimensions.width / 2 - 50 : dimensions.width - 50}`} />
+      <Form.Select className="mx-auto" size="lg" aria-label="Theme Select">
+        <option>Please select a theme (Cars by default)</option>
+        <option value="Cars">Cars</option>
+        <option value="Shopping-Carts">Shopping Carts</option>
+        <option value="Monkeys">Monkeys</option>
+      </Form.Select>
     </>
   );
 }
