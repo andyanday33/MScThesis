@@ -7,7 +7,7 @@
 ## FOR THE DEMO
 
 - [X] Turning right and left.
-- [ ] Fix the visual bug introduced.
+- [X] Fix the visual bug introduced.
 - [ ] Make the goals smaller.
 - [X] Move backwards.
 - [ ] Level Design.
