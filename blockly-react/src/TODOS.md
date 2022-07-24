@@ -10,11 +10,11 @@
 - [X] Fix the visual bug introduced.
 - [X] Make the goals smaller.
 - [X] Move backwards.
-- [ ] Level Design.
 - [ ] Theme selector.
 - [ ] Scoring.
-- [ ] ~House checkpoints~.
 - [ ] Indexing actors.
+- [ ] Level Design.
+- [ ] ~House checkpoints~.
 ## Further Down The Line
 
 - Cypress End-to-end Testing

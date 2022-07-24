@@ -20,6 +20,12 @@ enum moveTypes {
   Backwards = 'BACKWARDS',
 }
 
+enum themes {
+  Car = 'CAR',
+  Cart = 'CART',
+  Animal = 'ANIMAL',
+}
+
 export type GridObjectType = {
   coordinateX: number,
   coordinateY: number,
@@ -83,6 +89,7 @@ interface PlaygroundState {
     goalImageSrc: string
     movesThisTry: ActorType[][],
     points: number[],
+    theme: themes,
 };
 
 /* TODO: after adding user auth, change initial
@@ -112,6 +119,7 @@ const initialState: PlaygroundState = {
   wallImageSrc: wallSvg,
   movesThisTry: [],
   points: [],
+  theme: themes.Car,
 };
 
 export const fetchLevels = createAsyncThunk('playground/fetchLevels',
