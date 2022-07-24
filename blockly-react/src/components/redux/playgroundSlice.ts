@@ -20,7 +20,7 @@ enum moveTypes {
   Backwards = 'BACKWARDS',
 }
 
-enum themes {
+export enum themes {
   Car = 'CAR',
   Cart = 'CART',
   Animal = 'ANIMAL',
@@ -339,6 +339,9 @@ export const playgroundSlice = createSlice({
       state.animationInProgress = false;
       state.movesThisTry = [];
       state.actors = state.levels[state.level].actors!;
+    },
+    changeTheme: (state, action) => {
+      state.theme = action.payload;
     },
   },
   extraReducers: (builder) => {
