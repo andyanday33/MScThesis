@@ -20,6 +20,7 @@ export enum themes {
   Car = 'CAR',
   Cart = 'CART',
   Monkey = 'MONKEY',
+  Bear = 'BEAR',
 }
 
 export type GridObjectType = {

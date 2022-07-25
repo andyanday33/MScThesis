@@ -24,6 +24,12 @@ import monkeyGoalSvg from '../../assets/monkeyTheme/goal.svg';
 import monkeyHouseSvg from '../../assets/monkeyTheme/house.svg';
 import monkeyActorSvg from '../../assets/monkeyTheme/actor.svg';
 
+// Bear theme
+import bearWallSvg from '../../assets/bearTheme/wall.svg';
+import bearGoalSvg from '../../assets/bearTheme/goal.svg';
+import bearHouseSvg from '../../assets/bearTheme/house.svg';
+import bearActorSvg from '../../assets/bearTheme/actor.svg';
+
 // styles
 import './Canvas.css';
 
@@ -92,6 +98,12 @@ export default function Canvas(): JSX.Element {
         houseImageRef.current.src = monkeyHouseSvg;
         goalImageRef.current.src = monkeyGoalSvg;
         actorImageRef.current.src = monkeyActorSvg;
+        break;
+      case (themes.Bear):
+        wallImageRef.current.src = bearWallSvg;
+        houseImageRef.current.src = bearHouseSvg;
+        goalImageRef.current.src = bearGoalSvg;
+        actorImageRef.current.src = bearActorSvg;
         break;
     }
     console.log(actorImageRef.current.src);
@@ -279,6 +291,7 @@ export default function Canvas(): JSX.Element {
         <option value="CAR">Cars</option>
         <option value="CART">Shopping Carts</option>
         <option value="MONKEY">Monkeys</option>
+        <option value="BEAR">Bears</option>
       </Form.Select>
     </>
   );
