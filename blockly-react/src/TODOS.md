@@ -11,7 +11,7 @@
 - [X] Make the goals smaller.
 - [X] Move backwards.
 - [X] Theme selector.
-- [ ] Add more themes.
+- [X] Add more themes.
 - [ ] Scoring.
 - [ ] Indexing actors.
 - [ ] Level Design.
