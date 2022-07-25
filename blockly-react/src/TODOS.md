@@ -10,7 +10,8 @@
 - [X] Fix the visual bug introduced.
 - [X] Make the goals smaller.
 - [X] Move backwards.
-- [ ] Theme selector.
+- [X] Theme selector.
+- [ ] Add more themes.
 - [ ] Scoring.
 - [ ] Indexing actors.
 - [ ] Level Design.
