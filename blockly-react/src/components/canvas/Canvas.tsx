@@ -18,6 +18,12 @@ import cartGoalSvg from '../../assets/shoppingcartTheme/goal.svg';
 import cartHouseSvg from '../../assets/shoppingcartTheme/house.svg';
 import cartActorSvg from '../../assets/shoppingcartTheme/actor.svg';
 
+// Monkey theme
+import monkeyWallSvg from '../../assets/monkeyTheme/wall.svg';
+import monkeyGoalSvg from '../../assets/monkeyTheme/goal.svg';
+import monkeyHouseSvg from '../../assets/monkeyTheme/house.svg';
+import monkeyActorSvg from '../../assets/monkeyTheme/actor.svg';
+
 // styles
 import './Canvas.css';
 
@@ -80,6 +86,12 @@ export default function Canvas(): JSX.Element {
         houseImageRef.current.src = cartHouseSvg;
         goalImageRef.current.src = cartGoalSvg;
         actorImageRef.current.src = cartActorSvg;
+        break;
+      case (themes.Monkey):
+        wallImageRef.current.src = monkeyWallSvg;
+        houseImageRef.current.src = monkeyHouseSvg;
+        goalImageRef.current.src = monkeyGoalSvg;
+        actorImageRef.current.src = monkeyActorSvg;
         break;
     }
     console.log(actorImageRef.current.src);

@@ -19,7 +19,7 @@ enum moveTypes {
 export enum themes {
   Car = 'CAR',
   Cart = 'CART',
-  Animal = 'ANIMAL',
+  Monkey = 'MONKEY',
 }
 
 export type GridObjectType = {
