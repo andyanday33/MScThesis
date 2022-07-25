@@ -74,14 +74,12 @@ export default function Canvas(): JSX.Element {
         houseImageRef.current.src = carHouseSvg;
         goalImageRef.current.src = carGoalSvg;
         actorImageRef.current.src = carActorSvg;
-        // setActorImage({...actorImage, src: carActorSvg});
         break;
       case (themes.Cart):
         wallImageRef.current.src = cartWallSvg;
         houseImageRef.current.src = cartHouseSvg;
         goalImageRef.current.src = cartGoalSvg;
         actorImageRef.current.src = cartActorSvg;
-        // setActorImage({...actorImage, src: cartActorSvg});
         break;
     }
     console.log(actorImageRef.current.src);
