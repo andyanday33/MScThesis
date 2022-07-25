@@ -1,8 +1,22 @@
 import React, {useRef, useEffect} from 'react';
 import {Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
-import {finishThisTry} from '../redux/playgroundSlice';
+import {finishThisTry, changeTheme} from '../redux/playgroundSlice';
 import {ActorType} from '../redux/playgroundSlice';
+import {themes} from '../redux/playgroundSlice';
+
+// Theme images
+// Car theme
+import carWallSvg from '../../assets/carTheme/wall.svg';
+import carGoalSvg from '../../assets/carTheme/goal.svg';
+import carHouseSvg from '../../assets/carTheme/house.svg';
+import carActorSvg from '../../assets/carTheme/actor.svg';
+
+// Shopping Cart theme
+import cartWallSvg from '../../assets/shoppingcartTheme/wall.svg';
+import cartGoalSvg from '../../assets/shoppingcartTheme/goal.svg';
+import cartHouseSvg from '../../assets/shoppingcartTheme/house.svg';
+import cartActorSvg from '../../assets/shoppingcartTheme/actor.svg';
 
 // styles
 import './Canvas.css';
@@ -22,6 +36,7 @@ export default function Canvas(): JSX.Element {
   const storeStatus = useAppSelector((state) => state.playground.status);
   const actors = useAppSelector((state) => state.playground.actors);
   const goals = useAppSelector((state) => state.playground.goals);
+  // TODO: remove houses.
   const houses = useAppSelector((state) => state.playground.houses);
   const walls = useAppSelector((state) => state.playground.walls);
   const gridSize = useAppSelector((state) => state.playground.gridSize);
@@ -38,14 +53,7 @@ export default function Canvas(): JSX.Element {
     state.playground.movesThisTry);
 
   // Image sources
-  const actorImageSrc = useAppSelector((state) =>
-    state.playground.actorImageSrc);
-  const wallImageSrc = useAppSelector((state) =>
-    state.playground.wallImageSrc);
-  const houseImageSrc = useAppSelector((state) =>
-    state.playground.houseImageSrc);
-  const goalImageSrc = useAppSelector((state) =>
-    state.playground.goalImageSrc);
+  const theme = useAppSelector((state) => state.playground.theme);
   // Images
   const actorImageRef = useRef<HTMLImageElement>(new Image());
   const wallImageRef = useRef<HTMLImageElement>(new Image());
@@ -59,12 +67,25 @@ export default function Canvas(): JSX.Element {
   });
 
   useEffect(() => {
-    wallImageRef.current.src = wallImageSrc;
-    houseImageRef.current.src = houseImageSrc;
-    goalImageRef.current.src = goalImageSrc;
-    actorImageRef.current.src = actorImageSrc;
     actorImageRef.current.onload = createCtxAndDraw;
-  });
+    switch (theme) {
+      case (themes.Car):
+        wallImageRef.current.src = carWallSvg;
+        houseImageRef.current.src = carHouseSvg;
+        goalImageRef.current.src = carGoalSvg;
+        actorImageRef.current.src = carActorSvg;
+        // setActorImage({...actorImage, src: carActorSvg});
+        break;
+      case (themes.Cart):
+        wallImageRef.current.src = cartWallSvg;
+        houseImageRef.current.src = cartHouseSvg;
+        goalImageRef.current.src = cartGoalSvg;
+        actorImageRef.current.src = cartActorSvg;
+        // setActorImage({...actorImage, src: cartActorSvg});
+        break;
+    }
+    console.log(actorImageRef.current.src);
+  }, [theme, storeStatus]);
 
   useEffect(() => {
     /**
@@ -227,6 +248,13 @@ export default function Canvas(): JSX.Element {
   } else if (storeStatus == 'failed') {
     return (<p>There was an error while fetching data.</p>);
   }
+
+  const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e);
+    console.log(e.currentTarget.value);
+    dispatch(changeTheme(e.currentTarget.value));
+  };
+
   return (
     <>
       <canvas className="main-canvas" ref={canvasRef}
@@ -234,11 +262,12 @@ export default function Canvas(): JSX.Element {
           dimensions.height / 1.5 : dimensions.height - 50}`}
         width={`${dimensions.width >= 1200 ?
           dimensions.width / 2 - 50 : dimensions.width - 50}`} />
-      <Form.Select className="mx-auto" size="lg" aria-label="Theme Select">
+      <Form.Select onChange={(e) => handleThemeChange(e)}
+        className="mx-auto" size="lg" aria-label="Theme Select">
         <option>Please select a theme (Cars by default)</option>
-        <option value="Cars">Cars</option>
-        <option value="Shopping-Carts">Shopping Carts</option>
-        <option value="Monkeys">Monkeys</option>
+        <option value="CAR">Cars</option>
+        <option value="CART">Shopping Carts</option>
+        <option value="MONKEY">Monkeys</option>
       </Form.Select>
     </>
   );

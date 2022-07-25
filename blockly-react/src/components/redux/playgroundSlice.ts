@@ -1,10 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {db} from '../../firebase/firebaseConfig';
 import {collection, getDocs, orderBy, query} from 'firebase/firestore';
-import carSvg from '../../assets/carTheme/car.svg';
-import crossSvg from '../../assets/carTheme/cross.svg';
-import houseSvg from '../../assets/carTheme/house.svg';
-import wallSvg from '../../assets/carTheme/wall.svg';
 
 const levelCollection = collection(db, 'levels');
 
@@ -83,10 +79,6 @@ interface PlaygroundState {
     level: number,
     gridSize: number,
     currentMap: CrashableObjectType[][],
-    actorImageSrc: string,
-    houseImageSrc: string,
-    wallImageSrc: string,
-    goalImageSrc: string
     movesThisTry: ActorType[][],
     points: number[],
     theme: themes,
@@ -113,10 +105,6 @@ const initialState: PlaygroundState = {
   gridSize: 0,
   tip: '',
   currentMap: [],
-  actorImageSrc: carSvg,
-  houseImageSrc: houseSvg,
-  goalImageSrc: crossSvg,
-  wallImageSrc: wallSvg,
   movesThisTry: [],
   points: [],
   theme: themes.Car,
@@ -372,6 +360,6 @@ export const playgroundSlice = createSlice({
 });
 
 export const {move, levelUp, resetTry, finishThisTry,
-  startAnimation, turn} = playgroundSlice.actions;
+  startAnimation, turn, changeTheme} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
