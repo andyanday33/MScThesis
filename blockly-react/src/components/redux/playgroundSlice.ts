@@ -38,7 +38,6 @@ export type ActorType = {
 type LevelType = {
   actors?: ActorType[],
   goals?: GridObjectType[],
-  houses?: GridObjectType[],
   walls?: GridObjectType[],
   gridSize?: number,
   tip?: string,
@@ -74,7 +73,6 @@ interface PlaygroundState {
     actors: ActorType[],
     goals: GridObjectType[],
     walls?: GridObjectType[],
-    houses?: GridObjectType[],
     tip?: String,
     turn: number,
     level: number,
@@ -99,7 +97,6 @@ const initialState: PlaygroundState = {
   // Goal coordinates of actors.
   goals: [],
   walls: [],
-  houses: [],
   turn: 0,
   level: 0,
   maxLevel: 0,
@@ -133,12 +130,6 @@ const generateCurrentMap = (state: PlaygroundState) => {
     for (let i = 0; i < state.walls.length; i++) {
       state.currentMap[state.walls[i].coordinateY - 1][state.walls[i].
           coordinateX - 1] = {objectName: 'wall'};
-    }
-  }
-  if (state.houses) {
-    for (let i = 0; i < state.houses.length; i++) {
-      state.currentMap[state.houses[i].coordinateY - 1][state.houses[i].
-          coordinateX - 1] = {objectName: 'house'};
     }
   }
 };
@@ -302,7 +293,6 @@ export const playgroundSlice = createSlice({
         state.goals = state.levels[state.level].goals!;
         state.turn = 0;
         state.gridSize = state.levels[state.level].gridSize!;
-        state.houses = state.levels[state.level].houses;
         state.walls = state.levels[state.level].walls;
         state.tip = state.levels[state.level].tip;
         // generate new map
@@ -348,7 +338,6 @@ export const playgroundSlice = createSlice({
           // Goal coordinates of actors.
           state.goals = state.levels[0].goals!;
           state.walls = state.levels[0].walls;
-          state.houses = state.levels[0].houses;
           state.turn = 0;
           state.level = 0;
           state.maxLevel = state.levels.length;

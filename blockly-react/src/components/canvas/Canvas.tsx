@@ -9,25 +9,21 @@ import {themes} from '../redux/playgroundSlice';
 // Car theme
 import carWallSvg from '../../assets/carTheme/wall.svg';
 import carGoalSvg from '../../assets/carTheme/goal.svg';
-import carHouseSvg from '../../assets/carTheme/house.svg';
 import carActorSvg from '../../assets/carTheme/actor.svg';
 
 // Shopping Cart theme
 import cartWallSvg from '../../assets/shoppingcartTheme/wall.svg';
 import cartGoalSvg from '../../assets/shoppingcartTheme/goal.svg';
-import cartHouseSvg from '../../assets/shoppingcartTheme/house.svg';
 import cartActorSvg from '../../assets/shoppingcartTheme/actor.svg';
 
 // Monkey theme
 import monkeyWallSvg from '../../assets/monkeyTheme/wall.svg';
 import monkeyGoalSvg from '../../assets/monkeyTheme/goal.svg';
-import monkeyHouseSvg from '../../assets/monkeyTheme/house.svg';
 import monkeyActorSvg from '../../assets/monkeyTheme/actor.svg';
 
 // Bear theme
 import bearWallSvg from '../../assets/bearTheme/wall.svg';
 import bearGoalSvg from '../../assets/bearTheme/goal.svg';
-import bearHouseSvg from '../../assets/bearTheme/house.svg';
 import bearActorSvg from '../../assets/bearTheme/actor.svg';
 
 // styles
@@ -49,7 +45,6 @@ export default function Canvas(): JSX.Element {
   const actors = useAppSelector((state) => state.playground.actors);
   const goals = useAppSelector((state) => state.playground.goals);
   // TODO: remove houses.
-  const houses = useAppSelector((state) => state.playground.houses);
   const walls = useAppSelector((state) => state.playground.walls);
   const gridSize = useAppSelector((state) => state.playground.gridSize);
   // animation movement progress indicator
@@ -69,7 +64,6 @@ export default function Canvas(): JSX.Element {
   // Images
   const actorImageRef = useRef<HTMLImageElement>(new Image());
   const wallImageRef = useRef<HTMLImageElement>(new Image());
-  const houseImageRef = useRef<HTMLImageElement>(new Image());
   const goalImageRef = useRef<HTMLImageElement>(new Image());
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -83,25 +77,21 @@ export default function Canvas(): JSX.Element {
     switch (theme) {
       case (themes.Car):
         wallImageRef.current.src = carWallSvg;
-        houseImageRef.current.src = carHouseSvg;
         goalImageRef.current.src = carGoalSvg;
         actorImageRef.current.src = carActorSvg;
         break;
       case (themes.Cart):
         wallImageRef.current.src = cartWallSvg;
-        houseImageRef.current.src = cartHouseSvg;
         goalImageRef.current.src = cartGoalSvg;
         actorImageRef.current.src = cartActorSvg;
         break;
       case (themes.Monkey):
         wallImageRef.current.src = monkeyWallSvg;
-        houseImageRef.current.src = monkeyHouseSvg;
         goalImageRef.current.src = monkeyGoalSvg;
         actorImageRef.current.src = monkeyActorSvg;
         break;
       case (themes.Bear):
         wallImageRef.current.src = bearWallSvg;
-        houseImageRef.current.src = bearHouseSvg;
         goalImageRef.current.src = bearGoalSvg;
         actorImageRef.current.src = bearActorSvg;
         break;
@@ -217,22 +207,6 @@ export default function Canvas(): JSX.Element {
               wallImageRef.current,
               (wall.coordinateX - 1) * colSize,
               (wall.coordinateY - 1) * rowSize,
-              colSize,
-              rowSize,
-          );
-          ctx.stroke();
-        });
-      }
-
-      // draw the houses, if exists
-      if (houses) {
-        ctx.beginPath();
-        ctx.fillStyle = '#0000FF';
-        houses.map((house) => {
-          ctx.drawImage(
-              houseImageRef.current,
-              (house.coordinateX - 1) * colSize,
-              (house.coordinateY - 1) * rowSize,
               colSize,
               rowSize,
           );
