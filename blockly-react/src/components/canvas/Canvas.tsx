@@ -139,6 +139,7 @@ export default function Canvas(): JSX.Element {
       ctx.beginPath();
       // we should find the minimum side so we that could
       // fit the image in a grid without strecthing it.
+      let actorIndex = 1;
       const minSide = Math.min(rowSize, colSize);
       actors.map((actor) => {
         let actorX = actor.coordinateX * colSize -
@@ -147,6 +148,10 @@ export default function Canvas(): JSX.Element {
         rowSize / 2 - minSide / 3;
         const actorWidth = minSide * 2 / 3;
         const actorHeight = minSide * 2 / 3;
+        ctx.font = `${actorWidth / 2}px Arial`;
+        ctx.fillText(`${actorIndex}`, actorX - actorWidth / 3,
+            actorY + actorHeight * 2 / 3);
+        actorIndex++;
         ctx.save();
         if (actor.direction === 2) {
           ctx.scale(-1, 1);

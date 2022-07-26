@@ -13,8 +13,10 @@
 - [X] Theme selector.
 - [X] Add more themes.
 - [ ] Scoring.
-- [ ] Indexing actors.
+- [X] Indexing actors.
+- [ ] A block to select indexed actors.
 - [ ] Level Design.
+- [ ] Hide firebase keys.
 - [ ] ~House checkpoints~.
 ## Further Down The Line
 
