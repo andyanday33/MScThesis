@@ -17,7 +17,6 @@
 - [ ] A block to select indexed actors.
 - [ ] Level Design.
 - [ ] Hide firebase keys.
-- [ ] ~House checkpoints~.
 ## Further Down The Line
 
 - Cypress End-to-end Testing
