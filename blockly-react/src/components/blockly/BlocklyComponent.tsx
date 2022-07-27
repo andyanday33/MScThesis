@@ -117,7 +117,7 @@ export default function BlocklyComponent(...props :
     if (moves.length == boardTurn && boardTurn != 0) {
       let isAllMet = true;
       // Check all actors and corresponding goal indexes
-      for (let i = 0; i < actors.length; i++) {
+      for (let i = 0; isAllMet && i < actors.length; i++) {
         if (actors[i].coordinateX != goals[i].coordinateX) {
           isAllMet = false;
           setTimeout(() => {
