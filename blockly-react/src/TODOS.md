@@ -15,8 +15,8 @@
 - [ ] Scoring.
 - [X] Indexing actors.
 - [ ] A block to select indexed actors.
-- [ ] Goal index matching?
-- [ ] Check every individual actor.
+- [X] Goal index matching?
+- [X] Check every individual actor.
 - [ ] Level Design.
 - [ ] Hide firebase keys.
 ## Further Down The Lineß
