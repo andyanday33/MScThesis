@@ -16,8 +16,9 @@
 - [X] Indexing actors.
 - [ ] A block to select indexed actors.
 - [ ] Goal index matching?
+- [ ] Check every individual actor.
 - [ ] Level Design.
 - [ ] Hide firebase keys.
-## Further Down The Line
+## Further Down The Lineß
 
 - Cypress End-to-end Testing
