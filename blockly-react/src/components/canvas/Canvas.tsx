@@ -181,6 +181,7 @@ export default function Canvas(): JSX.Element {
       }
 
       // draw the goals
+      let goalIndex = 1;
       ctx.beginPath();
       goals.map((goal) => {
         const goalX = goal.coordinateX * colSize -
@@ -189,6 +190,10 @@ export default function Canvas(): JSX.Element {
         rowSize / 2 - minSide / 3;
         const goalWidth = minSide * 2 / 3;
         const goalHeight = minSide * 2 / 3;
+        ctx.font = `${goalWidth / 2}px Arial`;
+        ctx.fillText(`${goalIndex}`, goalX - goalWidth / 3,
+            goalY + goalHeight * 2 / 3);
+        goalIndex++;
         ctx.drawImage(
             goalImageRef.current,
             goalX,
