@@ -115,14 +115,20 @@ export default function BlocklyComponent(...props :
     // is equal to number of counted moves.
     console.log(moves.length, boardTurn);
     if (moves.length == boardTurn && boardTurn != 0) {
-      if (actors[0].coordinateX != goals[0].coordinateX) {
-        setTimeout(() => {
-          disabledRef.current = false;
-          failedRef.current = true;
-          return dispatch(resetTry());
-        }, 250 * moves.length);
-        tryNumber.current++;
-      } else {
+      let isAllMet = true;
+      // Check all actors and corresponding goal indexes
+      for (let i = 0; i < actors.length; i++) {
+        if (actors[i].coordinateX != goals[i].coordinateX) {
+          isAllMet = false;
+          setTimeout(() => {
+            disabledRef.current = false;
+            failedRef.current = true;
+            return dispatch(resetTry());
+          }, 250 * moves.length);
+          tryNumber.current++;
+        }
+      }
+      if (isAllMet) {
         console.log(moves.length);
         setTimeout(() => {
           actorsMetGoalsRef.current = true;
