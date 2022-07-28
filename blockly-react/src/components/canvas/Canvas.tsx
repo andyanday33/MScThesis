@@ -138,8 +138,8 @@ export default function Canvas(): JSX.Element {
         rowSize / 2 - minSide / 3;
         const actorWidth = minSide * 2 / 3;
         const actorHeight = minSide * 2 / 3;
-        ctx.font = `${actorWidth / 2}px Arial`;
-        ctx.fillText(`${actorIndex}`, actorX - actorWidth / 5,
+        ctx.font = `${actorWidth * 3 / 8}px Arial`;
+        ctx.fillText(`${actorIndex}`, actorX + actorWidth,
             actorY + actorHeight / 5);
         actorIndex++;
         ctx.save();
@@ -190,7 +190,7 @@ export default function Canvas(): JSX.Element {
         rowSize / 2 - minSide / 3;
         const goalWidth = minSide * 2 / 3;
         const goalHeight = minSide * 2 / 3;
-        ctx.font = `${goalWidth / 2}px Arial`;
+        ctx.font = `${goalWidth * 3 / 8}px Arial`;
         ctx.fillText(`${goalIndex}`, goalX - goalWidth / 5,
             goalY + goalHeight / 5);
         goalIndex++;
