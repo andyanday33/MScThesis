@@ -1,0 +1,16 @@
+{
+  "name": "puzzlaffic-scripts",
+  "version": "1.0.0",
+  "description": "Scripts to run before or during build time to populate the database etc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "bab26@st-andrews.ac.uk",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "firebase": "^9.9.1"
+  }
+}
