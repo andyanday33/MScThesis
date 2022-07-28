@@ -3,6 +3,8 @@ import {db} from '../../firebase/firebaseConfig';
 import {collection, getDocs, orderBy, query} from 'firebase/firestore';
 
 const levelCollection = collection(db, 'levels');
+// TODO: populate db with a script that is not
+// going to be shipped to client.
 
 enum directions {
   East = 0,
@@ -44,7 +46,6 @@ type LevelType = {
   id: string,
   levelNo?: number,
 }
-
 
 // TODO: add level selection logic
 const getLevels: () => Promise<LevelType[]> = async () => {
