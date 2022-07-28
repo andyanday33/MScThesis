@@ -139,8 +139,8 @@ export default function Canvas(): JSX.Element {
         const actorWidth = minSide * 2 / 3;
         const actorHeight = minSide * 2 / 3;
         ctx.font = `${actorWidth / 2}px Arial`;
-        ctx.fillText(`${actorIndex}`, actorX - actorWidth / 3,
-            actorY + actorHeight * 2 / 3);
+        ctx.fillText(`${actorIndex}`, actorX - actorWidth / 5,
+            actorY + actorHeight / 5);
         actorIndex++;
         ctx.save();
         if (actor.direction === 2) {
@@ -191,8 +191,8 @@ export default function Canvas(): JSX.Element {
         const goalWidth = minSide * 2 / 3;
         const goalHeight = minSide * 2 / 3;
         ctx.font = `${goalWidth / 2}px Arial`;
-        ctx.fillText(`${goalIndex}`, goalX - goalWidth / 3,
-            goalY + goalHeight * 2 / 3);
+        ctx.fillText(`${goalIndex}`, goalX - goalWidth / 5,
+            goalY + goalHeight / 5);
         goalIndex++;
         ctx.drawImage(
             goalImageRef.current,
