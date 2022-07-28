@@ -132,95 +132,176 @@
           "coordinateY": 5
         }
         ]
+      },
+      {
+      "gridSize": 5,
+      "levelNo": 3,
+      "tip": "Try turning around using turn block",
+      "actors": [
+        {
+          "coordinateX": 1,
+          "coordinateY": 2,
+          "direction": 2
+        },
+        {
+          "coordinateX": 1,
+          "coordinateY": 4,
+          "direction": 2
+        }
+      ],
+      "goals": [
+        {
+          "coordinateX": 5,
+          "coordinateY": 2
+        },
+        {
+          "coordinateX": 5,
+          "coordinateY": 4
+        }
+      ],
+      "walls": [
+        {
+          "coordinateX": 1,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 2,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 3,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 4,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 5,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 1,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 2,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 3,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 4,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 5,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 1,
+          "coordinateY": 5
+        },
+        {
+          "coordinateX": 2,
+          "coordinateY": 5
+        },
+        {
+          "coordinateX": 3,
+          "coordinateY": 5
+        },
+        {
+          "coordinateX": 4,
+          "coordinateY": 5
+        },
+        {
+          "coordinateX": 5,
+          "coordinateY": 5
+        }
+      ]
     },
     {
-    "gridSize": 5,
-    "levelNo": 3,
-    "tip": "Try turning around using turn block",
-    "actors": [
-      {
-        "coordinateX": 1,
-        "coordinateY": 2,
-        "direction": 2
-      },
-      {
-        "coordinateX": 1,
-        "coordinateY": 4,
-        "direction": 2
-      }
-    ],
-    "goals": [
-      {
-        "coordinateX": 5,
-        "coordinateY": 2
-      },
-      {
-        "coordinateX": 5,
-        "coordinateY": 4
-      }
-    ],
-    "walls": [
-      {
-        "coordinateX": 1,
-        "coordinateY": 1
-      },
-      {
-        "coordinateX": 2,
-        "coordinateY": 1
-      },
-      {
-        "coordinateX": 3,
-        "coordinateY": 1
-      },
-      {
-        "coordinateX": 4,
-        "coordinateY": 1
-      },
-      {
-        "coordinateX": 5,
-        "coordinateY": 1
-      },
-      {
-        "coordinateX": 1,
-        "coordinateY": 3
-      },
-      {
-        "coordinateX": 2,
-        "coordinateY": 3
-      },
-      {
-        "coordinateX": 3,
-        "coordinateY": 3
-      },
-      {
-        "coordinateX": 4,
-        "coordinateY": 3
-      },
-      {
-        "coordinateX": 5,
-        "coordinateY": 3
-      },
-      {
-        "coordinateX": 1,
-        "coordinateY": 5
-      },
-      {
-        "coordinateX": 2,
-        "coordinateY": 5
-      },
-      {
-        "coordinateX": 3,
-        "coordinateY": 5
-      },
-      {
-        "coordinateX": 4,
-        "coordinateY": 5
-      },
-      {
-        "coordinateX": 5,
-        "coordinateY": 5
-      }
-    ]
-  } 
+      "gridSize": 5,
+      "levelNo": 3,
+      "tip": "Now try mixing your knowledge!",
+      "actors": [
+        {
+          "coordinateX": 1,
+          "coordinateY": 2,
+          "direction": 2
+        },
+        {
+          "coordinateX": 1,
+          "coordinateY": 4,
+          "direction": 2
+        }
+      ],
+      "goals": [
+        {
+          "coordinateX": 5,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 5,
+          "coordinateY": 3
+        }
+      ],
+      "walls": [
+        {
+          "coordinateX": 1,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 2,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 3,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 4,
+          "coordinateY": 1
+        },
+        {
+          "coordinateX": 1,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 2,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 3,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 4,
+          "coordinateY": 3
+        },
+        {
+          "coordinateX": 1,
+          "coordinateY": 5
+        },
+        {
+          "coordinateX": 2,
+          "coordinateY": 5
+        },
+        {
+          "coordinateX": 3,
+          "coordinateY": 5
+        },
+        {
+          "coordinateX": 4,
+          "coordinateY": 5
+        },
+        {
+          "coordinateX": 5,
+          "coordinateY": 5
+        }
+      ]
+    }
   ] 
 }
