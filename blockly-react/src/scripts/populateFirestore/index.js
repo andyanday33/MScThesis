@@ -2,6 +2,8 @@ import {initializeApp} from 'firebase/app';
 import {getFirestore} from 'firebase/firestore';
 import {doc, setDoc} from 'firebase/firestore';
 import {readFile} from 'fs/promises';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -28,7 +30,7 @@ const json = await JSON.parse(
 
 for (const level of json.levels) {
   console.log(level.levelNo);
-  await setDoc(doc(db, 'test', `${level.levelNo}`), level);
+  await setDoc(doc(db, 'levelsGenerated', `${level.levelNo}`), level);
 }
 
 process.abort();

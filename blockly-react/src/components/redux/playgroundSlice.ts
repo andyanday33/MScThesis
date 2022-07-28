@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {db} from '../../firebase/firebaseConfig';
 import {collection, getDocs, orderBy, query} from 'firebase/firestore';
 
-const levelCollection = collection(db, 'levels');
+const levelCollection = collection(db, 'levelsGenerated');
 // TODO: populate db with a script that is not
 // going to be shipped to client.
 
