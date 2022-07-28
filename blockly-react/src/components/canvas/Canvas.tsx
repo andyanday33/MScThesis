@@ -74,6 +74,8 @@ export default function Canvas(): JSX.Element {
 
   useEffect(() => {
     actorImageRef.current.onload = createCtxAndDraw;
+    wallImageRef.current.onload = createCtxAndDraw;
+    goalImageRef.current.onload = createCtxAndDraw;
     switch (theme) {
       case (themes.Car):
         wallImageRef.current.src = carWallSvg;
