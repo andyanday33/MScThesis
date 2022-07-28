@@ -98,7 +98,7 @@ export default function Canvas(): JSX.Element {
         actorImageRef.current.src = bearActorSvg;
         break;
     }
-    console.log(actorImageRef.current.src);
+    // console.log(actorImageRef.current.src);
   }, [theme, storeStatus]);
 
   useEffect(() => {
@@ -258,8 +258,8 @@ export default function Canvas(): JSX.Element {
   }
 
   const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e);
-    console.log(e.currentTarget.value);
+    // console.log(e);
+    // console.log(e.currentTarget.value);
     dispatch(changeTheme(e.currentTarget.value));
   };
 

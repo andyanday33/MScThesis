@@ -174,7 +174,7 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
       }
       break;
     case directions.West:
-      console.log('inside');
+      // console.log('inside');
       switch (moveType) {
         case moveTypes.Forward:
           if (actor.coordinateX === 1) {
@@ -240,8 +240,6 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
   // check whether the actor has crashed into a wall or another actor.
   // TODO: check this logic for actors again in the future.
   if (mapGrid?.objectName == 'actor' || mapGrid?.objectName == 'wall') {
-    console.log('crashed');
-    console.log(actor.coordinateX, actor.coordinateY);
     state.crashed = true;
     state.crashedAtTurn = state.movesThisTry.length + 1;
   }
@@ -267,7 +265,6 @@ export const playgroundSlice = createSlice({
               actor.direction = directions.East;
             }
           }
-          console.log(actor.direction);
           return actor;
         });
         state.movesThisTry.push(state.actors);
@@ -275,7 +272,6 @@ export const playgroundSlice = createSlice({
     },
     move: (state, action) => {
       if (!state.crashed) {
-        console.log(action);
         state.turn += 1;
         state.actors = state.actors.map((actor) => {
           // Empty actors initial position.

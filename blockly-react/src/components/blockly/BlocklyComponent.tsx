@@ -113,7 +113,7 @@ export default function BlocklyComponent(...props :
     }
     // Check whether the end level goals are met if the board turn
     // is equal to number of counted moves.
-    console.log(moves.length, boardTurn);
+    // console.log(moves.length, boardTurn);
     if (moves.length == boardTurn && boardTurn != 0) {
       let isAllMet = true;
       // Check all actors and corresponding goal indexes
@@ -129,7 +129,7 @@ export default function BlocklyComponent(...props :
         }
       }
       if (isAllMet) {
-        console.log(moves.length);
+        // console.log(moves.length);
         setTimeout(() => {
           actorsMetGoalsRef.current = true;
           disabledRef.current = false;
@@ -156,7 +156,7 @@ export default function BlocklyComponent(...props :
     const code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
     disabledRef.current = true;
     failedRef.current = false;
-    console.log(code);
+    // console.log(code);
     await eval(code);
     if (moves.length > 0) {
       dispatch(startAnimation());
