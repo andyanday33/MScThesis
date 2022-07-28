@@ -1,0 +1,13 @@
+diff --git a/node_modules/blockly/blockly.d.ts b/node_modules/blockly/blockly.d.ts
+index 4898829..b7ce5b8 100644
+--- a/node_modules/blockly/blockly.d.ts
++++ b/node_modules/blockly/blockly.d.ts
+@@ -25695,7 +25695,7 @@ declare module "core/inject" {
+      * @return {!WorkspaceSvg} Newly created main workspace.
+      * @alias Blockly.inject
+      */
+-    export function inject(container: Element | string, opt_options?: (() => void) | undefined): WorkspaceSvg;
++    export function inject(container: Element | string, opt_options?: Object | undefined): WorkspaceSvg;
+     import { WorkspaceSvg } from "core/workspace_svg";
+ }
+ declare module "core/blockly" {

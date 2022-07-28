@@ -3,7 +3,7 @@ import {Card, Button} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 // styles
-import './home.css';
+import './Home.css';
 
 /**
  * This functional component consists of the components that are
