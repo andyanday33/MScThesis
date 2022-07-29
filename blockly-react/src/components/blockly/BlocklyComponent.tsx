@@ -4,7 +4,7 @@ import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {move, levelUp, resetTry,
   startAnimation, turn} from '../redux/playgroundSlice';
-import {Button, Stack, Popover, OverlayTrigger} from 'react-bootstrap';
+import {Button, Stack, Accordion} from 'react-bootstrap';
 import toolbox from './toolbox';
 
 // style
@@ -164,22 +164,19 @@ export default function BlocklyComponent(...props :
     }
   };
 
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Header as="h3">Level Tip</Popover.Header>
-      <Popover.Body>
-        {tip}
-      </Popover.Body>
-    </Popover>
-  );
-
-  const TipPopover = () => (
-    <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-      <Button variant="success">Show Tip</Button>
-    </OverlayTrigger>
+  const TipAccordion = () => (
+    <Accordion className="tip-accordion" defaultActiveKey="0" flush>
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>Level Tip</Accordion.Header>
+        <Accordion.Body>
+          {tip}
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
   );
   return (
     <React.Fragment>
+      {tip && <TipAccordion />}
       <div id="blockly-div" ref={blocklyRef} />
       <Stack gap={3}>
         <Stack gap={3} direction="horizontal">
@@ -192,8 +189,6 @@ export default function BlocklyComponent(...props :
           <p className='m-auto w-50 text-center
           bg-secondary text-light'>Level: {level + 1}</p>
         </Stack>
-        {tip && <TipPopover />}
-        {/* TODO: fix this */}
         <GoalAlert
           success={actorsMetGoalsRef.current}
           failed={failedRef.current}
