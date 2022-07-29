@@ -139,23 +139,23 @@
       "tip": "Try turning around using turn block",
       "actors": [
         {
-          "coordinateX": 1,
+          "coordinateX": 5,
           "coordinateY": 2,
-          "direction": 2
+          "direction": 1
         },
         {
-          "coordinateX": 1,
+          "coordinateX": 5,
           "coordinateY": 4,
-          "direction": 2
+          "direction": 1
         }
       ],
       "goals": [
         {
-          "coordinateX": 5,
+          "coordinateX": 1,
           "coordinateY": 2
         },
         {
-          "coordinateX": 5,
+          "coordinateX": 1,
           "coordinateY": 4
         }
       ],
