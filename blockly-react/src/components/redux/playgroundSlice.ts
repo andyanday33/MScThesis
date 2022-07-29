@@ -296,8 +296,21 @@ export const playgroundSlice = createSlice({
         generateCurrentMap(state);
       }
     },
+    selectLevel: (state, action) => {
+      if (action.payload > 0 && action.payload < state.maxLevel) {
+        state.level = action.payload;
+      }
+    },
     startAnimation: (state) => {
       state.animationInProgress = true;
+      state.actors = state.levels[state.level].actors!;
+      state.goals = state.levels[state.level].goals!;
+      state.turn = 0;
+      state.gridSize = state.levels[state.level].gridSize!;
+      state.walls = state.levels[state.level].walls;
+      state.tip = state.levels[state.level].tip;
+      // generate new map
+      generateCurrentMap(state);
     },
     /**
      * Logically resets the playground and initiates animation progress.
@@ -347,6 +360,6 @@ export const playgroundSlice = createSlice({
 });
 
 export const {move, levelUp, resetTry, finishThisTry,
-  startAnimation, turn, changeTheme} = playgroundSlice.actions;
+  startAnimation, turn, changeTheme, selectLevel} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
