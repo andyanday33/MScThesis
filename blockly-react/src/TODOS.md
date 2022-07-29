@@ -14,13 +14,14 @@
 - [X] Add more themes.
 - [ ] Scoring.
 - [X] Indexing actors.
-- [ ] A block to select indexed actors.
+- [ ] A block to select indexed actors (optional).
 - [X] Goal index matching?
 - [X] Check every individual actor.
 - [X] Level generation script.
 - [ ] Make tips an alert or breadcrumb instead of overlay and pop-up
 - [ ] Add a level selection dropdown.
 - [ ] Show scores after each level and allow trying again.
+- [ ] End Game logic.
 - [ ] Level Design.
 - [ ] Hide firebase keys.
 ## Further Down The Lineß
