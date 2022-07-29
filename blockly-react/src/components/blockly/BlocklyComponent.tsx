@@ -156,6 +156,7 @@ export default function BlocklyComponent(...props :
     const code = BlocklyJS.workspaceToCode(simpleWorkspace.current);
     disabledRef.current = true;
     failedRef.current = false;
+    actorsMetGoalsRef.current = false;
     // console.log(code);
     await eval(code);
     if (moves.length > 0) {
