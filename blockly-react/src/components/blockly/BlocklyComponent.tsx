@@ -192,6 +192,7 @@ export default function BlocklyComponent(...props :
           bg-secondary text-light'>Level: {level + 1}</p>
         </Stack>
         {tip && <TipPopover />}
+        {/* TODO: fix this */}
         <GoalAlert
           success={actorsMetGoalsRef.current}
           failed={failedRef.current}
