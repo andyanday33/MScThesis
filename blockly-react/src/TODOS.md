@@ -18,7 +18,7 @@
 - [X] Goal index matching?
 - [X] Check every individual actor.
 - [X] Level generation script.
-- [ ] Make tips an alert or breadcrumb instead of overlay and pop-up
+- [X] Make tips an alert or breadcrumb instead of overlay and pop-up
 - [ ] Add a level selection dropdown.
 - [ ] Show scores after each level and allow trying again.
 - [ ] End Game logic.
