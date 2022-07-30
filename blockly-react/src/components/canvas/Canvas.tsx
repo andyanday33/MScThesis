@@ -302,10 +302,12 @@ export default function Canvas(): JSX.Element {
           dimensions.height / 1.5 : dimensions.height - 50}`}
         width={`${dimensions.width >= 1200 ?
           dimensions.width / 2 - 50 : dimensions.width - 50}`} />
+      <p style={{fontSize: '1.5em'}}><strong>
+        Select a theme for playground:
+      </strong></p>
       <Form.Select defaultValue="CAR"
         onChange={(e) => handleThemeChange(e)}
         className="mx-auto" size="lg" aria-label="Theme Select">
-        <option>Please select a theme (Cars by default)</option>
         <option value="CAR">Cars</option>
         <option value="CART">Shopping Carts</option>
         <option value="MONKEY">Monkeys</option>
