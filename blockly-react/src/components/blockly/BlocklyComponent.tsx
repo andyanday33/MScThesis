@@ -53,6 +53,12 @@ export default function BlocklyComponent(...props :
   const actorsMetGoalsRef = useRef(false);
   const inProgress = useAppSelector((state) =>
     state.playground.animationInProgress);
+    // End level screen condition
+  const isShowingLevelFinished = useAppSelector((state) =>
+    state.playground.showingLevelFinishedScreen);
+  // End game screen condition
+  const isShowingGameFinished = useAppSelector((state) =>
+    state.playground.showingEndGameScreen);
   const failedRef = useRef(false);
   // generation button disabler
   const disabledRef = useRef(false);
@@ -183,7 +189,8 @@ export default function BlocklyComponent(...props :
           <Button className="w-50"
             id="generate-button" variant="primary"
             disabled={(disabledRef.current &&
-              storeStatus === 'idle'
+              storeStatus === 'idle' || isShowingLevelFinished ||
+              isShowingGameFinished
             )}
             onClick={handleGeneration}>Generate Code</Button>
           <p className='m-auto w-50 text-center

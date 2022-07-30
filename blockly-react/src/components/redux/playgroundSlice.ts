@@ -82,7 +82,8 @@ interface PlaygroundState {
     movesThisTry: ActorType[][],
     points: number[],
     theme: themes,
-    showLevelFinishedScreen: boolean,
+    showingLevelFinishedScreen: boolean,
+    showingEndGameScreen: boolean,
 };
 
 /* TODO: after adding user auth, change initial
@@ -108,7 +109,8 @@ const initialState: PlaygroundState = {
   movesThisTry: [],
   points: [],
   theme: themes.Car,
-  showLevelFinishedScreen: false,
+  showingLevelFinishedScreen: false,
+  showingEndGameScreen: false,
 };
 
 export const fetchLevels = createAsyncThunk('playground/fetchLevels',
@@ -286,7 +288,7 @@ export const playgroundSlice = createSlice({
       }
     },
     levelUp: (state) => {
-      if (state.level < state.maxLevel) {
+      if (state.level < state.maxLevel - 1) {
         state.level++;
         state.actors = state.levels[state.level].actors!;
         state.goals = state.levels[state.level].goals!;
@@ -296,6 +298,9 @@ export const playgroundSlice = createSlice({
         state.tip = state.levels[state.level].tip;
         // generate new map
         generateCurrentMap(state);
+      } else {
+        console.log('endgame');
+        state.showingEndGameScreen = true;
       }
     },
     selectLevel: (state, action) => {
@@ -323,7 +328,7 @@ export const playgroundSlice = createSlice({
       state.crashed = false;
     },
     showOrHideEndLevelScreen: (state: PlaygroundState) => {
-      state.showLevelFinishedScreen = !state.showLevelFinishedScreen;
+      state.showingLevelFinishedScreen = !state.showingLevelFinishedScreen;
     },
     /**
      * Makes the playground available for a new try.
@@ -336,6 +341,19 @@ export const playgroundSlice = createSlice({
     },
     changeTheme: (state, action) => {
       state.theme = action.payload;
+    },
+    startNewGame: (state: PlaygroundState) => {
+      state.actors = state.levels[0].actors!;
+      // Goal coordinates of actors.
+      state.goals = state.levels[0].goals!;
+      state.walls = state.levels[0].walls;
+      state.turn = 0;
+      state.level = 0;
+      state.maxLevel = state.levels.length;
+      state.gridSize = state.levels[0].gridSize!;
+      state.tip = state.levels[0].tip;
+      // generate current map
+      generateCurrentMap(state);
     },
   },
   extraReducers: (builder) => {
@@ -366,6 +384,6 @@ export const playgroundSlice = createSlice({
 
 export const {move, levelUp, resetTry, finishThisTry,
   startAnimation, turn, changeTheme, selectLevel,
-  showOrHideEndLevelScreen} = playgroundSlice.actions;
+  showOrHideEndLevelScreen, startNewGame} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

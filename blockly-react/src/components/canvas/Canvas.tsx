@@ -3,7 +3,7 @@ import {Button, Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry, changeTheme,
   showOrHideEndLevelScreen,
-  levelUp} from '../redux/playgroundSlice';
+  levelUp, startNewGame} from '../redux/playgroundSlice';
 import {ActorType} from '../redux/playgroundSlice';
 import {themes} from '../redux/playgroundSlice';
 
@@ -63,7 +63,10 @@ export default function Canvas(): JSX.Element {
 
   // End level screen condition
   const isShowingLevelFinished = useAppSelector((state) =>
-    state.playground.showLevelFinishedScreen);
+    state.playground.showingLevelFinishedScreen);
+  // End game screen condition
+  const isShowingGameFinished = useAppSelector((state) =>
+    state.playground.showingEndGameScreen);
   // Image sources
   const theme = useAppSelector((state) => state.playground.theme);
   // Images
@@ -273,6 +276,15 @@ export default function Canvas(): JSX.Element {
     dispatch(showOrHideEndLevelScreen());
     dispatch(levelUp());
   };
+
+  if (isShowingGameFinished) {
+    return (
+      <>
+        <div>Congratulations!!! You have finished the game!</div>
+        <Button onClick={() => dispatch(startNewGame())}>Start new game</Button>
+      </>
+    );
+  }
 
   // Show end level scren if the level is finished.
   if (isShowingLevelFinished) {
