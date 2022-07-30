@@ -124,7 +124,8 @@ export default function BlocklyComponent(...props :
       let isAllMet = true;
       // Check all actors and corresponding goal indexes
       for (let i = 0; isAllMet && i < actors.length; i++) {
-        if (actors[i].coordinateX != goals[i].coordinateX) {
+        if (actors[i].coordinateX != goals[i].coordinateX ||
+            actors[i].coordinateY != goals[i].coordinateY) {
           isAllMet = false;
           setTimeout(() => {
             disabledRef.current = false;
@@ -135,7 +136,6 @@ export default function BlocklyComponent(...props :
         }
       }
       if (isAllMet) {
-        // console.log(moves.length);
         setTimeout(() => {
           actorsMetGoalsRef.current = true;
           disabledRef.current = false;
