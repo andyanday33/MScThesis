@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react';
-import {Form} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry, changeTheme} from '../redux/playgroundSlice';
 import {ActorType} from '../redux/playgroundSlice';
@@ -59,6 +59,8 @@ export default function Canvas(): JSX.Element {
   const actorMovements = useAppSelector((state) =>
     state.playground.movesThisTry);
 
+  // End level screen condition
+  const [levelFinished, setLevelFinished] = React.useState(false);
   // Image sources
   const theme = useAppSelector((state) => state.playground.theme);
   // Images
@@ -242,7 +244,7 @@ export default function Canvas(): JSX.Element {
       }
       // Finish the animation by setting the state to finished.
       if (actorMovements.length > 0) {
-        setTimeout(() => dispatch(finishThisTry()),
+        setTimeout(() => setLevelFinished(true),
             actorMovements.length * 250);
       }
     };
@@ -263,6 +265,20 @@ export default function Canvas(): JSX.Element {
     dispatch(changeTheme(e.currentTarget.value));
   };
 
+  const proceedToNextlLevel = () => {
+    dispatch(finishThisTry());
+    setLevelFinished(false);
+  };
+
+  // Show end level scren if the level is finished.
+  if (levelFinished) {
+    return (
+      <>
+        <div>Level Finished</div>
+        <Button onClick={proceedToNextlLevel}>Next level</Button>
+      </>
+    );
+  }
   return (
     <>
       <canvas className="main-canvas" ref={canvasRef}
