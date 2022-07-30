@@ -272,6 +272,8 @@ export default function Canvas(): JSX.Element {
 
   // Show end level scren if the level is finished.
   if (levelFinished) {
+    // TODO: update styling of this screen.
+    // And add score for it.
     return (
       <>
         <div>Level Finished</div>
