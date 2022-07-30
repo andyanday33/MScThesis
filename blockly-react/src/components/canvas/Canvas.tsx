@@ -1,7 +1,9 @@
 import React, {useRef, useEffect} from 'react';
 import {Button, Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
-import {finishThisTry, changeTheme} from '../redux/playgroundSlice';
+import {finishThisTry, changeTheme,
+  showOrHideEndLevelScreen,
+  levelUp} from '../redux/playgroundSlice';
 import {ActorType} from '../redux/playgroundSlice';
 import {themes} from '../redux/playgroundSlice';
 
@@ -60,7 +62,8 @@ export default function Canvas(): JSX.Element {
     state.playground.movesThisTry);
 
   // End level screen condition
-  const [levelFinished, setLevelFinished] = React.useState(false);
+  const isShowingLevelFinished = useAppSelector((state) =>
+    state.playground.showLevelFinishedScreen);
   // Image sources
   const theme = useAppSelector((state) => state.playground.theme);
   // Images
@@ -244,7 +247,7 @@ export default function Canvas(): JSX.Element {
       }
       // Finish the animation by setting the state to finished.
       if (actorMovements.length > 0) {
-        setTimeout(() => setLevelFinished(true),
+        setTimeout(() => dispatch(finishThisTry()),
             actorMovements.length * 250);
       }
     };
@@ -267,13 +270,12 @@ export default function Canvas(): JSX.Element {
 
   const proceedToNextlLevel = () => {
     dispatch(finishThisTry());
-    setLevelFinished(false);
+    dispatch(showOrHideEndLevelScreen());
+    dispatch(levelUp());
   };
 
   // Show end level scren if the level is finished.
-  if (levelFinished) {
-    // TODO: update styling of this screen.
-    // And add score for it.
+  if (isShowingLevelFinished) {
     return (
       <>
         <div>Level Finished</div>

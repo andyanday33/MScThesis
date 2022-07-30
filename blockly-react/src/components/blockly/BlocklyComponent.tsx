@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
-import {move, levelUp, resetTry,
+import {move, showOrHideEndLevelScreen, resetTry,
   startAnimation, turn} from '../redux/playgroundSlice';
 import {Button, Stack, Accordion} from 'react-bootstrap';
 import toolbox from './toolbox';
@@ -135,7 +135,7 @@ export default function BlocklyComponent(...props :
           disabledRef.current = false;
         }, 250 * moves.length);
         setTimeout(() => {
-          return dispatch(levelUp());
+          return dispatch(showOrHideEndLevelScreen());
         }, 250 * moves.length);
         tryNumber.current = 0;
       }

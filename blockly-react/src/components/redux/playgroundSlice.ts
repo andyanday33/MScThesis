@@ -82,6 +82,7 @@ interface PlaygroundState {
     movesThisTry: ActorType[][],
     points: number[],
     theme: themes,
+    showLevelFinishedScreen: boolean,
 };
 
 /* TODO: after adding user auth, change initial
@@ -107,6 +108,7 @@ const initialState: PlaygroundState = {
   movesThisTry: [],
   points: [],
   theme: themes.Car,
+  showLevelFinishedScreen: false,
 };
 
 export const fetchLevels = createAsyncThunk('playground/fetchLevels',
@@ -320,6 +322,9 @@ export const playgroundSlice = createSlice({
       state.turn = 0;
       state.crashed = false;
     },
+    showOrHideEndLevelScreen: (state: PlaygroundState) => {
+      state.showLevelFinishedScreen = !state.showLevelFinishedScreen;
+    },
     /**
      * Makes the playground available for a new try.
      * @param {PlaygroundState} state State of the playground
@@ -360,6 +365,7 @@ export const playgroundSlice = createSlice({
 });
 
 export const {move, levelUp, resetTry, finishThisTry,
-  startAnimation, turn, changeTheme, selectLevel} = playgroundSlice.actions;
+  startAnimation, turn, changeTheme, selectLevel,
+  showOrHideEndLevelScreen} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
