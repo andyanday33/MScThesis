@@ -108,7 +108,7 @@ export default function Canvas(): JSX.Element {
         break;
     }
     // console.log(actorImageRef.current.src);
-  }, [theme, storeStatus]);
+  }, [theme, storeStatus, isShowingGameFinished]);
 
   useEffect(() => {
     /**
@@ -289,7 +289,7 @@ export default function Canvas(): JSX.Element {
   }
 
   // Show end level scren if the level is finished.
-  if (isShowingLevelFinished) {
+  if (isShowingLevelFinished && !isShowingGameFinished) {
     return (
       <FinishedCard
         HeaderText="Level Finished"
