@@ -298,9 +298,6 @@ export const playgroundSlice = createSlice({
         state.tip = state.levels[state.level].tip;
         // generate new map
         generateCurrentMap(state);
-      } else {
-        console.log('endgame');
-        state.showingEndGameScreen = true;
       }
     },
     selectLevel: (state, action) => {
@@ -328,7 +325,11 @@ export const playgroundSlice = createSlice({
       state.crashed = false;
     },
     showOrHideEndLevelScreen: (state: PlaygroundState) => {
-      state.showingLevelFinishedScreen = !state.showingLevelFinishedScreen;
+      if (state.level !== state.maxLevel - 1) {
+        state.showingLevelFinishedScreen = !state.showingLevelFinishedScreen;
+      } else {
+        state.showingEndGameScreen = true;
+      }
     },
     /**
      * Makes the playground available for a new try.

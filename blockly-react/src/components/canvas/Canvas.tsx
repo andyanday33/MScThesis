@@ -278,6 +278,7 @@ export default function Canvas(): JSX.Element {
     dispatch(levelUp());
   };
 
+  // Show the end game screen if the game is finished.
   if (isShowingGameFinished) {
     return (
       <FinishedCard
