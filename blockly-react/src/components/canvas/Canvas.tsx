@@ -282,7 +282,7 @@ export default function Canvas(): JSX.Element {
     return (
       <FinishedCard
         HeaderText="Game Finished"
-        AlterGameState={startNewGame}
+        AlterGameState={() => dispatch(startNewGame())}
         ButtonText="Start New Game"
       />
     );

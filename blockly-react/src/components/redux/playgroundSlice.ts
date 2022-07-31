@@ -354,6 +354,7 @@ export const playgroundSlice = createSlice({
       state.tip = state.levels[0].tip;
       // generate current map
       generateCurrentMap(state);
+      state.showingEndGameScreen = false;
     },
   },
   extraReducers: (builder) => {
