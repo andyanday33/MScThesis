@@ -3,7 +3,7 @@ import {Button, Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry, changeTheme,
   showOrHideEndLevelScreen,
-  levelUp, startNewGame} from '../redux/playgroundSlice';
+  levelUp, startNewGame, restartLevel} from '../redux/playgroundSlice';
 import {ActorType} from '../redux/playgroundSlice';
 import {themes} from '../redux/playgroundSlice';
 
@@ -108,7 +108,7 @@ export default function Canvas(): JSX.Element {
         break;
     }
     // console.log(actorImageRef.current.src);
-  }, [theme, storeStatus, isShowingGameFinished]);
+  }, [theme, storeStatus, isShowingGameFinished, isShowingLevelFinished]);
 
   useEffect(() => {
     /**
@@ -278,6 +278,11 @@ export default function Canvas(): JSX.Element {
     dispatch(levelUp());
   };
 
+  const restartThisLevel = () => {
+    dispatch(restartLevel());
+    dispatch(showOrHideEndLevelScreen());
+  };
+
   const EndGameCard: React.FC = () => {
     return (
       <FinishedCard
@@ -303,6 +308,7 @@ export default function Canvas(): JSX.Element {
         <Button
           variant='secondary'
           className='mx-2'
+          onClick={restartThisLevel}
         >
           Retry Level
         </Button>
