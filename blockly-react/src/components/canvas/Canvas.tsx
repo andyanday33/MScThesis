@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react';
-import {Button, Form} from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry, changeTheme,
   showOrHideEndLevelScreen,
@@ -30,6 +30,7 @@ import bearActorSvg from '../../assets/bearTheme/actor.svg';
 
 // styles
 import './Canvas.css';
+import FinishedCard from './FinishedCard';
 
 type CtxType = (CanvasRenderingContext2D | null | undefined)
 
@@ -271,7 +272,7 @@ export default function Canvas(): JSX.Element {
     dispatch(changeTheme(e.currentTarget.value));
   };
 
-  const proceedToNextlLevel = () => {
+  const proceedToNextLevel = () => {
     dispatch(finishThisTry());
     dispatch(showOrHideEndLevelScreen());
     dispatch(levelUp());
@@ -279,20 +280,22 @@ export default function Canvas(): JSX.Element {
 
   if (isShowingGameFinished) {
     return (
-      <>
-        <div>Congratulations!!! You have finished the game!</div>
-        <Button onClick={() => dispatch(startNewGame())}>Start new game</Button>
-      </>
+      <FinishedCard
+        HeaderText="Game Finished"
+        AlterGameState={startNewGame}
+        ButtonText="Start New Game"
+      />
     );
   }
 
   // Show end level scren if the level is finished.
   if (isShowingLevelFinished) {
     return (
-      <>
-        <div>Level Finished</div>
-        <Button onClick={proceedToNextlLevel}>Next level</Button>
-      </>
+      <FinishedCard
+        HeaderText="Level Finished"
+        AlterGameState={proceedToNextLevel}
+        ButtonText="Next Level"
+      />
     );
   }
   return (
