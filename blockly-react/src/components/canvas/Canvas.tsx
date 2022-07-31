@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react';
-import {Form} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry, changeTheme,
   showOrHideEndLevelScreen,
@@ -278,26 +278,53 @@ export default function Canvas(): JSX.Element {
     dispatch(levelUp());
   };
 
-  // Show the end game screen if the game is finished.
-  if (isShowingGameFinished) {
+  const EndGameCard: React.FC = () => {
     return (
       <FinishedCard
         HeaderText="Game Finished"
-        AlterGameState={() => dispatch(startNewGame())}
-        ButtonText="Start New Game"
-      />
+        BodyText="DISPLAY_TOTAL_SCORE_HERE"
+      >
+        <Button
+          variant='primary'
+          onClick={() => dispatch(startNewGame())}
+        >
+          Start New Game
+        </Button>
+      </FinishedCard>
     );
+  };
+
+  const EndLevelCard: React.FC = () => {
+    return (
+      <FinishedCard
+        HeaderText="Level Finished"
+        BodyText="DISPLAY_SCORE_HERE"
+      >
+        <Button
+          variant='secondary'
+          className='mx-2'
+        >
+          Retry Level
+        </Button>
+        <Button
+          variant='primary'
+          onClick={proceedToNextLevel}
+          className='mx-2'
+        >
+          Next Level
+        </Button>
+      </FinishedCard>
+    );
+  };
+
+  // Show the end game screen if the game is finished.
+  if (isShowingGameFinished) {
+    return <EndGameCard />;
   }
 
   // Show end level scren if the level is finished.
   if (isShowingLevelFinished && !isShowingGameFinished) {
-    return (
-      <FinishedCard
-        HeaderText="Level Finished"
-        AlterGameState={proceedToNextLevel}
-        ButtonText="Next Level"
-      />
-    );
+    return <EndLevelCard />;
   }
   return (
     <>

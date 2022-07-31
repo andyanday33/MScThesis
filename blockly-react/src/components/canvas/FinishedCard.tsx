@@ -1,10 +1,10 @@
 import React, {ReactElement} from 'react';
-import {Button, Card} from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 
 type FinishedCardProps = {
-  AlterGameState: () => void,
-  ButtonText: string,
   HeaderText: string,
+  BodyText: string,
+  children: JSX.Element[] | JSX.Element,
 }
 
 /**
@@ -15,8 +15,8 @@ type FinishedCardProps = {
  * @return {ReactElement} A JSX consisting of a
  *  card with a button to next level.
  */
-const FinishedCard: React.FC<FinishedCardProps> = ({AlterGameState,
-  ButtonText, HeaderText}): ReactElement => {
+const FinishedCard: React.FC<FinishedCardProps> = ({children,
+  HeaderText}): ReactElement => {
   return (
     <Card
       bg='light'
@@ -29,12 +29,7 @@ const FinishedCard: React.FC<FinishedCardProps> = ({AlterGameState,
         <Card.Text>
           DISPLAY_SCORE_HERE
         </Card.Text>
-        <Button
-          variant='primary'
-          onClick={AlterGameState}
-        >
-          {ButtonText}
-        </Button>
+        {children}
       </Card.Body>
     </Card>
   );
