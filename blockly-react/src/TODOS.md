@@ -21,7 +21,7 @@
 - [X] Make tips an alert or breadcrumb instead of overlay and pop-up
 - [ ] Add a level selection dropdown.
 - [ ] Show scores after each level and allow trying again.
-- [ ] End Game logic.
+- [X] End Game logic.
 - [ ] Level Design.
 - [ ] Hide firebase keys.
 ## Further Down The Lineß
