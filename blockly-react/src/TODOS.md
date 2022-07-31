@@ -20,7 +20,8 @@
 - [X] Level generation script.
 - [X] Make tips an alert or breadcrumb instead of overlay and pop-up
 - [ ] Add a level selection dropdown.
-- [ ] Show scores after each level and allow trying again.
+- [X] Allow trying again.
+- [ ] Show scores after each level.
 - [X] End Game logic.
 - [ ] Level Design.
 - [ ] Hide firebase keys.
