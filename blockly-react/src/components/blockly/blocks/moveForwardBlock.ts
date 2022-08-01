@@ -11,7 +11,6 @@ Blockly.Blocks['move_forward_block'] = {
     this.setHelpUrl('');
   },
 };
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 Blockly.JavaScript['move_forward_block'] = function(block: Blockly.Block)
   : String {
@@ -19,6 +18,7 @@ Blockly.JavaScript['move_forward_block'] = function(block: Blockly.Block)
   console.log('move_forward_block');
   const code =
   'if(initialTryNumber.current == tryNumber.current)' +
-  '{dispatch(move("FORWARD"))};\n';
+  '{dispatch(move("FORWARD"))};\n' +
+  `levelPointsRef.current -= 1;\n`;
   return code;
 };

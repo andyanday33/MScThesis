@@ -19,6 +19,7 @@ Blockly.JavaScript['move_backwards_block'] = function(block: Blockly.Block)
   console.log('move_backwards_block');
   const code =
   'if(initialTryNumber.current == tryNumber.current)' +
-  '{dispatch(move("BACKWARDS"))};\n';
+  '{dispatch(move("BACKWARDS"))};\n' +
+  `levelPointsRef.current -= 1;\n`;
   return code;
 };

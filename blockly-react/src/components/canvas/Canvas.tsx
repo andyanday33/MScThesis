@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, ReactElement} from 'react';
-import {Button, Form} from 'react-bootstrap';
+import {Button, Card, Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry, changeTheme,
   showOrHideEndLevelScreen,
@@ -290,11 +290,18 @@ export default function Canvas(): JSX.Element {
   };
 
   const EndGameCard: React.FC = () => {
+    const pointsArray = useAppSelector((state) =>
+      state.playground.points);
+    const totalPoints = pointsArray.reduce((partialSum, point) =>
+      partialSum + point, 0);
+
     return (
       <FinishedCard
-        HeaderText="Game Finished"
-        BodyText="DISPLAY_TOTAL_SCORE_HERE"
+        headerText="Game Finished"
       >
+        <Card.Text>
+          Total Score: {totalPoints}
+        </Card.Text>
         <Button
           variant='primary'
           onClick={() => dispatch(startNewGame())}
@@ -306,11 +313,13 @@ export default function Canvas(): JSX.Element {
   };
 
   const EndLevelCard: React.FC = () => {
+    const points = useAppSelector((state) =>
+      state.playground.points[currentLevel]);
     return (
-      <FinishedCard
-        HeaderText="Level Finished"
-        BodyText="DISPLAY_SCORE_HERE"
-      >
+      <FinishedCard headerText="Level Finished">
+        <Card.Text>
+          Level Score: {points}
+        </Card.Text>
         <Button
           variant='secondary'
           className='mx-2'

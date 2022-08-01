@@ -20,6 +20,7 @@ Blockly.JavaScript['turn_actors_block'] = function(block: Blockly.Block)
   // TODO: Assemble JavaScript into code variable.
   const code =
   'if(initialTryNumber.current == tryNumber.current)' +
-  `{dispatch(turn("${dropdownDirection}"))};\n`;
+  `{dispatch(turn("${dropdownDirection}"))};\n` +
+  `levelPointsRef.current -= 1;\n`;
   return code;
 };

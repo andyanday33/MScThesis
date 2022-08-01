@@ -3,7 +3,7 @@ import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {move, showOrHideEndLevelScreen, resetTry,
-  startAnimation, turn, unlockLevel} from '../redux/playgroundSlice';
+  startAnimation, turn, unlockLevel, setPoint} from '../redux/playgroundSlice';
 import {Button, Stack, Accordion} from 'react-bootstrap';
 import toolbox from './toolbox';
 
@@ -15,6 +15,10 @@ import './blocks/moveForwardBlock';
 import './blocks/moveBackwardsBlock';
 import './blocks/turnActorsBlock';
 import GoalAlert from '../alerts/GoalAlert';
+
+// Default level points that is going to be reduced
+// with each line of code, movement, etc.
+const DEFAULT_LEVEL_POINTS = 100;
 
 /**
  * A functional component that holds Blockly related functionality.
@@ -66,6 +70,7 @@ export default function BlocklyComponent(...props :
   const maxUnlockedLevel = useAppSelector((state) =>
     state.playground.maxUnlockedLevel);
   const currentLevel = useAppSelector((state) => state.playground.level);
+  const levelPointsRef = useRef(DEFAULT_LEVEL_POINTS);
   /**
    * Injects Blockly into the relavant div
    * if not already injected.
@@ -158,6 +163,16 @@ export default function BlocklyComponent(...props :
     checkActorGoals();
   }, [boardTurn, moves.length]);
 
+  const calculatePointsForBlockUsage = () => {
+    Blockly.getMainWorkspace().getAllBlocks(false).map((block) => {
+      if (block.type === 'move_forward_block' ||
+      block.type === 'move_backwards_block' ||
+      block.type === 'turn_actors_block') {
+        levelPointsRef.current -= 2;
+      }
+    });
+  };
+
   /**
    * Code generation handler function.
    * Starts the code generation process
@@ -171,6 +186,9 @@ export default function BlocklyComponent(...props :
     actorsMetGoalsRef.current = false;
     // console.log(code);
     await eval(code);
+    calculatePointsForBlockUsage();
+    dispatch(setPoint([currentLevel, levelPointsRef.current]));
+    levelPointsRef.current = DEFAULT_LEVEL_POINTS;
     if (moves.length > 0) {
       dispatch(startAnimation());
     }

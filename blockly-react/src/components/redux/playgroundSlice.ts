@@ -256,6 +256,10 @@ export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
+    setPoint: (state, action) => {
+      state.points[action.payload[0]] = action.payload[1];
+      console.log(state.points);
+    },
     turn: (state, action) => {
       if (!state.crashed) {
         state.turn += 1;
@@ -407,6 +411,11 @@ export const playgroundSlice = createSlice({
           state.tip = state.levels[0].tip;
           // generate current map
           generateCurrentMap(state);
+          // initialize points array with 100 points on each level
+          // that is going to be extracted for each code logic, line of code,
+          // etc.
+          state.points = new Array(action.payload.length);
+          state.points = state.points.fill(100, 0, action.payload.length);
         });
   },
 });
@@ -414,6 +423,6 @@ export const playgroundSlice = createSlice({
 export const {move, levelUp, resetTry, finishThisTry,
   startAnimation, turn, changeTheme, selectLevel,
   showOrHideEndLevelScreen, startNewGame,
-  restartLevel, unlockLevel} = playgroundSlice.actions;
+  restartLevel, unlockLevel, setPoint} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;
