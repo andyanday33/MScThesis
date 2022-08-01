@@ -19,6 +19,8 @@
     - [ ] Remove unnecessary fields.
     - [ ] Change math variable default value to 1.
     - [ ] Change loops to become easier to use.
+
+- [ ] Add max points property to each level (optional).
 - [X] Goal index matching?
 - [X] Check every individual actor.
 - [X] Level generation script.
