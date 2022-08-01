@@ -124,11 +124,9 @@ export default function BlocklyComponent(...props :
         return dispatch(resetTry());
       }, 250 * crashedAtTurn);
       tryNumber.current++;
-    }
-    // Check whether the end level goals are met if the board turn
-    // is equal to number of counted moves.
-    // console.log(moves.length, boardTurn);
-    if (moves.length == boardTurn && boardTurn != 0) {
+    } else if (moves.length == boardTurn && boardTurn != 0) {
+      // Check whether the end level goals are met if the board turn
+      // is equal to number of counted moves.
       let isAllMet = true;
       // Check all actors and corresponding goal indexes
       for (let i = 0; isAllMet && i < actors.length; i++) {
