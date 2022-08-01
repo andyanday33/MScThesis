@@ -311,8 +311,17 @@ export const playgroundSlice = createSlice({
       generateCurrentMap(state);
     },
     selectLevel: (state, action) => {
-      if (action.payload > 0 && action.payload < state.maxLevel) {
+      console.log('action', action);
+      if (action.payload >= 0 && action.payload < state.maxLevel) {
         state.level = action.payload;
+        state.actors = state.levels[state.level].actors!;
+        state.goals = state.levels[state.level].goals!;
+        state.turn = 0;
+        state.gridSize = state.levels[state.level].gridSize!;
+        state.walls = state.levels[state.level].walls;
+        state.tip = state.levels[state.level].tip;
+        // generate new map
+        generateCurrentMap(state);
       }
     },
     startAnimation: (state) => {

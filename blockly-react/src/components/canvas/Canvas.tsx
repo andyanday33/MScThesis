@@ -1,9 +1,10 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, ReactElement} from 'react';
 import {Button, Form} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {finishThisTry, changeTheme,
   showOrHideEndLevelScreen,
-  levelUp, startNewGame, restartLevel} from '../redux/playgroundSlice';
+  levelUp, startNewGame, restartLevel,
+  selectLevel} from '../redux/playgroundSlice';
 import {ActorType} from '../redux/playgroundSlice';
 import {themes} from '../redux/playgroundSlice';
 
@@ -62,6 +63,7 @@ export default function Canvas(): JSX.Element {
   const actorMovements = useAppSelector((state) =>
     state.playground.movesThisTry);
 
+  const currentLevel = useAppSelector((state) => state.playground.level);
   // End level screen condition
   const isShowingLevelFinished = useAppSelector((state) =>
     state.playground.showingLevelFinishedScreen);
@@ -108,7 +110,8 @@ export default function Canvas(): JSX.Element {
         break;
     }
     // console.log(actorImageRef.current.src);
-  }, [theme, storeStatus, isShowingGameFinished, isShowingLevelFinished]);
+  }, [theme, storeStatus, isShowingGameFinished, isShowingLevelFinished,
+    currentLevel]);
 
   useEffect(() => {
     /**
@@ -323,6 +326,49 @@ export default function Canvas(): JSX.Element {
     );
   };
 
+  /**
+   * Iterates for the number of previous levels up to the current level
+   * and generates a select option for each level.
+   *
+   * @return {JSX.Element[]} An array of select options.
+  */
+  const prevLevels = (): JSX.Element[] => {
+    const levels = [];
+    for (let i = 0; i <= currentLevel; i++) {
+      levels.push((
+        <option key={i} value={i}>{i + 1}</option>
+      ));
+    }
+    return levels;
+  };
+
+  const handleLevelSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const level = e.currentTarget.value;
+    if (level && +level != currentLevel) {
+      dispatch(selectLevel(+level));
+    }
+  };
+
+  /**
+   * Bootstrap Form Select component for level selection.
+   *
+   * @return {ReactElement} a select element consisting of
+   *  previous levels (including current one).
+   */
+  const LevelSelection: React.FC = (): ReactElement => {
+    return (
+      <Form.Select
+        onChange={handleLevelSelection}
+        className="mx-auto mb-4"
+        size="lg"
+        aria-label="Theme Select"
+      >
+        <option>Select a level</option>
+        {prevLevels()}
+      </Form.Select>
+    );
+  };
+
   // Show the end game screen if the game is finished.
   if (isShowingGameFinished) {
     return <EndGameCard />;
@@ -342,14 +388,18 @@ export default function Canvas(): JSX.Element {
       <p style={{fontSize: '1.5em'}}><strong>
         Select a theme for playground:
       </strong></p>
-      <Form.Select defaultValue="CAR"
+      <Form.Select defaultValue={themes.Car}
         onChange={(e) => handleThemeChange(e)}
         className="mx-auto" size="lg" aria-label="Theme Select">
-        <option value="CAR">Cars</option>
-        <option value="CART">Shopping Carts</option>
-        <option value="MONKEY">Monkeys</option>
-        <option value="BEAR">Bears</option>
+        <option value={themes.Car}>Cars</option>
+        <option value={themes.Cart}>Shopping Carts</option>
+        <option value={themes.Monkey}>Monkeys</option>
+        <option value={themes.Bear}>Bears</option>
       </Form.Select>
+      <p style={{fontSize: '1.5em'}}><strong>
+        Select a level:
+      </strong></p>
+      <LevelSelection />
     </>
   );
 }
