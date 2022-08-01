@@ -19,7 +19,7 @@
 - [X] Check every individual actor.
 - [X] Level generation script.
 - [X] Make tips an alert or breadcrumb instead of overlay and pop-up
-- [ ] Add a level selection dropdown.
+- [X] Add a level selection dropdown.
 - [X] Allow trying again.
 - [ ] Show scores after each level.
 - [X] End Game logic.
