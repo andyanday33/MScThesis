@@ -74,6 +74,7 @@ interface PlaygroundState {
     actors: ActorType[],
     goals: GridObjectType[],
     walls?: GridObjectType[],
+    maxUnlockedLevel: number,
     tip?: String,
     turn: number,
     level: number,
@@ -100,6 +101,7 @@ const initialState: PlaygroundState = {
   // Goal coordinates of actors.
   goals: [],
   walls: [],
+  maxUnlockedLevel: 0,
   turn: 0,
   level: 0,
   maxLevel: 0,
@@ -311,7 +313,6 @@ export const playgroundSlice = createSlice({
       generateCurrentMap(state);
     },
     selectLevel: (state, action) => {
-      console.log('action', action);
       state.showingEndGameScreen = false;
       state.showingLevelFinishedScreen = false;
       if (action.payload >= 0 && action.payload < state.maxLevel) {
@@ -378,6 +379,9 @@ export const playgroundSlice = createSlice({
       generateCurrentMap(state);
       state.showingEndGameScreen = false;
     },
+    unlockLevel: (state) => {
+      state.maxUnlockedLevel++;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -408,6 +412,6 @@ export const playgroundSlice = createSlice({
 export const {move, levelUp, resetTry, finishThisTry,
   startAnimation, turn, changeTheme, selectLevel,
   showOrHideEndLevelScreen, startNewGame,
-  restartLevel} = playgroundSlice.actions;
+  restartLevel, unlockLevel} = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

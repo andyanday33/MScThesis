@@ -3,7 +3,7 @@ import Blockly, {WorkspaceSvg} from 'blockly';
 import BlocklyJS from 'blockly/javascript';
 import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {move, showOrHideEndLevelScreen, resetTry,
-  startAnimation, turn} from '../redux/playgroundSlice';
+  startAnimation, turn, unlockLevel} from '../redux/playgroundSlice';
 import {Button, Stack, Accordion} from 'react-bootstrap';
 import toolbox from './toolbox';
 
@@ -63,6 +63,9 @@ export default function BlocklyComponent(...props :
   // generation button disabler
   const disabledRef = useRef(false);
 
+  const maxUnlockedLevel = useAppSelector((state) =>
+    state.playground.maxUnlockedLevel);
+  const currentLevel = useAppSelector((state) => state.playground.level);
   /**
    * Injects Blockly into the relavant div
    * if not already injected.
@@ -141,6 +144,9 @@ export default function BlocklyComponent(...props :
           disabledRef.current = false;
         }, 250 * moves.length);
         setTimeout(() => {
+          if (currentLevel === maxUnlockedLevel) {
+            dispatch(unlockLevel());
+          }
           return dispatch(showOrHideEndLevelScreen());
         }, 250 * moves.length);
         tryNumber.current = 0;

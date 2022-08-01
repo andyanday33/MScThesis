@@ -63,7 +63,10 @@ export default function Canvas(): JSX.Element {
   const actorMovements = useAppSelector((state) =>
     state.playground.movesThisTry);
 
-  const currentLevel = useAppSelector((state) => state.playground.level);
+  const maxUnlockedLevel = useAppSelector((state) =>
+    state.playground.maxUnlockedLevel);
+  const currentLevel = useAppSelector((state) =>
+    state.playground.level);
   // End level screen condition
   const isShowingLevelFinished = useAppSelector((state) =>
     state.playground.showingLevelFinishedScreen);
@@ -334,7 +337,7 @@ export default function Canvas(): JSX.Element {
   */
   const prevLevels = (): JSX.Element[] => {
     const levels = [];
-    for (let i = 0; i <= currentLevel; i++) {
+    for (let i = 0; i <= maxUnlockedLevel; i++) {
       levels.push((
         <option key={i} value={i}>{i + 1}</option>
       ));
@@ -349,7 +352,7 @@ export default function Canvas(): JSX.Element {
    */
   const handleLevelSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const level = e.currentTarget.value;
-    if (level && +level != currentLevel) {
+    if (level) {
       dispatch(selectLevel(+level));
     }
   };
