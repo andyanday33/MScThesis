@@ -312,6 +312,8 @@ export const playgroundSlice = createSlice({
     },
     selectLevel: (state, action) => {
       console.log('action', action);
+      state.showingEndGameScreen = false;
+      state.showingLevelFinishedScreen = false;
       if (action.payload >= 0 && action.payload < state.maxLevel) {
         state.level = action.payload;
         state.actors = state.levels[state.level].actors!;

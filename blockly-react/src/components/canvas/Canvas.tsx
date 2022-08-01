@@ -342,6 +342,11 @@ export default function Canvas(): JSX.Element {
     return levels;
   };
 
+  /**
+   * Handles value change of the level selection dropdown.
+   *
+   * @param {React.ChangeEvent<HTMLSelectElement>} e event target.
+   */
   const handleLevelSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const level = e.currentTarget.value;
     if (level && +level != currentLevel) {
@@ -371,12 +376,22 @@ export default function Canvas(): JSX.Element {
 
   // Show the end game screen if the game is finished.
   if (isShowingGameFinished) {
-    return <EndGameCard />;
+    return (
+      <>
+        <EndGameCard />
+        <LevelSelection />
+      </>
+    );
   }
 
   // Show end level scren if the level is finished.
   if (isShowingLevelFinished && !isShowingGameFinished) {
-    return <EndLevelCard />;
+    return (
+      <>
+        <EndLevelCard />
+        <LevelSelection />
+      </>
+    );
   }
   return (
     <>
