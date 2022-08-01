@@ -13,7 +13,7 @@
 - [X] Add more themes.
 - [ ] Finish get started page.
 - [ ] Adjust level tips. 
-- [ ] Scoring.
+- [X] Scoring.
 - [X] Indexing actors.
 - [ ] A block to select indexed actors (optional).
 - [X] Goal index matching?
@@ -22,7 +22,7 @@
 - [X] Make tips an alert or breadcrumb instead of overlay and pop-up
 - [X] Add a level selection dropdown.
 - [X] Allow trying again.
-- [ ] Show scores after each level.
+- [X] Show scores after each level.
 - [X] End Game logic.
 - [ ] Level Design.
 - [ ] Hide firebase keys.
