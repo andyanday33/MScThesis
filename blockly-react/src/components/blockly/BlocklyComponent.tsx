@@ -179,9 +179,9 @@ export default function BlocklyComponent(...props :
   const TipAccordion = () => (
     <Accordion className="tip-accordion" defaultActiveKey="0" flush>
       <Accordion.Item eventKey="0">
-        <Accordion.Header>Level Tip</Accordion.Header>
-        <Accordion.Body>
-          {tip}
+        <Accordion.Header><strong>Level Tip</strong></Accordion.Header>
+        <Accordion.Body style={{fontSize: '1.2em'}}>
+          <strong>{tip}</strong>
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
