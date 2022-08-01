@@ -380,7 +380,9 @@ export const playgroundSlice = createSlice({
       state.showingEndGameScreen = false;
     },
     unlockLevel: (state) => {
-      state.maxUnlockedLevel++;
+      if (state.maxUnlockedLevel != state.maxLevel - 1) {
+        state.maxUnlockedLevel++;
+      }
     },
   },
   extraReducers: (builder) => {
