@@ -15,7 +15,10 @@
 - [ ] Adjust level tips. 
 - [X] Scoring.
 - [X] Indexing actors.
-- [ ] A block to select indexed actors (optional).
+- [ ] Update blockly toolbox.
+    - [ ] Remove unnecessary fields.
+    - [ ] Change math variable default value to 1.
+    - [ ] Change loops to become easier to use.
 - [X] Goal index matching?
 - [X] Check every individual actor.
 - [X] Level generation script.
