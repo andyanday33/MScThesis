@@ -1,5 +1,4 @@
 - [ ] Vitest Testing!!!
-- [ ] Add a Get Started or How to Play page with complete guide.
 - [X] Connect a back-end (using Firebase or Amplify, decide) to fetch levels from.
 - [X] Create more than one levels.
 - [X] Game Alerts alongside tips
@@ -12,6 +11,8 @@
 - [X] Move backwards.
 - [X] Theme selector.
 - [X] Add more themes.
+- [ ] Finish get started page.
+- [ ] Adjust level tips. 
 - [ ] Scoring.
 - [X] Indexing actors.
 - [ ] A block to select indexed actors (optional).
