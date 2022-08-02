@@ -5,7 +5,8 @@ import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {move, showOrHideEndLevelScreen, resetTry,
   startAnimation, turn, unlockLevel, setPoint} from '../redux/playgroundSlice';
 import {Button, Stack, Accordion} from 'react-bootstrap';
-import toolbox from './toolbox';
+import {toolboxWithConditionals,
+  toolboxWithoutConditionals} from './toolbox';
 
 // style
 import './BlocklyComponent.css';
@@ -86,15 +87,20 @@ export default function BlocklyComponent(...props :
       Yet it works perfectly fine */
       simpleWorkspace.current = Blockly.inject(blocklyRef.current,
           {
-            toolbox,
+            toolbox: actors.length <= 1 ? toolboxWithConditionals :
+              toolboxWithoutConditionals,
+            id: 'injection-div',
             ...props,
           });
     }
   };
 
   useEffect(() => {
+    blocklyRef.current?.removeChild(
+        blocklyRef.current?.childNodes[0],
+    );
     injectBlockly();
-  }, [toolbox]);
+  }, [toolboxWithConditionals, toolboxWithoutConditionals, level]);
 
   /**
    * Function that is a placeholder for move and turn functions so it
@@ -185,8 +191,6 @@ export default function BlocklyComponent(...props :
     actorsMetGoalsRef.current = false;
     // console.log(code);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const gridColor = 'RED';
     await eval(code);
     calculatePointsForBlockUsage();
     dispatch(setPoint([currentLevel, levelPointsRef.current]));

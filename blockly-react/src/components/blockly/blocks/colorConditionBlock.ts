@@ -15,6 +15,8 @@ Blockly.Blocks['color_condition_block'] = {
   },
 };
 
+// Attention: Right now this block only works on maps with one actors,
+// so it is not implemented in maps with multiple ones.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 Blockly.JavaScript['color_condition_block'] = function(block: Blockly.Block)
   : String {
