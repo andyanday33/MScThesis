@@ -14,7 +14,6 @@ import './BlocklyComponent.css';
 import './blocks/moveForwardBlock';
 import './blocks/moveBackwardsBlock';
 import './blocks/turnActorsBlock';
-import './blocks/colorConditionBlock';
 import GoalAlert from '../alerts/GoalAlert';
 
 // Default level points that is going to be reduced
