@@ -15,10 +15,10 @@
 - [ ] Adjust level tips. 
 - [X] Scoring.
 - [X] Indexing actors.
-- [ ] Update blockly toolbox.
-    - [ ] Remove unnecessary fields.
-    - [ ] Change math variable default value to 1.
-    - [ ] Change loops to become easier to use.
+- [X] Update blockly toolbox.
+    - [X] Remove unnecessary fields.
+    - [X] Change math variable default value to 1.
+    - [X] Change loops to become easier to use.
 
 - [ ] Add max points property to each level (optional).
 - [X] Goal index matching?
