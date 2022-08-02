@@ -3,7 +3,7 @@
     {
       "gridSize": 3,
       "levelNo": 1,
-      "tip": "Try moving the actor by dragging moveForward block inside Move directory into the right side of the toolbox.",
+      "tip": "Try moving the actor by dragging moveForward block inside Move directory into the right side of the toolbox and clicking generate code button.",
       "actors": [
         {
           "coordinateX": 1,
@@ -303,5 +303,5 @@
         }
       ]
     }
-  ] 
+  ]
 }
