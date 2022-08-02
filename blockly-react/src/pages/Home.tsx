@@ -22,10 +22,18 @@ export default function Home(): JSX.Element {
             Puzzlaffic is a coding puzzle game that makes you think
              like a computer to solve a couple of puzzles. It provides
               a simple drag and drop interface to generate code that
-                will help you solve the puzzle.
+                will help you solve the puzzle.<br /><br />
+            You can quickly jump to the game:
           </Card.Text>
           <LinkContainer to="game">
             <Button variant="primary">Play the game</Button>
+          </LinkContainer>
+          <Card.Text>
+            <br />
+            Or you can learn more about the game before jumping in:
+          </Card.Text>
+          <LinkContainer to="get-started">
+            <Button variant="primary">Get Started</Button>
           </LinkContainer>
         </Card.Body>
       </Card>
