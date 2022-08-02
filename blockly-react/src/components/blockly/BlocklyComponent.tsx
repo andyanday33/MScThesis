@@ -14,6 +14,7 @@ import './BlocklyComponent.css';
 import './blocks/moveForwardBlock';
 import './blocks/moveBackwardsBlock';
 import './blocks/turnActorsBlock';
+import './blocks/colorConditionBlock';
 import GoalAlert from '../alerts/GoalAlert';
 
 // Default level points that is going to be reduced
@@ -183,6 +184,9 @@ export default function BlocklyComponent(...props :
     failedRef.current = false;
     actorsMetGoalsRef.current = false;
     // console.log(code);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const gridColor = 'RED';
     await eval(code);
     calculatePointsForBlockUsage();
     dispatch(setPoint([currentLevel, levelPointsRef.current]));

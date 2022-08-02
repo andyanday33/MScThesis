@@ -45,7 +45,7 @@ const toolbox = {
       'contents': [
         {
           'kind': 'block',
-          'type': 'controls_if',
+          'type': 'color_condition_block',
         },
       ],
     },
