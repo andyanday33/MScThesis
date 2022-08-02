@@ -29,10 +29,30 @@ export const toolboxWithLoops = {
         {
           'kind': 'block',
           'type': 'controls_for',
-          'fields': {
-            'VAR': {
-              'name': 'index',
-              'type': 'Number',
+          'inputs': {
+            'FROM': {
+              'block': {
+                'type': 'math_number',
+                'fields': {
+                  'NUM': 1,
+                },
+              },
+            },
+            'TO': {
+              'block': {
+                'type': 'math_number',
+                'fields': {
+                  'NUM': 10,
+                },
+              },
+            },
+            'BY': {
+              'block': {
+                'type': 'math_number',
+                'fields': {
+                  'NUM': 1,
+                },
+              },
             },
           },
         },
