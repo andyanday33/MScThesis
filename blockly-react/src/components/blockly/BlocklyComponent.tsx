@@ -43,6 +43,7 @@ export default function BlocklyComponent(...props :
   const tip = useAppSelector((state) => state.playground.tip);
   const storeStatus = useAppSelector((state) => state.playground.status);
   const actorCrashed = useAppSelector((state) => state.playground.crashed);
+  const coloredGrids = useAppSelector((state) => state.playground.coloredGrids);
   // Keeping track of movement turn of a crash. for animation purposes.
   const crashedAtTurn = useAppSelector((state) =>
     state.playground.crashedAtTurn);
@@ -87,18 +88,20 @@ export default function BlocklyComponent(...props :
       Yet it works perfectly fine */
       simpleWorkspace.current = Blockly.inject(blocklyRef.current,
           {
-            toolbox: actors.length <= 1 ? toolboxWithConditionals :
+            toolbox: actors.length <= 1 && coloredGrids?.length ?
+              toolboxWithConditionals :
               toolboxWithoutConditionals,
-            id: 'injection-div',
             ...props,
           });
     }
   };
 
   useEffect(() => {
-    blocklyRef.current?.removeChild(
-        blocklyRef.current?.childNodes[0],
-    );
+    if (blocklyRef.current?.childNodes[0]) {
+      blocklyRef.current?.removeChild(
+          blocklyRef.current?.childNodes[0],
+      );
+    }
     injectBlockly();
   }, [toolboxWithConditionals, toolboxWithoutConditionals, level]);
 
