@@ -29,8 +29,9 @@
 - [X] Allow trying again.
 - [X] Show scores after each level.
 - [X] End Game logic.
-- [ ] Level Design.
+- [X] Level Design.
 - [ ] Hide firebase keys.
+- [ ] Configure app check.
 ## Further Down The Lineß
 
 - Cypress End-to-end Testing
