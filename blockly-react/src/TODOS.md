@@ -11,7 +11,7 @@
 - [X] Move backwards.
 - [X] Theme selector.
 - [X] Add more themes.
-- [ ] Finish get started page.
+- [X] Finish get started page.
 - [ ] Adjust level tips. 
 - [X] Scoring.
 - [X] Indexing actors.
