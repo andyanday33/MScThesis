@@ -15,8 +15,6 @@ Blockly.Blocks['move_backwards_block'] = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 Blockly.JavaScript['move_backwards_block'] = function(block: Blockly.Block)
   : String {
-  // TODO: count number of times block is used.
-  console.log('move_backwards_block');
   const code =
   'if(initialTryNumber.current == tryNumber.current)' +
   '{dispatch(move("BACKWARDS"))};\n' +
