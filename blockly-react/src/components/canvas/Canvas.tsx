@@ -51,7 +51,6 @@ export default function Canvas(): JSX.Element {
   // TODO: remove houses.
   const walls = useAppSelector((state) => state.playground.walls);
   const gridSize = useAppSelector((state) => state.playground.gridSize);
-  const coloredGrids = useAppSelector((state) => state.playground.coloredGrids);
   // animation movement progress indicator
   const movementInProgress = useAppSelector((state) =>
     state.playground.animationInProgress);
@@ -157,20 +156,6 @@ export default function Canvas(): JSX.Element {
         ctx.lineTo(colSize * i, ctx.canvas.height);
         ctx.stroke();
       }
-
-      // draw colored grids (if exists)
-      if (coloredGrids) {
-        ctx.beginPath();
-        coloredGrids.map((coloredGrid) => {
-          const gridX = (coloredGrid.coordinateX - 1) * colSize;
-          const gridY = (coloredGrid.coordinateY - 1) * rowSize;
-          ctx.fillStyle = coloredGrid.objectName === 'RED_GRID' ? '#FF0000' :
-            '#0000FF';
-          ctx.fillRect(gridX, gridY, colSize, rowSize);
-          ctx.stroke();
-        });
-      }
-      ctx.fillStyle = '#000000';
 
       // draw the actors
       ctx.beginPath();

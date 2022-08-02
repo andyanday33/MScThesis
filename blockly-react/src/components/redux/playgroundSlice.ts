@@ -42,7 +42,6 @@ type LevelType = {
   actors?: ActorType[],
   goals?: GridObjectType[],
   walls?: GridObjectType[],
-  coloredGrids?: GridObjectType[],
   gridSize?: number,
   tip?: string,
   id: string,
@@ -76,7 +75,6 @@ interface PlaygroundState {
     actors: ActorType[],
     goals: GridObjectType[],
     walls?: GridObjectType[],
-    coloredGrids?: GridObjectType[],
     maxUnlockedLevel: number,
     tip?: String,
     turn: number,
@@ -101,7 +99,6 @@ const initialState: PlaygroundState = {
   animationInProgress: false,
   levels: [],
   actors: [],
-  coloredGrids: [],
   // Goal coordinates of actors.
   goals: [],
   walls: [],
@@ -141,12 +138,6 @@ const generateCurrentMap = (state: PlaygroundState) => {
     for (let i = 0; i < state.walls.length; i++) {
       state.currentMap[state.walls[i].coordinateY - 1][state.walls[i].
           coordinateX - 1] = {objectName: 'wall'};
-    }
-  }
-  if (state.coloredGrids) {
-    for (let i = 0; i < state.coloredGrids.length; i++) {
-      state.currentMap[state.coloredGrids[i].coordinateY - 1][state.
-          coloredGrids[i].coordinateX - 1] = {objectName: 'RED_GRID'};
     }
   }
 };
@@ -269,7 +260,6 @@ const setStateValues = (state: PlaygroundState, level = state.level) => {
   state.gridSize = state.levels[level].gridSize!;
   state.walls = state.levels[level].walls;
   state.tip = state.levels[level].tip;
-  state.coloredGrids = state.levels[level].coloredGrids;
 };
 
 export const playgroundSlice = createSlice({

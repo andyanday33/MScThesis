@@ -5,8 +5,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {move, showOrHideEndLevelScreen, resetTry,
   startAnimation, turn, unlockLevel, setPoint} from '../redux/playgroundSlice';
 import {Button, Stack, Accordion} from 'react-bootstrap';
-import {toolboxWithConditionals,
-  toolboxWithoutConditionals} from './toolbox';
+import toolbox from './toolbox';
 
 // style
 import './BlocklyComponent.css';
@@ -43,7 +42,6 @@ export default function BlocklyComponent(...props :
   const tip = useAppSelector((state) => state.playground.tip);
   const storeStatus = useAppSelector((state) => state.playground.status);
   const actorCrashed = useAppSelector((state) => state.playground.crashed);
-  const coloredGrids = useAppSelector((state) => state.playground.coloredGrids);
   // Keeping track of movement turn of a crash. for animation purposes.
   const crashedAtTurn = useAppSelector((state) =>
     state.playground.crashedAtTurn);
@@ -88,9 +86,7 @@ export default function BlocklyComponent(...props :
       Yet it works perfectly fine */
       simpleWorkspace.current = Blockly.inject(blocklyRef.current,
           {
-            toolbox: actors.length <= 1 && coloredGrids?.length ?
-              toolboxWithConditionals :
-              toolboxWithoutConditionals,
+            toolbox,
             ...props,
           });
     }
@@ -103,7 +99,7 @@ export default function BlocklyComponent(...props :
       );
     }
     injectBlockly();
-  }, [toolboxWithConditionals, toolboxWithoutConditionals, level]);
+  }, [level]);
 
   /**
    * Function that is a placeholder for move and turn functions so it
