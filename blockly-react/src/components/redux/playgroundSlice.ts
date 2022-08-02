@@ -26,7 +26,7 @@ export enum themes {
 }
 
 export type GridObjectType = {
-  objecName?: string,
+  objectName?: string,
   coordinateX: number,
   coordinateY: number,
 }
