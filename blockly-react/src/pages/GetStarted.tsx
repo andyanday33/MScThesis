@@ -24,6 +24,8 @@ export default function GetStarted(): JSX.Element {
              it is fairly simple; you have to solve the puzzle
               on the right side on the screen by using the code
                pieces on the left side.<br />
+            You could drag and drop blocks from toolbox to
+             generate a piece of code that is going to move the actors.<br />
             Every puzzle could have more than one solution,
              and there would be at least one solution.
             All of the puzzles have the same components:
@@ -45,11 +47,6 @@ export default function GetStarted(): JSX.Element {
                    all the actors should finish the level on
                     a distinct goal to complete that level.
               </li>
-              <li><strong>Checkpoints:</strong><br /></li>
-                Checkpoints are the pieces of the puzzle that
-                 act as an objective to fullfill for actors before going
-                  to one of the goals. These could not exist in
-                   some easier levels.
             </ul>
           </Accordion.Body>
         </Accordion.Item>
@@ -68,11 +65,32 @@ export default function GetStarted(): JSX.Element {
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
-          <Accordion.Header>Moving Actors Forward</Accordion.Header>
+          <Accordion.Header>Moving Actors Forward or Backward</Accordion.Header>
           <Accordion.Body>
             Inside move section of the toolbox, you are going to
               see a block called moveForward. This block will move
-                all the actors forward by square.
+                all the actors forward by square. moveBackards block
+                 has the same logic but instead of moving forward,
+                  it moves actors backwards.
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="3">
+          <Accordion.Header>Loops</Accordion.Header>
+          <Accordion.Body>
+            After reaching level 5, you will see a new section on the toolbox
+             called loops. This section contains a for loop block that
+              can be used to execute a series of blocks attached next to it
+               more than once.
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="4">
+          <Accordion.Header>Scoring</Accordion.Header>
+          <Accordion.Body>
+            At the end of each level, you are going to see a score with a
+             retry button and next level button. Keep in mind that 100 is not
+              the highest score for each level and every level has a distinct
+               maximum score. You can get higher scores by reducing the number
+                of moves you are making and making use of the loops block.
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
