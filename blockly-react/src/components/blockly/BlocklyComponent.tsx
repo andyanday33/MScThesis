@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
 import {move, showOrHideEndLevelScreen, resetTry,
   startAnimation, turn, unlockLevel, setPoint} from '../redux/playgroundSlice';
 import {Button, Stack, Accordion} from 'react-bootstrap';
-import toolbox from './toolbox';
+import {toolboxWithLoops, toolboxWithoutLoops} from './toolbox';
 
 // style
 import './BlocklyComponent.css';
@@ -85,14 +85,16 @@ export default function BlocklyComponent(...props :
       Yet it works perfectly fine */
       simpleWorkspace.current = Blockly.inject(blocklyRef.current,
           {
-            toolbox,
+            toolbox: level > 3 ? toolboxWithLoops : toolboxWithoutLoops,
             ...props,
           });
     }
   };
 
   useEffect(() => {
-    if (blocklyRef.current?.childNodes[0]) {
+    // Since we are going to introduce loops at level 5 (4 by index)
+    // We are going to re-inject blockly with a new toolbox.
+    if (level == 4 && blocklyRef.current?.childNodes[0]) {
       blocklyRef.current?.removeChild(
           blocklyRef.current?.childNodes[0],
       );

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const toolbox = {
+export const toolboxWithLoops = {
   'kind': 'categoryToolbox',
   'contents': [
     {
@@ -62,4 +62,27 @@ const toolbox = {
   ],
 };
 
-export default toolbox;
+export const toolboxWithoutLoops = {
+  'kind': 'categoryToolbox',
+  'contents': [
+    {
+      'kind': 'category',
+      'name': 'Movement',
+      'colour': '80',
+      'contents': [
+        {
+          'kind': 'block',
+          'type': 'move_forward_block',
+        },
+        {
+          'kind': 'block',
+          'type': 'move_backwards_block',
+        },
+        {
+          'kind': 'block',
+          'type': 'turn_actors_block',
+        },
+      ],
+    },
+  ],
+};
