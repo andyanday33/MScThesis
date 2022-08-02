@@ -26,6 +26,7 @@ export enum themes {
 }
 
 export type GridObjectType = {
+  objecName?: string,
   coordinateX: number,
   coordinateY: number,
 }
@@ -41,6 +42,7 @@ type LevelType = {
   actors?: ActorType[],
   goals?: GridObjectType[],
   walls?: GridObjectType[],
+  coloredGrids?: GridObjectType[],
   gridSize?: number,
   tip?: string,
   id: string,
@@ -74,6 +76,7 @@ interface PlaygroundState {
     actors: ActorType[],
     goals: GridObjectType[],
     walls?: GridObjectType[],
+    coloredGrids?: GridObjectType[],
     maxUnlockedLevel: number,
     tip?: String,
     turn: number,
@@ -98,6 +101,7 @@ const initialState: PlaygroundState = {
   animationInProgress: false,
   levels: [],
   actors: [],
+  coloredGrids: [],
   // Goal coordinates of actors.
   goals: [],
   walls: [],
@@ -137,6 +141,12 @@ const generateCurrentMap = (state: PlaygroundState) => {
     for (let i = 0; i < state.walls.length; i++) {
       state.currentMap[state.walls[i].coordinateY - 1][state.walls[i].
           coordinateX - 1] = {objectName: 'wall'};
+    }
+  }
+  if (state.coloredGrids) {
+    for (let i = 0; i < state.coloredGrids.length; i++) {
+      state.currentMap[state.coloredGrids[i].coordinateY - 1][state.
+          coloredGrids[i].coordinateX - 1] = {objectName: 'RED_GRID'};
     }
   }
 };
@@ -252,13 +262,22 @@ const checkCrashedAndMove = (state: PlaygroundState, actor: ActorType,
   return actor;
 };
 
+const setStateValues = (state: PlaygroundState, level = state.level) => {
+  state.actors = state.levels[level].actors!;
+  state.goals = state.levels[level].goals!;
+  state.turn = 0;
+  state.gridSize = state.levels[level].gridSize!;
+  state.walls = state.levels[level].walls;
+  state.tip = state.levels[level].tip;
+  state.coloredGrids = state.levels[level].coloredGrids;
+};
+
 export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
     setPoint: (state, action) => {
       state.points[action.payload[0]] = action.payload[1];
-      console.log(state.points);
     },
     turn: (state, action) => {
       if (!state.crashed) {
@@ -296,23 +315,13 @@ export const playgroundSlice = createSlice({
     levelUp: (state) => {
       if (state.level < state.maxLevel - 1) {
         state.level++;
-        state.actors = state.levels[state.level].actors!;
-        state.goals = state.levels[state.level].goals!;
-        state.turn = 0;
-        state.gridSize = state.levels[state.level].gridSize!;
-        state.walls = state.levels[state.level].walls;
-        state.tip = state.levels[state.level].tip;
+        setStateValues(state);
         // generate new map
         generateCurrentMap(state);
       }
     },
     restartLevel: (state) => {
-      state.actors = state.levels[state.level].actors!;
-      state.goals = state.levels[state.level].goals!;
-      state.turn = 0;
-      state.gridSize = state.levels[state.level].gridSize!;
-      state.walls = state.levels[state.level].walls;
-      state.tip = state.levels[state.level].tip;
+      setStateValues(state);
       // generate new map
       generateCurrentMap(state);
     },
@@ -321,24 +330,14 @@ export const playgroundSlice = createSlice({
       state.showingLevelFinishedScreen = false;
       if (action.payload >= 0 && action.payload < state.maxLevel) {
         state.level = action.payload;
-        state.actors = state.levels[state.level].actors!;
-        state.goals = state.levels[state.level].goals!;
-        state.turn = 0;
-        state.gridSize = state.levels[state.level].gridSize!;
-        state.walls = state.levels[state.level].walls;
-        state.tip = state.levels[state.level].tip;
+        setStateValues(state);
         // generate new map
         generateCurrentMap(state);
       }
     },
     startAnimation: (state) => {
       state.animationInProgress = true;
-      state.actors = state.levels[state.level].actors!;
-      state.goals = state.levels[state.level].goals!;
-      state.turn = 0;
-      state.gridSize = state.levels[state.level].gridSize!;
-      state.walls = state.levels[state.level].walls;
-      state.tip = state.levels[state.level].tip;
+      setStateValues(state);
       // generate new map
       generateCurrentMap(state);
     },
@@ -370,15 +369,8 @@ export const playgroundSlice = createSlice({
       state.theme = action.payload;
     },
     startNewGame: (state: PlaygroundState) => {
-      state.actors = state.levels[0].actors!;
-      // Goal coordinates of actors.
-      state.goals = state.levels[0].goals!;
-      state.walls = state.levels[0].walls;
-      state.turn = 0;
       state.level = 0;
-      state.maxLevel = state.levels.length;
-      state.gridSize = state.levels[0].gridSize!;
-      state.tip = state.levels[0].tip;
+      setStateValues(state, 0);
       // generate current map
       generateCurrentMap(state);
       state.showingEndGameScreen = false;
@@ -400,15 +392,8 @@ export const playgroundSlice = createSlice({
         .addCase(fetchLevels.fulfilled, (state, action) => {
           action.payload.forEach((level) => state.levels.push(level));
           state.status = 'idle';
-          state.actors = state.levels[0].actors!;
-          // Goal coordinates of actors.
-          state.goals = state.levels[0].goals!;
-          state.walls = state.levels[0].walls;
-          state.turn = 0;
-          state.level = 0;
-          state.maxLevel = state.levels.length;
-          state.gridSize = state.levels[0].gridSize!;
-          state.tip = state.levels[0].tip;
+          setStateValues(state, 0);
+          state.maxLevel = action.payload.length;
           // generate current map
           generateCurrentMap(state);
           // initialize points array with 100 points on each level

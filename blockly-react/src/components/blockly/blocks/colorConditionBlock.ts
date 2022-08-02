@@ -24,6 +24,5 @@ Blockly.JavaScript['color_condition_block'] = function(block: Blockly.Block)
   // TODO: Assemble JavaScript into code variable.
   const code = `if(gridColor === '${dropdownColor}'){
     ${conditionalCode}};\n`;
-  console.log(code);
   return code;
 };
