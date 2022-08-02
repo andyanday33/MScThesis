@@ -66,6 +66,9 @@ export const toolboxWithLoops = {
         {
           'kind': 'block',
           'type': 'math_number',
+          'fields': {
+            'NUM': 1,
+          },
         },
         {
           'kind': 'block',
