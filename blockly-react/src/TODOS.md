@@ -12,7 +12,7 @@
 - [X] Theme selector.
 - [X] Add more themes.
 - [X] Finish get started page.
-- [ ] Adjust level tips. 
+- [X] Adjust level tips. 
 - [X] Scoring.
 - [X] Indexing actors.
 - [X] Update blockly toolbox.

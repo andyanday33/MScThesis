@@ -115,7 +115,7 @@ await setDoc(doc(db, 'levelsGenerated', `${level.levelNo}`), level);
 // Level 7
 level = {
   gridSize: 10,
-  levelNo: 0,
+  levelNo: 7,
   actors: [
     {
       coordinateX: 1,
