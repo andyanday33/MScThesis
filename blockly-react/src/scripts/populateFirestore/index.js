@@ -57,7 +57,11 @@ let level = {
     },
   ],
   walls: [],
-  tip: 'Introducing: loops!',
+  tip: 'Introducing: loops! Loops are used to ' +
+  'run a piece of code multiple times.\n' +
+  'A loop will start counting from a number up to another one,' +
+  ' (including both) by a customizable amount ' +
+  'and would run the code piece attached to it for each count.',
 };
 for (let i = 1; i <= level.gridSize; i++) {
   if (i == 2) {
