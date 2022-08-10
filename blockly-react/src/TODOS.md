@@ -1,37 +1,40 @@
 - [ ] Vitest Testing!!!
-- [X] Connect a back-end (using Firebase or Amplify, decide) to fetch levels from.
-- [X] Create more than one levels.
-- [X] Game Alerts alongside tips
+- [x] Connect a back-end (using Firebase or Amplify, decide) to fetch levels from.
+- [x] Create more than one levels.
+- [x] Game Alerts alongside tips
 
 ## FOR THE DEMO
 
-- [X] Turning right and left.
-- [X] Fix the visual bug introduced.
-- [X] Make the goals smaller.
-- [X] Move backwards.
-- [X] Theme selector.
-- [X] Add more themes.
-- [X] Finish get started page.
-- [X] Adjust level tips. 
-- [X] Scoring.
-- [X] Indexing actors.
-- [X] Update blockly toolbox.
-    - [X] Remove unnecessary fields.
-    - [X] Change math variable default value to 1.
-    - [X] Change loops to become easier to use.
+- [x] Turning right and left.
+- [x] Fix the visual bug introduced.
+- [x] Make the goals smaller.
+- [x] Move backwards.
+- [x] Theme selector.
+- [x] Add more themes.
+- [x] Finish get started page.
+- [x] Adjust level tips.
+- [x] Scoring.
+- [x] Indexing actors.
+- [x] Update blockly toolbox.
+
+  - [x] Remove unnecessary fields.
+  - [x] Change math variable default value to 1.
+  - [x] Change loops to become easier to use.
 
 - [ ] Add max points property to each level (optional).
-- [X] Goal index matching?
-- [X] Check every individual actor.
-- [X] Level generation script.
-- [X] Make tips an alert or breadcrumb instead of overlay and pop-up
-- [X] Add a level selection dropdown.
-- [X] Allow trying again.
-- [X] Show scores after each level.
-- [X] End Game logic.
-- [X] Level Design.
+- [x] Goal index matching?
+- [x] Check every individual actor.
+- [x] Level generation script.
+- [x] Make tips an alert or breadcrumb instead of overlay and pop-up
+- [x] Add a level selection dropdown.
+- [x] Allow trying again.
+- [x] Show scores after each level.
+- [x] End Game logic.
+- [x] Level Design.
 - [ ] Hide firebase keys.
 - [ ] Configure app check.
+- [ ] Change firebase rules.
+
 ## Further Down The Lineß
 
 - Cypress End-to-end Testing
