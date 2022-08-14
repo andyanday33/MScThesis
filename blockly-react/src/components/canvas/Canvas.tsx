@@ -86,10 +86,24 @@ export default function Canvas(): JSX.Element {
     width: window.innerWidth,
   });
 
+  /**
+   * Handles changing the theme on image load,
+   * causes a re-draw on the canvas if there's no
+   * animation going on.
+   */
+  const handleThemeLoad = () => {
+    // If there is an animation going on, we don't need to
+    // trigger a re-render or re-draw since the images are going to be
+    // updated on the next step of the animation.
+    if (actorMovements.length == 0) {
+      createCtxAndDraw();
+    }
+  };
+
   useEffect(() => {
-    actorImageRef.current.onload = createCtxAndDraw;
-    wallImageRef.current.onload = createCtxAndDraw;
-    goalImageRef.current.onload = createCtxAndDraw;
+    actorImageRef.current.onload = handleThemeLoad;
+    wallImageRef.current.onload = handleThemeLoad;
+    goalImageRef.current.onload = handleThemeLoad;
     switch (theme) {
       case (themes.Car):
         wallImageRef.current.src = carWallSvg;
